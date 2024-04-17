@@ -1,10 +1,11 @@
 import { NavigationContainer } from "@react-navigation/native";
 import TabNavigation from "./TabNavigation";
+import DrawerGroup from "./DrawerGroup";
 
 const Content = () => {
   return (
     <NavigationContainer>
-      <TabNavigation />
+      <DrawerGroup />
     </NavigationContainer>
   );
 };

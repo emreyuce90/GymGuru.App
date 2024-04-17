@@ -2,11 +2,12 @@ import {
   BottomTabNavigationOptions,
   createBottomTabNavigator,
 } from "@react-navigation/bottom-tabs";
-import { Home } from "../screens";
+import { Home, Workouts, Tracks } from "../screens";
 import { Ionicons } from "@expo/vector-icons";
+import TopTabsNavigation from "./TopTabsNavigation";
 
+const Tab = createBottomTabNavigator();
 const TabNavigation = () => {
-  const Tab = createBottomTabNavigator();
   return (
     <Tab.Navigator
       screenOptions={({ route }): BottomTabNavigationOptions => ({
@@ -14,13 +15,13 @@ const TabNavigation = () => {
           let iconName;
           if (route.name === "Home") {
             iconName = focused ? "home" : "home-outline";
-          } else if (route.name === "Sessions") {
-            iconName = focused ? "calendar" : "calendar-outline";
-          } else if (route.name === "More") {
-            iconName = focused ? "book" : "book-outline";
+          } else if (route.name === "Workouts") {
+            iconName = focused ? "barbell-sharp" : "barbell-outline";
+          } else if (route.name === "Tracks") {
+            iconName = focused ? "bar-chart" : "bar-chart-outline";
           }
           // You can return any component that you like here!
-          return <Ionicons name={iconName} size={24} color={color} />;
+          return <Ionicons name={iconName as any} size={24} color={color} />;
         },
         tabBarActiveTintColor: "tomato",
         tabBarInactiveTintColor: "gray",
@@ -37,6 +38,8 @@ const TabNavigation = () => {
       })}
     >
       <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="Workouts" component={TopTabsNavigation} />
+      <Tab.Screen name="Tracks" component={Tracks} />
     </Tab.Navigator>
   );
 };
