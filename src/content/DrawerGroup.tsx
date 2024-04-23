@@ -1,5 +1,6 @@
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import TabNavigation from "./TabNavigation";
+import StackGroup from "./StackGroup";
 
 const Drawer = createDrawerNavigator();
 
@@ -10,13 +11,7 @@ function DrawerGroup() {
         headerShown: false,
       }}
     >
-      <Drawer.Screen
-        name="TabNavigation"
-        component={TabNavigation}
-        options={{
-          title: "Home",
-        }}
-      />
+      <Drawer.Screen name="StackGroup" component={StackGroup} />
     </Drawer.Navigator>
   );
 }
