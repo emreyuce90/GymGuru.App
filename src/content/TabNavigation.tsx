@@ -2,7 +2,7 @@ import {
   BottomTabNavigationOptions,
   createBottomTabNavigator,
 } from "@react-navigation/bottom-tabs";
-import { Home, Workouts, Tracks } from "../screens";
+import { Home, Workouts, Programmes } from "../screens";
 import { Ionicons } from "@expo/vector-icons";
 import TopTabsNavigation from "./TopTabsNavigation";
 
@@ -17,7 +17,7 @@ const TabNavigation = () => {
             iconName = focused ? "home" : "home-outline";
           } else if (route.name === "Workouts") {
             iconName = focused ? "barbell-sharp" : "barbell-outline";
-          } else if (route.name === "Tracks") {
+          } else if (route.name === "Programmes") {
             iconName = focused ? "bar-chart" : "bar-chart-outline";
           }
           // You can return any component that you like here!
@@ -37,9 +37,21 @@ const TabNavigation = () => {
         },
       })}
     >
-      <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Workouts" component={TopTabsNavigation} />
-      <Tab.Screen name="Tracks" component={Tracks} />
+      <Tab.Screen
+        name="Home"
+        component={Home}
+        options={{ headerTitle: "Anasayfa", title: "Anasayfa" }}
+      />
+      <Tab.Screen
+        name="Workouts"
+        component={TopTabsNavigation}
+        options={{ headerTitle: "Hareketler", title: "Hareketler" }}
+      />
+      <Tab.Screen
+        name="Programmes"
+        component={Programmes}
+        options={{ headerTitle: "Programlarım", title: "Programlarım" }}
+      />
     </Tab.Navigator>
   );
 };

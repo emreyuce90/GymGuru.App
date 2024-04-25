@@ -20,7 +20,12 @@ const TopTabsNavigation = () => {
     >
       {bodyPart?.map((b, i) => {
         return (
-          <TopTabs.Screen key={`${b.id - i}`} name={b.name}>
+          <TopTabs.Screen
+            key={`${b.id - i}`}
+            name={`${b.name}(${
+              workouts.filter((w) => w.bodyPartId === b.id).length
+            })`}
+          >
             {() => filteredWorkouts(b.id)}
           </TopTabs.Screen>
         );

@@ -1,5 +1,5 @@
 import Workouts from "./workout/Workouts";
 import Home from "./home/Home";
-import Tracks from "./track/Tracks";
+import Programmes from "./programme/Programmes";
 
-export { Home, Workouts, Tracks };
+export { Home, Workouts, Programmes };
