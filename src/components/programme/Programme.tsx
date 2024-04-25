@@ -13,7 +13,14 @@ const Programme = (props: ProgrammePropTypes) => {
   const { id, name } = props.programme;
   const navigation = useNavigation<any>();
   return (
-    <Pressable onPress={() => navigation.navigate("")}>
+    <Pressable
+      onPress={() =>
+        navigation.navigate("ProgrammeDetail", {
+          programmeId: id,
+          programmeName: name,
+        })
+      }
+    >
       <View key={id} className="mb-1 mt-1 px-5">
         <Bounceable onPress={() => {}}>
           <View className="bg-white p-5 flex flex-row justify-between items-center  rounded-lg ">

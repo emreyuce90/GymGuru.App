@@ -1,6 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import TabNavigation from "./TabNavigation";
-import WorkoutDetail from "../components/workout/MovementDetail";
+import { ProgrammeDetail, MovementDetail } from "../screens";
 
 function StackGroup() {
   const Stack = createStackNavigator();
@@ -11,7 +11,8 @@ function StackGroup() {
         component={TabNavigation}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="WorkoutDetail" component={WorkoutDetail} />
+      <Stack.Screen name="MovementDetail" component={MovementDetail} />
+      <Stack.Screen name="ProgrammeDetail" component={ProgrammeDetail} />
     </Stack.Navigator>
   );
 }

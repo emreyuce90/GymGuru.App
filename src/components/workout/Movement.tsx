@@ -14,7 +14,7 @@ const Movement = (props: MovementPropTypes) => {
   console.log("uri", icon);
   return (
     <Pressable
-      onPress={() => navigation.navigate("WorkoutDetail", { movementId: id })}
+      onPress={() => navigation.navigate("MovementDetail", { movementId: id })}
     >
       <View key={title} className="mb-1 mt-1 px-2">
         <Bounceable onPress={() => {}}>
