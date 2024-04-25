@@ -1,6 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import TabNavigation from "./TabNavigation";
-import WorkoutDetail from "../components/workout/WorkoutDetail";
+import WorkoutDetail from "../components/workout/MovementDetail";
 
 function StackGroup() {
   const Stack = createStackNavigator();

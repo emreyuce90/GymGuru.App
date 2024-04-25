@@ -11,17 +11,17 @@ import {
 } from "react-native";
 import React, { useLayoutEffect } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { workouts } from "../../utils/types/datas";
+import { movements } from "../../utils/types/datas";
 import YoutubeIframe from "react-native-youtube-iframe";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ScrollView } from "react-native-gesture-handler";
 
-const WorkoutDetail = () => {
+const MovementDetail = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const { workoutId } = route.params as any;
-  const { title, icon, video, description }: IWorkout | undefined =
+  const { title, icon, video, description }: IMovement | undefined =
     workouts.find((w) => w.id === workoutId);
 
   const windowWidth = Dimensions.get("window").width;
@@ -82,4 +82,4 @@ const WorkoutDetail = () => {
   );
 };
 
-export default WorkoutDetail;
+export default MovementDetail;

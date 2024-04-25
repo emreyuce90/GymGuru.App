@@ -1,11 +1,11 @@
 import React from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { bodyPart, workouts } from "../utils/types/datas";
-import { Workouts } from "../screens";
+import { bodyPart, movements } from "../utils/types/datas";
+import { Movements } from "../screens";
 
 const filteredWorkouts = (bodyPartId: number) => {
-  const filtered = workouts?.filter((w) => w.bodyPartId === bodyPartId);
-  return <Workouts workouts={filtered} />;
+  const filtered = movements?.filter((w) => w.bodyPartId === bodyPartId);
+  return <Movements movements={filtered} />;
 };
 
 const TopTabsNavigation = () => {
@@ -23,7 +23,7 @@ const TopTabsNavigation = () => {
           <TopTabs.Screen
             key={`${b.id - i}`}
             name={`${b.name}(${
-              workouts.filter((w) => w.bodyPartId === b.id).length
+              movements.filter((w) => w.bodyPartId === b.id).length
             })`}
           >
             {() => filteredWorkouts(b.id)}

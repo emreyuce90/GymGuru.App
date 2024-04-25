@@ -1,4 +1,4 @@
-export const workouts: IWorkout[] = [
+export const movements: IMovement[] = [
   {
     id: 1,
     title: "Flat Bench Press",

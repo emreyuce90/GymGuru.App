@@ -4,12 +4,12 @@ import { Ionicons } from "@expo/vector-icons";
 import { Image, Pressable, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-type WorkoutPropTypes = {
-  workout: IWorkout;
+type MovementPropTypes = {
+  movement: IMovement;
 };
 
-const Workout = (props: WorkoutPropTypes) => {
-  const { id, title, description, bodyPartId, icon } = props.workout;
+const Movement = (props: MovementPropTypes) => {
+  const { id, title, description, bodyPartId, icon } = props.movement;
   const navigation = useNavigation<any>();
   console.log("uri", icon);
   return (
@@ -38,4 +38,4 @@ const Workout = (props: WorkoutPropTypes) => {
   );
 };
 
-export default Workout;
+export default Movement;
