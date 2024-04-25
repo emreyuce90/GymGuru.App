@@ -12,11 +12,9 @@ type IBodyPart = {
   name: string;
 };
 
-type programme = {
+type IProgramme = {
   id: number;
   name: string;
-  userid: number;
-  workout: IWorkout[];
 };
 
 /*

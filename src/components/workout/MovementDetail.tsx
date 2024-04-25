@@ -20,9 +20,10 @@ import { ScrollView } from "react-native-gesture-handler";
 const MovementDetail = () => {
   const navigation = useNavigation();
   const route = useRoute();
-  const { workoutId } = route.params as any;
-  const { title, icon, video, description }: IMovement | undefined =
-    workouts.find((w) => w.id === workoutId);
+  const { movementId } = route.params as any;
+  const { title, icon, video, description }: any = movements?.find(
+    (w) => w.id === movementId
+  );
 
   const windowWidth = Dimensions.get("window").width;
   const windowHeight = Dimensions.get("window").height;

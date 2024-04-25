@@ -126,3 +126,10 @@ export const bodyPart: IBodyPart[] = [
   { id: 6, name: "Arka Kol" },
   { id: 7, name: "Karın" },
 ];
+
+export const programmes: IProgramme[] = [
+  { id: 1, name: "Full Body" },
+  { id: 2, name: "Split" },
+  { id: 3, name: "Push & Pull" },
+  { id: 4, name: "5x5" },
+];
