@@ -3,21 +3,23 @@ import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Bounceable } from "rn-bounceable";
 import { Ionicons } from "@expo/vector-icons";
-import { SafeAreaView } from "react-native-safe-area-context";
 
-type ProgrammePropTypes = {
-  programme: IProgramme;
+type SubProgrammePropTypes = {
+  subprogramme: ISubProgramme;
+  programmeName: string;
 };
 
-const Programme = (props: ProgrammePropTypes) => {
-  const { id, name } = props.programme;
+const SubProgramme = (props: SubProgrammePropTypes) => {
+  const { id, name, programmeId } = props.subprogramme;
   const navigation = useNavigation<any>();
+  console.log("subProgramme", props.programmeName);
   return (
     <Pressable
       onPress={() =>
-        navigation.navigate("SubProgrammes", {
-          programmeId: id,
-          programmeName: name,
+        navigation.navigate("SubProgrammeDetail", {
+          subProgrammeId: id,
+          subProgrammeName: name,
+          programmeName: props.programmeName,
         })
       }
     >
@@ -35,4 +37,4 @@ const Programme = (props: ProgrammePropTypes) => {
   );
 };
 
-export default Programme;
+export default SubProgramme;

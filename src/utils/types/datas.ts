@@ -128,8 +128,66 @@ export const bodyPart: IBodyPart[] = [
 ];
 
 export const programmes: IProgramme[] = [
-  { id: 1, name: "Full Body" },
-  { id: 2, name: "Split" },
+  {
+    id: 1,
+    name: "Full Body",
+  },
+  {
+    id: 2,
+    name: "Split 4 Günlük",
+  },
   { id: 3, name: "Push & Pull" },
   { id: 4, name: "5x5" },
+  {
+    id: 5,
+    name: "Split 5 Günlük",
+  },
+];
+
+export const subProgramme: ISubProgramme[] = [
+  { id: 1, name: "1.Gün", programmeId: 1 },
+  { id: 2, name: "2.Gün", programmeId: 1 },
+  { id: 3, name: "3.Gün", programmeId: 1 },
+  { id: 4, name: "1.Gün", programmeId: 2 },
+  { id: 5, name: "2.Gün", programmeId: 2 },
+  { id: 6, name: "3.Gün", programmeId: 2 },
+  { id: 7, name: "4.Gün", programmeId: 2 },
+  { id: 8, name: "A", programmeId: 3 },
+  { id: 9, name: "B", programmeId: 3 },
+  { id: 10, name: "A", programmeId: 3 },
+  { id: 11, name: "1.Gün", programmeId: 5 },
+  { id: 12, name: "2.Gün", programmeId: 5 },
+  { id: 13, name: "3.Gün", programmeId: 5 },
+  { id: 14, name: "4.Gün", programmeId: 5 },
+  { id: 15, name: "5.Gün", programmeId: 5 },
+];
+
+export const subProgrammeMovements: ISubProgrammeMovement[] = [
+  {
+    id: 1,
+    title: "Incline Bench Press",
+    image:
+      "https://w7.pngwing.com/pngs/616/270/png-transparent-bench-press-barbell-dumbbell-pectoralis-major-barbell-physical-fitness-fitness-professional-arm-thumbnail.png",
+    reps: 15,
+    sets: 3,
+    subProgrammeId: 1,
+  },
+  {
+    id: 2,
+    subProgrammeId: 1,
+    title: "Incline Bench Press",
+    image:
+      "https://w7.pngwing.com/pngs/616/270/png-transparent-bench-press-barbell-dumbbell-pectoralis-major-barbell-physical-fitness-fitness-professional-arm-thumbnail.png",
+    reps: 15,
+    sets: 3,
+  },
+  {
+    id: 3,
+    subProgrammeId: 2,
+    title: "Incline Bench Press",
+    image:
+      "https://w7.pngwing.com/pngs/616/270/png-transparent-bench-press-barbell-dumbbell-pectoralis-major-barbell-physical-fitness-fitness-professional-arm-thumbnail.png",
+    reps: 15,
+    sets: 3,
+  },
 ];

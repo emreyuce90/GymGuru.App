@@ -16,7 +16,11 @@ const Programmes = () => {
         )}
       />
 
-      <Pressable onPress={() => {}}>
+      <Pressable
+        onPress={() => {
+          // console.log("Pressed");
+        }}
+      >
         <View className="mb-1 mt-1 px-5">
           <Bounceable onPress={() => {}}>
             <View className=" bg-indigo-400 p-5 flex flex-row justify-between items-center  rounded-lg ">
