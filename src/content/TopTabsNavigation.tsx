@@ -1,14 +1,16 @@
 import React from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { bodyPart, movements } from "../utils/types/datas";
+import { bodyPart } from "../utils/types/datas";
 import { Movements } from "../screens";
-
-const filteredWorkouts = (bodyPartId: number) => {
-  const filtered = movements?.filter((w) => w.bodyPartId === bodyPartId);
-  return <Movements movements={filtered} />;
-};
+import useMovements from "../screens/movement/hooks/useMovements";
 
 const TopTabsNavigation = () => {
+  const { movements, loading, error } = useMovements();
+
+  const filteredWorkouts = (bodyPartId: number) => {
+    const filtered = movements?.filter((w) => w.bodyPartId === bodyPartId);
+    return <Movements movements={filtered} />;
+  };
   const TopTabs = createMaterialTopTabNavigator();
   return (
     <TopTabs.Navigator

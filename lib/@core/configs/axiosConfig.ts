@@ -1,7 +1,11 @@
 import axios from "axios";
 import { isString } from "../utils";
 
-export const configureAxios = ({ baseURL }: any) => {
+type axiosConfigType = {
+  baseURL: string;
+};
+
+export const configureAxios = ({ baseURL }: axiosConfigType) => {
   if (axios.defaults.headers.common.Authorization) {
     return;
   }
@@ -12,6 +16,7 @@ export const configureAxios = ({ baseURL }: any) => {
 
   axios.interceptors.request.use((request) => {
     //request.headers.set('Accept-Language', i18n.language);
+    request.withCredentials = true;
     return request;
   });
 
@@ -37,6 +42,7 @@ export const configureAxios = ({ baseURL }: any) => {
       };
     },
     (err: any) => {
+      console.log("err", err);
       let msg = err.message;
       console.error(
         "axios interceptors ERROR*",
