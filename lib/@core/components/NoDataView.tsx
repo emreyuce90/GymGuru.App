@@ -8,8 +8,8 @@ type NoDataViewProps = {
 const NoDataView = (props: NoDataViewProps) => {
   //const { t } = useTranslation();
   return (
-    <View className="flex pt-24 px-5 items-center">
-      <Text className="text-red-700">{t(props.message ?? "No Data")}</Text>
+    <View className="flex-1 pt-24 px-5 items-center justify-center">
+      <Text className="text-[#FF6346]">{props.message ?? "No Data"}</Text>
     </View>
   );
 };

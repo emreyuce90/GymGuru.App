@@ -9,24 +9,28 @@ type MovementPropTypes = {
 };
 
 const Movement = (props: MovementPropTypes) => {
-  const { id, title, description, bodyPartId, icon } = props.movement;
+  const { id, title, description, bodyPartId, imageUrl, videoUrl } =
+    props.movement;
   const navigation = useNavigation<any>();
-  console.log("uri", icon);
   return (
     <Pressable
-      onPress={() => navigation.navigate("MovementDetail", { movementId: id })}
+      onPress={() =>
+        navigation.navigate("MovementDetail", { movement: props.movement })
+      }
     >
       <View key={title} className="mb-1 mt-1 px-2">
         <Bounceable onPress={() => {}}>
           <View className="bg-white p-1 flex flex-row justify-between items-center  rounded-lg ">
             {/* <Ionicons name={icon} size={24} /> */}
+
             <Image
+              className={imageUrl ? "" : "bg-orange-100 w-28 h-28 rounded-sm"}
               style={{ width: 100, height: 100 }}
               source={{
-                uri: icon,
+                uri: imageUrl ? imageUrl : "string",
               }}
             />
-            {/* <Image className="bg-orange-100 w-28 h-28 rounded-sm" /> */}
+            {/* <Image className="" /> */}
             <View className="ml-3 flex flex-1">
               <Text className="text-base text-[#696969]">{title}</Text>
             </View>

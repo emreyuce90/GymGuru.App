@@ -1,16 +1,15 @@
 type IMovement = {
-  id: number;
+  id: string;
   title: string;
   description?: string;
-  icon?: string;
-  bodyPartId?: number;
-  video?: string;
-  sets?: number;
-  reps?: number;
+  tip?: string;
+  imageUrl?: string;
+  videoUrl?: string;
+  bodyPartId?: string;
 };
 
 type IBodyPart = {
-  id: number;
+  id: string;
   name: string;
 };
 
