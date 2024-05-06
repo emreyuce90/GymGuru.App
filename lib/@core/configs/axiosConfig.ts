@@ -16,7 +16,7 @@ export const configureAxios = ({ baseURL }: axiosConfigType) => {
 
   axios.interceptors.request.use((request) => {
     //request.headers.set('Accept-Language', i18n.language);
-    request.withCredentials = true;
+    //request.withCredentials = true;
     return request;
   });
 

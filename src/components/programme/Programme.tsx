@@ -24,6 +24,9 @@ const Programme = (props: ProgrammePropTypes) => {
       <View key={id} className="mb-1 mt-1 px-5">
         <Bounceable onPress={() => {}}>
           <View className="bg-white p-5 flex flex-row justify-between items-center  rounded-lg ">
+            <View>
+              <Ionicons name="menu" color={"#FF6346"} size={20} />
+            </View>
             <View className="ml-3 flex flex-1">
               <Text className="text-base text-[#696969]">{name}</Text>
             </View>

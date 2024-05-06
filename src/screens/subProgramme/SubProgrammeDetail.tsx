@@ -30,7 +30,7 @@ const SubProgrammeDetail = () => {
   if (loading) return <LoadingScreen />;
   if (error) return <ErrorScreen error={error} />;
   return (
-    <View>
+    <View className="mt-5">
       {subProgrammeMovements &&
         subProgrammeMovements?.map((m, i) => (
           <SubProgrammeDetailRender key={m.id} movement={m} />
