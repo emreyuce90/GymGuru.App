@@ -7,19 +7,31 @@ import useBodyPart from "../hooks/useBodyPart";
 import ErrorScreen from "../../lib/@core/components/ErrorScreen";
 import NoDataView from "../../lib/@core/components/NoDataView";
 
+const filteredWorkouts = (movements: IMovement[], bodyPartId: string) => {
+  const filtered = movements?.filter((w) => w.bodyPartId === bodyPartId);
+
+  if (filtered.length == 0) {
+    return <NoDataView />;
+  }
+  return <Movements movements={filtered} />;
+};
+
 const TopTabsNavigation = () => {
-  const { movements } = useMovements();
-  const { bodyParts, loading, error } = useBodyPart();
+  const {
+    movements,
+    loading: movementsLoading,
+    error: movementsError,
+  } = useMovements();
+  const {
+    bodyParts,
+    loading: bodyPartsLoading,
+    error: bodyPartsError,
+  } = useBodyPart();
 
-  const filteredWorkouts = (bodyPartId: string) => {
-    const filtered = movements?.filter((w) => w.bodyPartId === bodyPartId);
-
-    if (filtered.length == 0) {
-      return <NoDataView />;
-    }
-    return <Movements movements={filtered} />;
-  };
   const TopTabs = createMaterialTopTabNavigator();
+
+  const loading = movementsLoading || bodyPartsLoading;
+  const error = movementsError || bodyPartsError;
 
   if (loading) {
     return <LoadingScreen />;
@@ -28,7 +40,7 @@ const TopTabsNavigation = () => {
   if (error) {
     return <ErrorScreen error={error} />;
   }
-
+  console.log("bodyParts", bodyParts);
   return (
     <TopTabs.Navigator
       screenOptions={{
@@ -37,18 +49,19 @@ const TopTabsNavigation = () => {
         tabBarIndicatorStyle: { borderColor: "#FF6346", borderWidth: 1 },
       }}
     >
-      {bodyParts?.map((b, i) => {
-        return (
-          <TopTabs.Screen
-            key={i}
-            name={`${b.name}(${
-              movements.filter((w) => w.bodyPartId === b.id).length
-            })`}
-          >
-            {() => filteredWorkouts(b.id)}
-          </TopTabs.Screen>
-        );
-      })}
+      {bodyParts &&
+        bodyParts?.map((b, i) => {
+          return (
+            <TopTabs.Screen
+              key={i}
+              name={`${b.name}(${
+                movements.filter((w) => w.bodyPartId === b.id).length
+              })`}
+            >
+              {() => filteredWorkouts(movements, b.id)}
+            </TopTabs.Screen>
+          );
+        })}
     </TopTabs.Navigator>
   );
 };

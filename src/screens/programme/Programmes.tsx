@@ -1,11 +1,22 @@
 import { View, Text, FlatList, ScrollView, Pressable } from "react-native";
 import React from "react";
-import { programmes } from "../../utils/types/datas";
 import Programme from "../../components/programme/Programme";
 import { Bounceable } from "rn-bounceable";
 import { Ionicons } from "@expo/vector-icons";
+import useProgrammes from "./hooks/useProgrammes";
+import LoadingScreen from "../../../lib/@core/components/LoadingScreen";
+import ErrorScreen from "../../../lib/@core/components/ErrorScreen";
 
 const Programmes = () => {
+  const { programmes, loading, error } = useProgrammes();
+
+  if (loading) {
+    <LoadingScreen />;
+  }
+
+  if (error) {
+    <ErrorScreen error={error} />;
+  }
   return (
     <View>
       <FlatList

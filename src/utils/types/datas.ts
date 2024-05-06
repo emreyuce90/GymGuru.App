@@ -127,22 +127,22 @@
 //   { id: 7, name: "Karın" },
 // ];
 
-export const programmes: IProgramme[] = [
-  {
-    id: 1,
-    name: "Full Body",
-  },
-  {
-    id: 2,
-    name: "Split 4 Günlük",
-  },
-  { id: 3, name: "Push & Pull" },
-  { id: 4, name: "5x5" },
-  {
-    id: 5,
-    name: "Split 5 Günlük",
-  },
-];
+// export const programmes: IProgramme[] = [
+//   {
+//     id: 1,
+//     name: "Full Body",
+//   },
+//   {
+//     id: 2,
+//     name: "Split 4 Günlük",
+//   },
+//   { id: 3, name: "Push & Pull" },
+//   { id: 4, name: "5x5" },
+//   {
+//     id: 5,
+//     name: "Split 5 Günlük",
+//   },
+// ];
 
 export const subProgramme: ISubProgramme[] = [
   { id: 1, name: "1.Gün", programmeId: 1 },
