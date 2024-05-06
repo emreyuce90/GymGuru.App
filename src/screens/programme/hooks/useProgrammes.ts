@@ -9,7 +9,9 @@ const useProgrammes = () => {
   useEffect(() => {
     const getProgrammes = async () => {
       try {
-        const programmes = await Api.get("/api/programme");
+        const programmes = await Api.get(
+          `/api/programme/7aaf453f-56ea-4f7d-8877-4cec29072bfe`
+        );
         if (programmes.Success) {
           setProgrammes(programmes.Resource.resource);
         }

@@ -14,24 +14,24 @@ type IBodyPart = {
 };
 
 type IProgramme = {
-  id: number;
+  id: string;
   name: string;
   userId?: string;
 };
 
 type ISubProgramme = {
-  id: number;
+  id: string;
   name: string;
   programmeId: number;
 };
 
 type ISubProgrammeMovement = {
-  id: number;
-  subProgrammeId: number;
-  title: string;
+  id: string;
+  movementId: string;
+  subProgrammeId: string;
   sets: number;
   reps: number;
-  image: string;
+  movement: IMovement;
 };
 
 /*
