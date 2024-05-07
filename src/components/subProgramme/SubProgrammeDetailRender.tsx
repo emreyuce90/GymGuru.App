@@ -1,4 +1,4 @@
-import { View, Text, Pressable } from "react-native";
+import { View, Text, Pressable, Image } from "react-native";
 import React, { useMemo, useState } from "react";
 import { Bounceable } from "rn-bounceable";
 import { Ionicons } from "@expo/vector-icons";
@@ -25,6 +25,16 @@ const SubProgrammeDetailRender = (props: SubProgrammeDetailPropTypes) => {
               <View>
                 <Ionicons name="menu" color={"#FF6346"} size={20} />
               </View>
+              <View className="bg-[#ff8a76] rounded-full ml-2">
+                <Image
+                  style={{ borderRadius: 50, padding: 3 }}
+                  width={70}
+                  height={70}
+                  source={{
+                    uri: `https://api.gymguru.com.tr/api.gymguru.com.tr/images/${movement.imageUrl}`,
+                  }}
+                />
+              </View>
               <View className="ml-3 flex flex-1">
                 <Text className="text-base text-[#696969]">
                   {movement.title}
@@ -41,7 +51,13 @@ const SubProgrammeDetailRender = (props: SubProgrammeDetailPropTypes) => {
         </View>
       </Pressable>
       {isOpened && movement?.videoUrl && (
-        <YoutubeIframe height={400} width={400} videoId={movement?.videoUrl} />
+        <View>
+          <YoutubeIframe
+            height={250}
+            width={400}
+            videoId={movement?.videoUrl}
+          />
+        </View>
       )}
     </View>
   );

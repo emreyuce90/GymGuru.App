@@ -12,6 +12,7 @@ const Movement = (props: MovementPropTypes) => {
   const { id, title, description, bodyPartId, imageUrl, videoUrl } =
     props.movement;
   const navigation = useNavigation<any>();
+  console.log("ImageUrl", imageUrl);
   return (
     <Pressable
       onPress={() =>
@@ -23,13 +24,29 @@ const Movement = (props: MovementPropTypes) => {
           <View className="bg-white p-1 flex flex-row justify-between items-center  rounded-lg ">
             {/* <Ionicons name={icon} size={24} /> */}
 
-            <Image
-              className={imageUrl ? "" : "bg-orange-100 w-28 h-28 rounded-sm"}
-              style={{ width: 100, height: 100 }}
-              source={{
-                uri: imageUrl ? imageUrl : "string",
-              }}
-            />
+            {process.env.EXPO_PUBLIC_API_URL ===
+            "https://api.gymguru.com.tr" ? (
+              <Image
+                className={imageUrl ? "" : "bg-orange-100 w-28 h-28 rounded-sm"}
+                style={{ width: 100, height: 100 }}
+                source={{
+                  uri: imageUrl
+                    ? `https://api.gymguru.com.tr/api.gymguru.com.tr/images/${imageUrl}`
+                    : "string",
+                }}
+              />
+            ) : (
+              <Image
+                className={imageUrl ? "" : "bg-orange-100 w-28 h-28 rounded-sm"}
+                style={{ width: 100, height: 100 }}
+                source={{
+                  uri: imageUrl
+                    ? `${process.env.EXPO_PUBLIC_API_URL}/wwwroot/images/${imageUrl}`
+                    : "string",
+                }}
+              />
+            )}
+
             {/* <Image className="" /> */}
             <View className="ml-3 flex flex-1">
               <Text className="text-base text-[#696969]">{title}</Text>

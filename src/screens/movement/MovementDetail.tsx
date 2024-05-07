@@ -33,17 +33,11 @@ const MovementDetail = () => {
   }, []);
   return (
     <SafeAreaView>
-      <ScrollView className="flex p-1 bg-orange-100">
-        {imageUrl && (
-          <Image
-            resizeMode="contain"
-            className="flex-1 mx-auto"
-            source={{
-              uri: imageUrl,
-            }}
-            width={windowWidth * 0.75}
-            height={windowHeight * 0.33}
-          />
+      <ScrollView className="flex p-1 ">
+        {videoUrl && (
+          <View>
+            <YoutubeIframe height={250} width={400} videoId={videoUrl} />
+          </View>
         )}
         <View className="mt-5">
           <Text className="text-xl mx-auto text-gray-500">
@@ -53,10 +47,12 @@ const MovementDetail = () => {
             <Ionicons name="barbell" size={24} color="tomato" />
             <Text className="text-base mx-auto">{description}</Text>
           </View>
-          <View className="flex flex-row px-4 py-1 items-center gap-3">
-            <Ionicons name="bulb" size={24} color="tomato" />
-            <Text className="text-base mx-auto">{tip}</Text>
-          </View>
+          {tip && (
+            <View className="flex flex-row px-4 py-1 items-center gap-3">
+              <Ionicons name="bulb" size={24} color="tomato" />
+              <Text className="text-base mx-auto">{tip}</Text>
+            </View>
+          )}
         </View>
 
         <TouchableOpacity
@@ -66,12 +62,6 @@ const MovementDetail = () => {
           <Ionicons name="add-circle" size={36} color="tomato"></Ionicons>
           <Text className="ml-3 text-base text-gray-500">Programıma Ekle</Text>
         </TouchableOpacity>
-
-        {videoUrl && (
-          <View className="mt-5">
-            <YoutubeIframe height={400} width={400} videoId={videoUrl} />
-          </View>
-        )}
       </ScrollView>
     </SafeAreaView>
   );
