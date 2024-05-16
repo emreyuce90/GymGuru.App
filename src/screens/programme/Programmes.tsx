@@ -11,11 +11,11 @@ const Programmes = () => {
   const { programmes, loading, error } = useProgrammes();
 
   if (loading) {
-    <LoadingScreen />;
+    return <LoadingScreen />;
   }
 
   if (error) {
-    <ErrorScreen error={error} />;
+    return <ErrorScreen error={error} />;
   }
   return (
     <View>

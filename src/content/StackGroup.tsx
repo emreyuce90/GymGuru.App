@@ -5,6 +5,8 @@ import {
   MovementDetail,
   SubProgrammes,
   SubProgrammeDetail,
+  Workouts,
+  WorkoutLogs,
 } from "../screens";
 
 function StackGroup() {
@@ -20,6 +22,8 @@ function StackGroup() {
       <Stack.Screen name="ProgrammeDetail" component={ProgrammeDetail} />
       <Stack.Screen name="SubProgrammes" component={SubProgrammes} />
       <Stack.Screen name="SubProgrammeDetail" component={SubProgrammeDetail} />
+      <Stack.Screen name="Workouts" component={Workouts} />
+      <Stack.Screen name="WorkoutLogs" component={WorkoutLogs} />
     </Stack.Navigator>
   );
 }

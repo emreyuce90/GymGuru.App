@@ -5,6 +5,8 @@ import MovementDetail from "./movement/MovementDetail";
 import ProgrammeDetail from "./programme/ProgrammeDetail";
 import SubProgrammes from "./subProgramme/SubProgrammes";
 import SubProgrammeDetail from "./subProgramme/SubProgrammeDetail";
+import Workouts from "./workout/Workouts";
+import WorkoutLogs from "./workoutLog/WorkoutLogs";
 
 export {
   Home,
@@ -14,4 +16,6 @@ export {
   ProgrammeDetail,
   SubProgrammes,
   SubProgrammeDetail,
+  Workouts,
+  WorkoutLogs,
 };

@@ -47,7 +47,7 @@ const Home = () => {
         <ImageSlider />
       </View>
       {/* BodyParts List */}
-      {/* <View className="p-6">
+      <View className="p-6">
         <View className="flex flex-row space-x-2">
           <View className="bg-green-200 flex flex-col justify-center items-center p-3 w-30 h-30">
             <Ionicons name="fitness-outline" size={40} color="#FF6346" />
@@ -62,7 +62,7 @@ const Home = () => {
             <Text className="text-base text-slate-600">Antrenmanlarım</Text>
           </View>
         </View>
-      </View> */}
+      </View>
     </SafeAreaView>
   );
 };
