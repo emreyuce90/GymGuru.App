@@ -28,6 +28,7 @@ const SubProgrammeDetail = () => {
   //     (p) => p.subProgrammeId === subProgrammeId
   //   );
   // }, [subProgrammeId]);
+
   const handleWorkoutStart = useCallback(async () => {
     const now = new Date();
     try {
@@ -44,6 +45,7 @@ const SubProgrammeDetail = () => {
         navigation.navigate("Workouts", {
           workoutId: request.Resource.resource.id,
           workoutName: `${programmeName} | ${subProgrammeName}`,
+          subProgrammeId: subProgrammeId,
         });
       }
     } catch (error) {

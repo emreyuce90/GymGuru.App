@@ -20,11 +20,11 @@ const useSubProgrammeMovements = (props: useSubProgrammeMovementsPropTypes) => {
           `/api/SubProgrammeMovement/${subProgrammeId}`
         );
         if (movements.Success) {
-          setsubProgrammeMovements(movements.Resource.resource);
           console.log(
             "movements.Resource.resource",
             movements.Resource.resource
           );
+          setsubProgrammeMovements(movements.Resource.resource);
         }
       } catch (err) {
         setError(err);
