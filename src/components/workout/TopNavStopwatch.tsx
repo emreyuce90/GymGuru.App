@@ -18,7 +18,7 @@ const TopNavStopwatch = (props: TopNavStopwatchPropTypes) => {
         </View>
         <Bounceable onPress={() => {}}>
           <View className="ml-2 flex flex-row items-center">
-            <Ionicons name="pause" size={26} color="grey" />
+            <Ionicons name="pause" size={26} color="#FF6346" />
             <Text>Durdur</Text>
           </View>
         </Bounceable>

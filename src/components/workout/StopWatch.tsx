@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Text } from "react-native";
 
 function getFormattedTime(seconds: number) {
+  let hour = Math.floor(seconds / 3600) as any;
   let minute = Math.floor(seconds / 60) as any;
   let second = (seconds - minute * 60) as any;
 
@@ -12,7 +13,10 @@ function getFormattedTime(seconds: number) {
   if (second < 10) {
     second = `0${second}`;
   }
-  return `${minute}:${second}`;
+  if (hour < 10) {
+    hour = `0${hour}`;
+  }
+  return `${hour > 0 ? `${hour}:` : ""}${minute}:${second}`;
 }
 
 const StopWatch = () => {
