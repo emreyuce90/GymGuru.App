@@ -21,9 +21,10 @@ function getFormattedTime(seconds: number) {
 
 const StopWatch = () => {
   const [seconds, setSeconds] = useState<number>(0);
-
   useEffect(() => {
-    setInterval(() => setSeconds((prev) => prev + 1), 1000);
+    const intervalId = setInterval(() => setSeconds((prev) => prev + 1), 1000);
+
+    return () => clearInterval(intervalId);
   }, []);
 
   return (
@@ -33,8 +34,3 @@ const StopWatch = () => {
   );
 };
 export default StopWatch;
-
-//159
-
-//2dk
-//

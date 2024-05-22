@@ -34,6 +34,18 @@ type ISubProgrammeMovement = {
   movement: IMovement;
 };
 
+type IWorkoutSets = {
+  setNumber: number;
+  reps: number;
+  weight: number;
+  checked: boolean;
+};
+
+type IWorkout = {
+  movementId: string;
+  movementSets: IWorkoutSets[];
+};
+
 /*
   Users
   Id,Name,Surname,DateofBirth,Mobile,username,password,passwordSalt,MembershipStartDate,MembershipEndDate

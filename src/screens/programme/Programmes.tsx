@@ -34,7 +34,7 @@ const Programmes = () => {
       >
         <View className="mb-1 mt-1 px-5">
           <Bounceable onPress={() => {}}>
-            <View className=" bg-indigo-400 p-5 flex flex-row justify-between items-center  rounded-lg ">
+            <View className=" bg-[#FF6346] p-5 flex flex-row justify-between items-center  rounded-lg ">
               <View className="ml-3 flex flex-row items-center gap-2">
                 <Ionicons name="add-circle" size={40} color={"white"} />
                 <Text className="text-base text-white">Yeni Program Ekle</Text>
