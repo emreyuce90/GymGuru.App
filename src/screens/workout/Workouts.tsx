@@ -1,5 +1,10 @@
-import { View, Text, Pressable } from "react-native";
-import React, { useCallback, useLayoutEffect, useState } from "react";
+import { View, Text, Pressable, BackHandler } from "react-native";
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from "react";
 import { Ionicons } from "@expo/vector-icons";
 import LoadingScreen from "../../../lib/@core/components/LoadingScreen";
 import ErrorScreen from "../../../lib/@core/components/ErrorScreen";
@@ -7,23 +12,24 @@ import Api from "../../../lib/@core/data/Api";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { getCurrentTime } from "../../../lib/@core/utils";
 import useSubProgrammeMovements from "../subProgramme/hooks/useSubProgrammeMovements";
-import TopNavStopwatch from "../../components/workout/TopNavStopwatch";
 import WorkoutRunning from "../../components/workout/WorkoutRunning";
 import { ScrollView } from "react-native-gesture-handler";
-
-const convertToWorkoutMovementAddDto = (workouts: IWorkout[]) => {
-  return workouts.map((workout) => ({
-    MovementId: workout.movementId,
-    MovementSetDtos: workout.movementSets.map((set) => ({
-      SetNumber: set.setNumber,
-      Reps: set.reps,
-      Weight: set.weight,
-    })),
-  }));
-};
+import WorkoutBackModal from "../../components/workout/Modals/WorkoutBackModal";
+import WorkoutFinishModel from "../../components/workout/Modals/WorkoutFinishModel";
+import {
+  convertToWorkoutMovementAddDto,
+  filterDataToSend,
+  finishedSetCounts,
+  isAllMovementsOk,
+  unFinishedSetCounts,
+} from "../../components/workout";
+import StopWatch from "../../components/workout/StopWatch";
 
 const Workouts = () => {
   const navigation = useNavigation<any>();
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [finishModalVisible, setFinishModalVisible] = useState<boolean>(false);
+  const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
   const route = useRoute();
   const workout = route.params as any;
   const { workoutId, workoutName, subProgrammeId } = workout;
@@ -32,8 +38,14 @@ const Workouts = () => {
   const { subProgrammeMovements } = useSubProgrammeMovements({
     subProgrammeId,
   });
-
   const [allWorkoutsData, setAllWorkoutsData] = useState<IWorkout[]>([]);
+  const [seconds, setSeconds] = useState<number>(0);
+  const [isRunning, setIsRunning] = useState<boolean>(true);
+
+  const handleReset = useCallback(() => {
+    setSeconds(0);
+    setIsRunning(false);
+  }, [isRunning]);
 
   const handleWorkoutChanges = useCallback(
     (data: IWorkout) => {
@@ -59,21 +71,45 @@ const Workouts = () => {
     [allWorkoutsData]
   );
 
-  // const Ids = useMemo(() => {
-  //   return subProgrammeMovements.map((p, i) => p.movementId);
-  // }, [subProgrammeMovements]);
+  const handleAllSetsFinished = useCallback(() => {
+    if (isAllMovementsOk(allWorkoutsData)) {
+      setFinishModalVisible((prev) => !prev);
+      handleWorkoutFinish();
+    } else {
+      setFinishModalVisible((prev) => !prev);
+    }
+  }, [allWorkoutsData, finishModalVisible]);
+
+  const handleFinishWorkout = useCallback(async () => {
+    try {
+      const response = await Api.delete(
+        `/api/Workout/DeleteWorkout/${workoutId}`,
+        {}
+      );
+      if (response.Success) {
+        //kronometreyi de resetle
+        navigation.navigate("Programmes");
+      }
+    } catch (err) {
+      alert(err);
+    }
+  }, [workoutId]);
 
   const handleWorkoutFinish = useCallback(async () => {
+    handleReset();
     setLoading(true);
     try {
       const request = await Api.put(
         `/api/Workout/FinishWorkout/${workoutId}?endTime=${encodeURIComponent(
           getCurrentTime()
-        )}`,
+        )}&duration=${seconds}`,
         ""
       );
       if (request.Success) {
-        const transformedData = convertToWorkoutMovementAddDto(allWorkoutsData);
+        const filteredData = allWorkoutsData;
+        const transformedData = convertToWorkoutMovementAddDto(
+          filterDataToSend(allWorkoutsData)
+        );
         const saveMovements = await Api.post(
           `/api/Workout/SaveWorkoutMovements/${workoutId}`,
           transformedData
@@ -93,28 +129,81 @@ const Workouts = () => {
   //Topbar
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle: () => <TopNavStopwatch workoutName={workoutName} />,
+      headerTitle: () => (
+        <StopWatch
+          seconds={seconds ? seconds : 0}
+          setSeconds={setSeconds}
+          workoutName={workoutName}
+          setIsRunning={setIsRunning}
+          isRunning={isRunning}
+        />
+      ),
     });
-  }, []);
+  }, [seconds, isRunning]);
+
+  useEffect(() => {
+    const backAction = () => {
+      setModalVisible((prev) => {
+        if (!prev) {
+          return true;
+        }
+        return prev;
+      });
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    const unsubscribe = navigation.addListener("beforeRemove", (e: any) => {
+      e.preventDefault();
+      setModalVisible((prev) => {
+        if (!prev) {
+          return true;
+        }
+        return prev;
+      });
+    });
+
+    return () => {
+      backHandler.remove();
+      unsubscribe();
+    };
+  }, [navigation]);
+
+  useEffect(() => {
+    if (
+      allWorkoutsData.some((obj) =>
+        obj.movementSets.find((ms) => ms.checked === true)
+      )
+    ) {
+      setButtonDisabled(false);
+    } else {
+      setButtonDisabled(true);
+    }
+  }, [allWorkoutsData]);
+
   //error-loading state
   if (loading) return <LoadingScreen />;
   if (error) return <ErrorScreen error={error} />;
-
   return (
-    <View className="flex-1 h-screen ">
-      <ScrollView className="flex-1">
-        <View className="justify-between">
-          <View>
-            {subProgrammeMovements &&
-              subProgrammeMovements.map((s: ISubProgrammeMovement, i) => (
-                <WorkoutRunning
-                  key={i}
-                  movement={s}
-                  onChangeData={handleWorkoutChanges}
-                />
-              ))}
-          </View>
-          {/* <Bounceable onPress={() => {}}>
+    <>
+      <View className="flex-1 h-screen ">
+        <ScrollView className="flex-1">
+          <View className="justify-between">
+            <View>
+              {subProgrammeMovements &&
+                subProgrammeMovements.map((s: ISubProgrammeMovement, i) => (
+                  <WorkoutRunning
+                    key={i}
+                    movement={s}
+                    onChangeData={handleWorkoutChanges}
+                  />
+                ))}
+            </View>
+            {/* <Bounceable onPress={() => {}}>
             <View className="flex flex-row items-center justify-center  px-4 py-2 m-3 rounded-xl bg-[#FF6346]">
               <View>
                 <Ionicons name="add-outline" size={24} color="white" />
@@ -126,20 +215,37 @@ const Workouts = () => {
               </View>
             </View>
           </Bounceable> */}
-        </View>
-      </ScrollView>
-      <Pressable
-        onPress={handleWorkoutFinish}
-        disabled={allWorkoutsData.length === 0}
-      >
-        <View className="w-full flex flex-row items-center justify-center bg-[#FF6346] rounded-xl py-3 px-4 space-x-3 mb-2">
-          <Ionicons name="stop" size={24} color={"white"} />
-          <Text className=" text-white font-semibold uppercase text-lg ">
-            BİTİR
-          </Text>
-        </View>
-      </Pressable>
-    </View>
+          </View>
+        </ScrollView>
+        <Pressable
+          onPress={handleAllSetsFinished}
+          disabled={buttonDisabled}
+          className={`${buttonDisabled ? "bg-[#FF634680]" : "bg-[#FF6346]"}`}
+        >
+          <View className="w-full flex flex-row items-center justify-center  rounded-xl py-3 px-4 space-x-3 mb-2">
+            <Ionicons name="stop" size={24} color={"white"} />
+            <Text className=" text-white font-semibold uppercase text-lg ">
+              BİTİR
+            </Text>
+          </View>
+        </Pressable>
+      </View>
+      {/* Antrenman esnasında kullanıcı geri butonuna tıkladığında çıkan modal */}
+      <WorkoutBackModal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        handleFinishWorkout={handleFinishWorkout}
+      />
+      {/* Antrenman esnasında kullanıcı setlerini tamamlamadan çıkması halinde karışılaşacağı modal*/}
+
+      <WorkoutFinishModel
+        unFinishedSets={unFinishedSetCounts(allWorkoutsData)}
+        finishedSets={finishedSetCounts(allWorkoutsData)}
+        finishModalVisible={finishModalVisible}
+        setFinishModalVisible={setFinishModalVisible}
+        handleWorkoutFinish={handleWorkoutFinish}
+      />
+    </>
   );
 };
 

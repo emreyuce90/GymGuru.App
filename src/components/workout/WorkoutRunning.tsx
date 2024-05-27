@@ -148,164 +148,163 @@ const WorkoutRunning = (props: WorkoutRunningPropTypes) => {
       return { ...prevState, movementSets: updated };
     });
   };
-
   useEffect(() => {
-    const dataToSend = workoutSets.movementSets.filter(
-      (w) => w.checked === true
-    );
-
-    if (dataToSend.length > 0) {
-      const data: IWorkout = {
-        movementId: workoutSets.movementId,
-        movementSets: dataToSend,
-      };
-      onChangeData(data);
-    }
+    onChangeData(workoutSets);
   }, [workoutSets]);
   return (
-    <View style={styles.container}>
-      <View style={styles.innerContainer}>
-        <View style={styles.header}>
-          <Pressable onPress={() => setIsOpened((prev) => !prev)}>
-            <Ionicons
-              name={isOpened ? "chevron-up" : "chevron-down"}
-              size={24}
-              color="grey"
-            />
-          </Pressable>
-          <View>
-            <Image
-              style={styles.image}
-              width={80}
-              height={80}
-              source={{
-                uri: `https://api.gymguru.com.tr/api.gymguru.com.tr/images/${movement.movement.imageUrl}`,
-              }}
-            />
-          </View>
-          <View className="flex flex-col">
-            <View style={styles.headerText}>
-              <Text style={styles.title}>{movement.movement.title}</Text>
-            </View>
-            <View className="flex flex-row items-center ml-2">
-              {workoutSets.movementSets.filter((c) => c.checked === true)
-                .length === workoutSets.movementSets.length && (
-                <View className="mr-1">
-                  <Ionicons name="checkmark-circle" size={24} color="#16a34a" />
-                </View>
-              )}
-              <Text
-                className={
-                  workoutSets.movementSets.filter((c) => c.checked === true)
-                    .length === workoutSets.movementSets.length
-                    ? "text-green-600"
-                    : ""
-                }
-              >
-                {`${
-                  workoutSets.movementSets.filter((c) => c.checked === true)
-                    .length
-                }/${workoutSets.movementSets.length} Tamamlandı`}
-              </Text>
-            </View>
-          </View>
-        </View>
-        {isOpened && (
-          <>
-            {workoutSets.movementSets.map((workoutSet, index) => (
-              <Swipeable
-                ref={(ref) => (swipeableRefs.current[index] = ref)}
-                key={index}
-                renderRightActions={() =>
-                  rightSwipeActions(index, swipeableRefs.current[index])
-                }
-              >
-                <Pressable key={index} onPress={() => toggleChecked(index)}>
-                  <View
-                    style={[
-                      styles.setContainer,
-                      workoutSet.checked
-                        ? styles.checkedSet
-                        : styles.uncheckedSet,
-                    ]}
-                  >
-                    <Ionicons
-                      name={
-                        workoutSet.checked
-                          ? "checkmark-circle"
-                          : "checkmark-circle-outline"
-                      }
-                      size={24}
-                      color={workoutSet.checked ? "white" : "black"}
-                    />
-                    <Text
-                      style={[
-                        styles.setText,
-                        workoutSet.checked
-                          ? styles.checkedText
-                          : styles.uncheckedText,
-                      ]}
-                    >
-                      {index + 1}
-                    </Text>
-                    <TextInput
-                      style={[
-                        styles.input,
-                        workoutSet.weight.toString() === ""
-                          ? styles.emptyInput
-                          : styles.filledInput,
-                      ]}
-                      value={workoutSet.weight.toString()}
-                      onChangeText={(value) => updateWeights(index, value)}
-                      keyboardType="numeric"
-                    />
-                    <Text
-                      style={[
-                        styles.setText,
-                        workoutSet.checked
-                          ? styles.checkedText
-                          : styles.uncheckedText,
-                      ]}
-                    >
-                      KG
-                    </Text>
-                    <TextInput
-                      style={[
-                        styles.input,
-                        workoutSet.reps.toString() === ""
-                          ? styles.emptyInput
-                          : styles.filledInput,
-                      ]}
-                      value={workoutSet.reps.toString()}
-                      onChangeText={(value) => updateReps(index, value)}
-                      keyboardType="numeric"
-                    />
-                    <Text
-                      style={[
-                        styles.setText,
-                        workoutSet.checked
-                          ? styles.checkedText
-                          : styles.uncheckedText,
-                      ]}
-                    >
-                      Tekrar
-                    </Text>
-                  </View>
-                </Pressable>
-              </Swipeable>
-            ))}
-            <Pressable onPress={() => addSet()}>
-              <View className="mb-1 flex flex-row items-start rounded-xl justify-around p-4 bg-[#f4f4f5]">
-                <View className="flex flex-row items-center">
-                  <Ionicons name="add-circle-outline" size={24} color="black" />
-                  <Text className="text-lg  ml-2">Set ekle</Text>
-                </View>
-              </View>
+    <>
+      <View style={styles.container}>
+        <View style={styles.innerContainer}>
+          <View style={styles.header}>
+            <Pressable onPress={() => setIsOpened((prev) => !prev)}>
+              <Ionicons
+                name={isOpened ? "chevron-up" : "chevron-down"}
+                size={24}
+                color="grey"
+              />
             </Pressable>
-          </>
-        )}
+            <View>
+              <Image
+                style={styles.image}
+                width={80}
+                height={80}
+                source={{
+                  uri: `https://api.gymguru.com.tr/api.gymguru.com.tr/images/${movement.movement.imageUrl}`,
+                }}
+              />
+            </View>
+            <View className="flex flex-col">
+              <View style={styles.headerText}>
+                <Text style={styles.title}>{movement.movement.title}</Text>
+              </View>
+              <View className="flex flex-row items-center ml-2">
+                {workoutSets.movementSets.filter((c) => c.checked === true)
+                  .length === workoutSets.movementSets.length && (
+                  <View className="mr-1">
+                    <Ionicons
+                      name="checkmark-circle"
+                      size={24}
+                      color="#16a34a"
+                    />
+                  </View>
+                )}
+                <Text
+                  className={
+                    workoutSets.movementSets.filter((c) => c.checked === true)
+                      .length === workoutSets.movementSets.length
+                      ? "text-green-600"
+                      : ""
+                  }
+                >
+                  {`${
+                    workoutSets.movementSets.filter((c) => c.checked === true)
+                      .length
+                  }/${workoutSets.movementSets.length} Tamamlandı`}
+                </Text>
+              </View>
+            </View>
+          </View>
+          {isOpened && (
+            <>
+              {workoutSets.movementSets.map((workoutSet, index) => (
+                <Swipeable
+                  ref={(ref) => (swipeableRefs.current[index] = ref)}
+                  key={index}
+                  renderRightActions={() =>
+                    rightSwipeActions(index, swipeableRefs.current[index])
+                  }
+                >
+                  <Pressable key={index} onPress={() => toggleChecked(index)}>
+                    <View
+                      style={[
+                        styles.setContainer,
+                        workoutSet.checked
+                          ? styles.checkedSet
+                          : styles.uncheckedSet,
+                      ]}
+                    >
+                      <Ionicons
+                        name={
+                          workoutSet.checked
+                            ? "checkmark-circle"
+                            : "checkmark-circle-outline"
+                        }
+                        size={24}
+                        color={workoutSet.checked ? "white" : "black"}
+                      />
+                      <Text
+                        style={[
+                          styles.setText,
+                          workoutSet.checked
+                            ? styles.checkedText
+                            : styles.uncheckedText,
+                        ]}
+                      >
+                        {index + 1}
+                      </Text>
+                      <TextInput
+                        style={[
+                          styles.input,
+                          workoutSet.weight.toString() === ""
+                            ? styles.emptyInput
+                            : styles.filledInput,
+                        ]}
+                        value={workoutSet.weight.toString()}
+                        onChangeText={(value) => updateWeights(index, value)}
+                        keyboardType="numeric"
+                      />
+                      <Text
+                        style={[
+                          styles.setText,
+                          workoutSet.checked
+                            ? styles.checkedText
+                            : styles.uncheckedText,
+                        ]}
+                      >
+                        KG
+                      </Text>
+                      <TextInput
+                        style={[
+                          styles.input,
+                          workoutSet.reps.toString() === ""
+                            ? styles.emptyInput
+                            : styles.filledInput,
+                        ]}
+                        value={workoutSet.reps.toString()}
+                        onChangeText={(value) => updateReps(index, value)}
+                        keyboardType="numeric"
+                      />
+                      <Text
+                        style={[
+                          styles.setText,
+                          workoutSet.checked
+                            ? styles.checkedText
+                            : styles.uncheckedText,
+                        ]}
+                      >
+                        Tekrar
+                      </Text>
+                    </View>
+                  </Pressable>
+                </Swipeable>
+              ))}
+              <Pressable onPress={() => addSet()}>
+                <View className="mb-1 flex flex-row items-start rounded-xl justify-around p-4 bg-[#f4f4f5]">
+                  <View className="flex flex-row items-center">
+                    <Ionicons
+                      name="add-circle-outline"
+                      size={24}
+                      color="black"
+                    />
+                    <Text className="text-lg  ml-2">Set ekle</Text>
+                  </View>
+                </View>
+              </Pressable>
+            </>
+          )}
+        </View>
       </View>
-    </View>
+    </>
   );
 };
 
@@ -388,6 +387,43 @@ const styles = StyleSheet.create({
   deleteButtonText: {
     fontWeight: "bold",
     color: "white",
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(255,99,70,0.3)",
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+    backgroundColor: "#FF6346",
+    marginVertical: 10,
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center",
   },
 });
 

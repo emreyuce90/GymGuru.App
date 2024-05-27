@@ -1,5 +1,12 @@
-import { View, Text, Pressable, Image } from "react-native";
-import React, { useLayoutEffect } from "react";
+import {
+  View,
+  Text,
+  Pressable,
+  Image,
+  Button,
+  TouchableHighlight,
+} from "react-native";
+import React, { useLayoutEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -8,6 +15,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import ImageSlider from "../../components/home/ImageSlider";
+
 const Home = () => {
   const navigation = useNavigation<any>();
   useLayoutEffect(() => {
@@ -64,7 +72,9 @@ const Home = () => {
     //     </View>
     //   </View>
     // </SafeAreaView>
-    <Text>Test</Text>
+    <TouchableHighlight onPress={() => navigation.navigate("WorkoutLogs")}>
+      <Text>Git</Text>
+    </TouchableHighlight>
   );
 };
 
