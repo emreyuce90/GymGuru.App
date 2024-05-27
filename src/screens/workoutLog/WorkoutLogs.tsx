@@ -19,7 +19,7 @@ function HeaderTitle() {
   return (
     <View className="flex flex-row items-center justify-between">
       <View className="flex flex-col">
-        <Text className="text-xl font-semibold text-white">Harika!</Text>
+        <Text className="text-base text-white">Harika!</Text>
         <Text className="text-xl font-extrabold text-white">
           9.ANTRENMANINIZ
         </Text>
@@ -67,7 +67,7 @@ const WorkoutLogs = (props) => {
       <Pressable onPress={() => {}} className={"bg-[#FF6346]"}>
         <View className="w-full flex flex-row items-center justify-center  rounded-xl py-3 px-4 space-x-3 mb-2">
           <Ionicons name="flag-outline" size={24} color={"white"} />
-          <Text className=" text-white font-semibold uppercase text-lg ">
+          <Text className=" text-white font-bold uppercase text-lg ">
             BİTTİ
           </Text>
         </View>
