@@ -62,3 +62,12 @@ export const findMovementName = (
     };
   });
 };
+
+export const calculateVolume = (data: IWorkout[]): number => {
+  return data.reduce((total, movement) => {
+    const movements = movement.movementSets.reduce((subTotal, set) => {
+      return (subTotal += set.reps * set.weight);
+    }, 0);
+    return total + movements;
+  }, 0);
+};

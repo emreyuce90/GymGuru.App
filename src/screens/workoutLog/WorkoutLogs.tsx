@@ -3,6 +3,8 @@ import React, { useLayoutEffect } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import NoDataView from "../../../lib/@core/components/NoDataView";
 import WorkoutLog from "../../components/workoutLog/WorkoutLog";
+import { calculateVolume } from "../../components/workout";
+import { getFormattedTime } from "../../components/workout/StopWatch";
 
 /*
 Konfeti patlama efekti
@@ -14,23 +16,32 @@ Konfeti patlama efekti
   5-Tarih o günkü tarihten elde edilir propa gerek yok
   6-FlatList tanımlanır flat list içerisine antrenmandaki hareket adı set sayıları ve tekrar sayıları verilir   
 */
+function formatDateTime(date: Date) {
+  // Tarih formatlaması için
+  const dateFormatter = new Intl.DateTimeFormat("tr-TR", {
+    day: "2-digit",
+    month: "short",
+  });
+  let formattedDate = dateFormatter.format(date).toUpperCase();
 
-const calculateVolume = (data: IWorkout[]): number => {
-  return data.reduce((total, movement) => {
-    const movements = movement.movementSets.reduce((subTotal, set) => {
-      return (subTotal += set.reps * set.weight);
-    }, 0);
-    return total + movements;
-  }, 0);
-};
+  // Saat formatlaması için
+  const timeFormatter = new Intl.DateTimeFormat("tr-TR", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
+  const formattedTime = timeFormatter.format(date);
 
-function HeaderTitle() {
+  return { formattedDate, formattedTime };
+}
+
+function HeaderTitle(props: any) {
   return (
     <View className="flex flex-row items-center justify-between">
       <View className="flex flex-col">
         <Text className="text-base text-white">Harika!</Text>
         <Text className="text-xl font-extrabold text-white">
-          9.ANTRENMANINIZI
+          {`${props.workoutCount}.ANTRENMANINIZI`}
         </Text>
         <Text className="text-xl font-extrabold text-white">
           TAMAMLANDINIZ!
@@ -49,10 +60,10 @@ function HeaderTitle() {
 
 const WorkoutLogs = () => {
   const route = useRoute();
-  const { workout, duration, workoutName, workoutCount } = route.params as any;
-  console.log("workout", workout);
-  //volume
-  //date , o anki tarih formatlı bir şekilde elde edilir
+  const { workout, duration, workoutName, workoutCount, date } =
+    route.params as any;
+  console.log("workoutCount", workoutCount);
+  const { formattedDate, formattedTime } = formatDateTime(date);
   const navigation = useNavigation<any>();
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -62,7 +73,9 @@ const WorkoutLogs = () => {
         backgroundColor: "#ff6145",
         height: 200,
       },
-      headerTitle: (props: any) => <HeaderTitle {...props} />,
+      headerTitle: (props: any) => (
+        <HeaderTitle workoutCount={workoutCount} {...props} />
+      ),
     });
   }, [navigation]);
 
@@ -79,12 +92,14 @@ const WorkoutLogs = () => {
               <Text className="text-base">Hacim</Text>
             </View>
             <View className="flex flex-col items-center justify-center">
-              <Text className="font-extrabold text-2xl">34:00</Text>
+              <Text className="font-extrabold text-2xl">
+                {getFormattedTime(duration)}
+              </Text>
               <Text className="text-base">Süre</Text>
             </View>
             <View className="flex flex-col items-center justify-center">
-              <Text className="font-extrabold text-2xl">27 May</Text>
-              <Text className="text-base">19:32</Text>
+              <Text className="font-extrabold text-2xl">{formattedDate}</Text>
+              <Text className="text-base">{formattedTime}</Text>
             </View>
           </View>
         </View>

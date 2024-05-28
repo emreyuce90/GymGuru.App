@@ -3,7 +3,7 @@ import { Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Bounceable } from "rn-bounceable";
 
-function getFormattedTime(seconds: number) {
+export function getFormattedTime(seconds: number) {
   let hour = Math.floor(seconds / 3600) as any;
   let minute = Math.floor((seconds % 3600) / 60) as any;
   let second = (seconds % 60) as any;
@@ -32,9 +32,6 @@ type StopWatchPropTypes = {
 const StopWatch = (props: StopWatchPropTypes) => {
   const { workoutName, seconds, setSeconds, isRunning, setIsRunning } = props;
 
-  console.log("Stop watch runnin");
-
-  //durdurma
   const handleStartPause = () => {
     setIsRunning(!isRunning);
   };

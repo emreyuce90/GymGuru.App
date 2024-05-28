@@ -107,7 +107,6 @@ const Workouts = () => {
         ""
       );
       if (request.Success) {
-        const filteredData = allWorkoutsData;
         const transformedData = convertToWorkoutMovementAddDto(
           filterDataToSend(allWorkoutsData)
         );
@@ -115,9 +114,13 @@ const Workouts = () => {
           `/api/Workout/SaveWorkoutMovements/${workoutId}`,
           transformedData
         );
+
+        const date = new Date();
+        console.log("saveMovements", saveMovements);
         if (saveMovements.Success) {
-          console.log("antrenman bitirildi");
           navigation.navigate("WorkoutLogs", {
+            workoutCount: saveMovements.Resource.resource,
+            date: date,
             duration: seconds,
             workoutName: workoutName,
             workout: findMovementName(
