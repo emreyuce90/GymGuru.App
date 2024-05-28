@@ -44,29 +44,5 @@ type IWorkoutSets = {
 type IWorkout = {
   movementId: string;
   movementSets: IWorkoutSets[];
+  movementName?: string;
 };
-
-/*
-  Users
-  Id,Name,Surname,DateofBirth,Mobile,username,password,passwordSalt,MembershipStartDate,MembershipEndDate
-  
-  BodyParts
-  Id,Name
-
-  Movements 
-  Id,Title,Description,Trick,videoUrl,pictureUrl,bodyPartId
-
-  Programlar
-  Id,UserId,Name
-
-  Workouts
-  Id,ProgramId,Name
-
-
-  MovementsProgram Tablosu
-  Id,MovementId,ProgramId,Sets,Reps
-
-  Metrics
-  Id,Name,UserId
-  
-*/

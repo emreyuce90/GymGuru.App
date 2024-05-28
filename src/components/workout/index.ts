@@ -47,3 +47,18 @@ export const unFinishedSetCounts = (workouts: IWorkout[]): number => {
 
   return setCounts;
 };
+
+export const findMovementName = (
+  data: IWorkout[],
+  subProgrammeMovements: ISubProgrammeMovement[]
+) => {
+  return data.map((w: IWorkout) => {
+    return {
+      movementId: w.movementId,
+      movementName: subProgrammeMovements.find(
+        (sp) => sp.movementId === w.movementId
+      )?.movement.title,
+      movementSets: w.movementSets,
+    };
+  });
+};

@@ -23,7 +23,9 @@ const LoadingScreen = (props: {
         (!showLoading ? "hidden" : "")
       }
     >
-      {!hideText && <Text className="text-lg mb-8">{text ?? "Loading"}</Text>}
+      {!hideText && (
+        <Text className="text-lg mb-8">{text ?? "Yükleniyor"}</Text>
+      )}
       <ActivityIndicator size="large" color="#3b82f6" />
     </View>
   );

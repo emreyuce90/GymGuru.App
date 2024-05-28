@@ -19,6 +19,7 @@ import WorkoutFinishModel from "../../components/workout/Modals/WorkoutFinishMod
 import {
   convertToWorkoutMovementAddDto,
   filterDataToSend,
+  findMovementName,
   finishedSetCounts,
   isAllMovementsOk,
   unFinishedSetCounts,
@@ -116,7 +117,14 @@ const Workouts = () => {
         );
         if (saveMovements.Success) {
           console.log("antrenman bitirildi");
-          navigation.navigate("WorkoutLogs");
+          navigation.navigate("WorkoutLogs", {
+            duration: seconds,
+            workoutName: workoutName,
+            workout: findMovementName(
+              filterDataToSend(allWorkoutsData),
+              subProgrammeMovements
+            ),
+          });
         }
         //kullanıcı antrenmanla ilgili logların olduğu bir sayfaya yönlendirilir
       }
