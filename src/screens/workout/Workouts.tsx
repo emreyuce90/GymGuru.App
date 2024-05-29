@@ -39,6 +39,13 @@ const Workouts = () => {
   const { subProgrammeMovements } = useSubProgrammeMovements({
     subProgrammeId,
   });
+
+  const [subProgrammeMovementsState, setSubProgrammeMovementsState] = useState<
+    ISubProgrammeMovement[]
+  >([]);
+
+  console.log("subProgrammeMovementsState", subProgrammeMovementsState);
+
   const [allWorkoutsData, setAllWorkoutsData] = useState<IWorkout[]>([]);
   const [seconds, setSeconds] = useState<number>(0);
   const [isRunning, setIsRunning] = useState<boolean>(true);
@@ -116,7 +123,6 @@ const Workouts = () => {
         );
 
         const date = new Date();
-        console.log("saveMovements", saveMovements);
         if (saveMovements.Success) {
           navigation.navigate("WorkoutLogs", {
             workoutCount: saveMovements.Resource.resource,
@@ -137,6 +143,16 @@ const Workouts = () => {
       setLoading(false);
     }
   }, [workoutId, navigation, allWorkoutsData]);
+
+  const deleteExcersize = useCallback((movementId: string) => {
+    setSubProgrammeMovementsState((prev) => {
+      const copiedData = [...prev];
+      const filteredData = copiedData.filter(
+        (d) => d.movementId !== movementId
+      );
+      return filteredData;
+    });
+  }, []);
   //Topbar
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -196,6 +212,10 @@ const Workouts = () => {
     }
   }, [allWorkoutsData]);
 
+  useEffect(() => {
+    setSubProgrammeMovementsState(subProgrammeMovements);
+  }, [subProgrammeMovements]);
+
   //error-loading state
   if (loading) return <LoadingScreen />;
   if (error) return <ErrorScreen error={error} />;
@@ -205,14 +225,17 @@ const Workouts = () => {
         <ScrollView className="flex-1">
           <View className="justify-between">
             <View>
-              {subProgrammeMovements &&
-                subProgrammeMovements.map((s: ISubProgrammeMovement, i) => (
-                  <WorkoutRunning
-                    key={i}
-                    movement={s}
-                    onChangeData={handleWorkoutChanges}
-                  />
-                ))}
+              {subProgrammeMovementsState &&
+                subProgrammeMovementsState.map(
+                  (s: ISubProgrammeMovement, i) => (
+                    <WorkoutRunning
+                      key={i}
+                      movement={s}
+                      onChangeData={handleWorkoutChanges}
+                      deleteExercise={deleteExcersize}
+                    />
+                  )
+                )}
             </View>
             {/* <Bounceable onPress={() => {}}>
             <View className="flex flex-row items-center justify-center  px-4 py-2 m-3 rounded-xl bg-[#FF6346]">
