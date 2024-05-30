@@ -50,6 +50,8 @@ const Workouts = () => {
   const [seconds, setSeconds] = useState<number>(0);
   const [isRunning, setIsRunning] = useState<boolean>(true);
 
+  console.log("allWorkoutsData", allWorkoutsData);
+
   const handleReset = useCallback(() => {
     setSeconds(0);
     setIsRunning(false);
@@ -149,6 +151,14 @@ const Workouts = () => {
       const copiedData = [...prev];
       const filteredData = copiedData.filter(
         (d) => d.movementId !== movementId
+      );
+      return filteredData;
+    });
+
+    setAllWorkoutsData((prev) => {
+      const copyOfState = [...prev];
+      const filteredData = copyOfState.filter(
+        (s) => s.movementId !== movementId
       );
       return filteredData;
     });

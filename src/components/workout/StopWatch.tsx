@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Bounceable } from "rn-bounceable";
@@ -74,4 +74,4 @@ const StopWatch = (props: StopWatchPropTypes) => {
   );
 };
 
-export default StopWatch;
+export default React.memo(StopWatch);
