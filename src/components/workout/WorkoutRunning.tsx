@@ -1,6 +1,6 @@
 import { Image, Pressable, Text, TextInput, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Swipeable } from "react-native-gesture-handler";
 import MiniMenu from "./Modals/MiniMenu";
 import MovementDeleteConfirm from "./Modals/MovementDeleteConfirm";
@@ -329,4 +329,4 @@ const WorkoutRunning = (props: WorkoutRunningPropTypes) => {
     </View>
   );
 };
-export default WorkoutRunning;
+export default React.memo(WorkoutRunning);

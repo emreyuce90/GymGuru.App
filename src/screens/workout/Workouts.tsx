@@ -3,6 +3,7 @@ import React, {
   useCallback,
   useEffect,
   useLayoutEffect,
+  useMemo,
   useState,
 } from "react";
 import { Ionicons } from "@expo/vector-icons";
@@ -49,8 +50,6 @@ const Workouts = () => {
   const [allWorkoutsData, setAllWorkoutsData] = useState<IWorkout[]>([]);
   const [seconds, setSeconds] = useState<number>(0);
   const [isRunning, setIsRunning] = useState<boolean>(true);
-
-  console.log("allWorkoutsData", allWorkoutsData);
 
   const handleReset = useCallback(() => {
     setSeconds(0);
@@ -163,6 +162,16 @@ const Workouts = () => {
       return filteredData;
     });
   }, []);
+  const renderedWorkoutMovements = useMemo(() => {
+    return subProgrammeMovementsState.map((s, i) => (
+      <WorkoutRunning
+        key={i}
+        movement={s}
+        onChangeData={handleWorkoutChanges}
+        deleteExercise={deleteExcersize}
+      />
+    ));
+  }, [subProgrammeMovementsState, handleWorkoutChanges, deleteExcersize]);
   //Topbar
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -234,19 +243,7 @@ const Workouts = () => {
       <View className="flex-1 h-screen ">
         <ScrollView className="flex-1">
           <View className="justify-between">
-            <View>
-              {subProgrammeMovementsState &&
-                subProgrammeMovementsState.map(
-                  (s: ISubProgrammeMovement, i) => (
-                    <WorkoutRunning
-                      key={i}
-                      movement={s}
-                      onChangeData={handleWorkoutChanges}
-                      deleteExercise={deleteExcersize}
-                    />
-                  )
-                )}
-            </View>
+            <View>{renderedWorkoutMovements}</View>
             {/* <Bounceable onPress={() => {}}>
             <View className="flex flex-row items-center justify-center  px-4 py-2 m-3 rounded-xl bg-[#FF6346]">
               <View>
