@@ -31,7 +31,7 @@ const WorkoutRunning = (props: WorkoutRunningPropTypes) => {
     movementSets: movementSets,
   });
   const [visible, setVisible] = useState<boolean>(false);
-  const [isOpened, setIsOpened] = useState<boolean>(false);
+  const [isOpened, setIsOpened] = useState<boolean>(true);
   const [confirm, setConfirm] = useState<boolean>(false);
   const rightSwipeActions = (index: number, swipeableRef: any) => {
     return (
@@ -86,7 +86,7 @@ const WorkoutRunning = (props: WorkoutRunningPropTypes) => {
       // değiştirmek istediğim objeyi indexten yakala
       copyOfState[index] = {
         ...copyOfState[index],
-        reps: value === "" ? "" : parseInt(value),
+        reps: value === "" ? 0 : parseInt(value),
       };
 
       return {
@@ -114,7 +114,7 @@ const WorkoutRunning = (props: WorkoutRunningPropTypes) => {
       //find exact data
       updateWeigth[index] = {
         ...updateWeigth[index],
-        weight: value === "" ? "" : parseInt(value),
+        weight: value === "" ? 0 : parseInt(value),
       };
       return { ...prevState, movementSets: updateWeigth };
     });

@@ -1,5 +1,6 @@
 import axios from "axios";
-import { isString } from "../utils";
+
+const isString = (object: any) => typeof object === "string";
 
 type axiosConfigType = {
   baseURL: string;

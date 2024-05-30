@@ -10,6 +10,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Bounceable } from "rn-bounceable";
 import Api from "../../../lib/@core/data/Api";
 import { getCurrentDateTime, getCurrentTime } from "../../../lib/@core/utils";
+import { ScrollView } from "react-native-gesture-handler";
 
 const SubProgrammeDetail = () => {
   const route = useRoute();
@@ -63,21 +64,22 @@ const SubProgrammeDetail = () => {
   if (loading || isLoading) return <LoadingScreen />;
   if (error || subProgrammeError) return <ErrorScreen error={error} />;
   return (
-    <View className="mt-5">
-      {subProgrammeMovements &&
-        subProgrammeMovements?.map((m, i) => (
-          <SubProgrammeDetailRender key={m.id} movement={m} />
-        ))}
-
+    <>
+      <ScrollView className="flex mt-5">
+        {subProgrammeMovements &&
+          subProgrammeMovements?.map((m, i) => (
+            <SubProgrammeDetailRender key={m.id} movement={m} />
+          ))}
+      </ScrollView>
       <Bounceable onPress={handleWorkoutStart}>
-        <View className="flex flex-row items-center justify-center bg-orange-500 rounded-xl mt-4 ml-5 mr-5">
+        <View className="flex flex-row items-center justify-center bg-orange-500 rounded-xl mt-2 mb-2 ml-5 mr-5">
           <Ionicons name="fitness-outline" size={36} color={"white"} />
           <Text className=" text-white p-4 font-semibold uppercase text-xl ">
             Başla
           </Text>
         </View>
       </Bounceable>
-    </View>
+    </>
   );
 };
 

@@ -10,7 +10,6 @@ import LoadingScreen from "../../../lib/@core/components/LoadingScreen";
 import ErrorScreen from "../../../lib/@core/components/ErrorScreen";
 import Api from "../../../lib/@core/data/Api";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { getCurrentTime } from "../../../lib/@core/utils";
 import useSubProgrammeMovements from "../subProgramme/hooks/useSubProgrammeMovements";
 import WorkoutRunning from "../../components/workout/WorkoutRunning";
 import { ScrollView } from "react-native-gesture-handler";
@@ -25,6 +24,7 @@ import {
   unFinishedSetCounts,
 } from "../../components/workout";
 import StopWatch from "../../components/workout/StopWatch";
+import { getCurrentTime } from "../../../lib/@core/utils";
 
 const Workouts = () => {
   const navigation = useNavigation<any>();
@@ -83,10 +83,10 @@ const Workouts = () => {
 
   const handleAllSetsFinished = useCallback(() => {
     if (isAllMovementsOk(allWorkoutsData)) {
-      setFinishModalVisible((prev) => !prev);
+      setFinishModalVisible(false);
       handleWorkoutFinish();
     } else {
-      setFinishModalVisible((prev) => !prev);
+      setFinishModalVisible(true);
     }
   }, [allWorkoutsData, finishModalVisible]);
 

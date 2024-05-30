@@ -24,11 +24,11 @@ const MovementDeleteConfirm = (props: MovementDeleteConfirmPropTypes) => {
           alignItems: "center",
         }}
       >
-        <View className="bg-white p-4 rounded-lg">
+        <View className="bg-white py-3 px-1 rounded-lg">
           <Text className="mb-4 p-4">
             Bu egzersizi silmek istediğinizden emin misiniz?
           </Text>
-          <View className="flex-row justify-around">
+          <View className="flex-row justify-center space-x-4">
             <Pressable onPress={handleDelete}>
               <View className="bg-green-600 px-4 py-2 rounded-xl">
                 <Text className="text-white">Evet</Text>
