@@ -163,7 +163,6 @@ const WorkoutRunning = (props: WorkoutRunningPropTypes) => {
     setConfirm((prev) => !prev);
   };
   useEffect(() => {
-    console.log("wokroutSets", workoutSets);
     onChangeData(workoutSets);
   }, [workoutSets]);
 
@@ -184,7 +183,7 @@ const WorkoutRunning = (props: WorkoutRunningPropTypes) => {
               width={80}
               height={80}
               source={{
-                uri: `https://api.gymguru.com.tr/api.gymguru.com.tr/images/${movement.movement.imageUrl}`,
+                uri: `https://api.gymguru.com.tr/api.gymguru.com.tr/images/${movement?.movement?.imageUrl}`,
               }}
             />
           </View>

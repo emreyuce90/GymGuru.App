@@ -26,6 +26,7 @@ import {
 } from "../../components/workout";
 import StopWatch from "../../components/workout/StopWatch";
 import { getCurrentTime } from "../../../lib/@core/utils";
+import { Bounceable } from "rn-bounceable";
 
 const Workouts = () => {
   const navigation = useNavigation<any>();
@@ -34,7 +35,15 @@ const Workouts = () => {
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
   const route = useRoute();
   const workout = route.params as any;
-  const { workoutId, workoutName, subProgrammeId } = workout;
+  const { workoutId, workoutName, subProgrammeId, checkedMovements } = workout;
+
+  const [workoutInfos, setWorkoutInfos] = useState({
+    workoutId: workout.workoutId,
+    workoutName: workout.workoutName,
+    subProgrammeId: workout.subProgrammeId,
+    checkedMovements: workout.checkedMovements,
+  });
+
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<unknown | string>("");
   const { subProgrammeMovements } = useSubProgrammeMovements({
@@ -45,7 +54,8 @@ const Workouts = () => {
     ISubProgrammeMovement[]
   >([]);
 
-  console.log("subProgrammeMovementsState", subProgrammeMovementsState);
+  // console.log("subProgrammeMovementsState", subProgrammeMovementsState);
+  console.log("workoutId", workoutInfos.workoutId);
 
   const [allWorkoutsData, setAllWorkoutsData] = useState<IWorkout[]>([]);
   const [seconds, setSeconds] = useState<number>(0);
@@ -92,7 +102,7 @@ const Workouts = () => {
   const handleFinishWorkout = useCallback(async () => {
     try {
       const response = await Api.delete(
-        `/api/Workout/DeleteWorkout/${workoutId}`,
+        `/api/Workout/DeleteWorkout/${workoutInfos.workoutId}`,
         {}
       );
       if (response.Success) {
@@ -102,16 +112,16 @@ const Workouts = () => {
     } catch (err) {
       alert(err);
     }
-  }, [workoutId]);
+  }, [workoutInfos.workoutId]);
 
   const handleWorkoutFinish = useCallback(async () => {
     handleReset();
     setLoading(true);
     try {
       const request = await Api.put(
-        `/api/Workout/FinishWorkout/${workoutId}?endTime=${encodeURIComponent(
-          getCurrentTime()
-        )}&duration=${seconds}`,
+        `/api/Workout/FinishWorkout/${
+          workoutInfos.workoutId
+        }?endTime=${encodeURIComponent(getCurrentTime())}&duration=${seconds}`,
         ""
       );
       if (request.Success) {
@@ -119,7 +129,7 @@ const Workouts = () => {
           filterDataToSend(allWorkoutsData)
         );
         const saveMovements = await Api.post(
-          `/api/Workout/SaveWorkoutMovements/${workoutId}`,
+          `/api/Workout/SaveWorkoutMovements/${workoutInfos.workoutId}`,
           transformedData
         );
 
@@ -129,10 +139,10 @@ const Workouts = () => {
             workoutCount: saveMovements.Resource.resource,
             date: date,
             duration: seconds,
-            workoutName: workoutName,
+            workoutName: workoutInfos.workoutName,
             workout: findMovementName(
               filterDataToSend(allWorkoutsData),
-              subProgrammeMovements
+              subProgrammeMovementsState
             ),
           });
         }
@@ -143,7 +153,7 @@ const Workouts = () => {
     } finally {
       setLoading(false);
     }
-  }, [workoutId, navigation, allWorkoutsData]);
+  }, [workoutInfos.workoutId, navigation, allWorkoutsData]);
 
   const deleteExcersize = useCallback((movementId: string) => {
     setSubProgrammeMovementsState((prev) => {
@@ -179,13 +189,35 @@ const Workouts = () => {
         <StopWatch
           seconds={seconds ? seconds : 0}
           setSeconds={setSeconds}
-          workoutName={workoutName}
+          workoutName={workoutInfos.workoutName}
           setIsRunning={setIsRunning}
           isRunning={isRunning}
         />
       ),
     });
   }, [seconds, isRunning]);
+
+  useEffect(() => {
+    if (checkedMovements) {
+      console.log("workoutId", workoutInfos.workoutId);
+      setSubProgrammeMovementsState((prev) => {
+        //mevcut state i kopyala
+        const state = [...prev];
+        //sana gelen arrayi state içerisine uygun bir şekilde push et
+        const newData = checkedMovements.forEach((element) => {
+          state.push({
+            movementId: element.id,
+            reps: 8,
+            sets: 1,
+            movement: element,
+          });
+        });
+        console.log("state", state);
+        //yenilenmiş state i geri döndür
+        return state;
+      });
+    }
+  }, [checkedMovements]);
 
   useEffect(() => {
     const backAction = () => {
@@ -244,18 +276,22 @@ const Workouts = () => {
         <ScrollView className="flex-1">
           <View className="justify-between">
             <View>{renderedWorkoutMovements}</View>
-            {/* <Bounceable onPress={() => {}}>
-            <View className="flex flex-row items-center justify-center  px-4 py-2 m-3 rounded-xl bg-[#FF6346]">
-              <View>
-                <Ionicons name="add-outline" size={24} color="white" />
+            <Bounceable
+              onPress={() => {
+                navigation.navigate("AddExercises");
+              }}
+            >
+              <View className="flex flex-row items-center justify-center  px-4 py-2 m-3 rounded-xl bg-[#FF6346]">
+                <View>
+                  <Ionicons name="add-outline" size={24} color="white" />
+                </View>
+                <View>
+                  <Text className="font-bold text-base text-white">
+                    Yeni Egzersiz Ekle
+                  </Text>
+                </View>
               </View>
-              <View>
-                <Text className="font-bold text-base text-white">
-                  Yeni Egzersiz Ekle
-                </Text>
-              </View>
-            </View>
-          </Bounceable> */}
+            </Bounceable>
           </View>
         </ScrollView>
         <Pressable

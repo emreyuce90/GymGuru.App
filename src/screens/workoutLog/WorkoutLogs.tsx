@@ -6,16 +6,6 @@ import WorkoutLog from "../../components/workoutLog/WorkoutLog";
 import { calculateVolume } from "../../components/workout";
 import { getFormattedTime } from "../../components/workout/StopWatch";
 
-/*
-Konfeti patlama efekti
-  1- 9.antrenmanınız tamamlandı
-  Bu bilgiyi geçmek için bu ekrana gelmeden evvel son yapılan requesste kullanıcının antrenmanlarına count atılır buraya prop olarak geçilir
-  2- Antrenman adı yine üst componentten geçilir . Örn: FullBody | 1. Gün
-  3- Antrenman hacmi , tüm antrenmandaki set sayıları ile kg çarpılarak hacim elde edilir
-  4-Duration bilgisi üst componentten gelir
-  5-Tarih o günkü tarihten elde edilir propa gerek yok
-  6-FlatList tanımlanır flat list içerisine antrenmandaki hareket adı set sayıları ve tekrar sayıları verilir   
-*/
 function formatDateTime(date: Date) {
   // Tarih formatlaması için
   const dateFormatter = new Intl.DateTimeFormat("tr-TR", {
@@ -62,7 +52,6 @@ const WorkoutLogs = () => {
   const route = useRoute();
   const { workout, duration, workoutName, workoutCount, date } =
     route.params as any;
-  console.log("workoutCount", workoutCount);
   const { formattedDate, formattedTime } = formatDateTime(date);
   const navigation = useNavigation<any>();
   useLayoutEffect(() => {
@@ -78,7 +67,6 @@ const WorkoutLogs = () => {
       ),
     });
   }, [navigation]);
-
   return (
     <View className="flex-1 justify-between">
       <View className="bg-white flex flex=col px-7 py-5">
@@ -118,9 +106,7 @@ const WorkoutLogs = () => {
         )}
       </View>
       <Pressable
-        onPress={() => {
-          navigation.navigate("Home");
-        }}
+        onPress={() => navigation.navigate("Home")}
         className={"bg-[#FF6346]"}
       >
         <View className="w-full flex flex-row items-center justify-center  rounded-xl py-3 px-4 space-x-3 mb-2">

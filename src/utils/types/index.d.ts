@@ -6,6 +6,7 @@ type IMovement = {
   imageUrl?: string;
   videoUrl?: string;
   bodyPartId?: string;
+  isChecked?: boolean;
 };
 
 type IBodyPart = {
@@ -26,9 +27,9 @@ type ISubProgramme = {
 };
 
 type ISubProgrammeMovement = {
-  id: string;
+  id?: string;
   movementId: string;
-  subProgrammeId: string;
+  subProgrammeId?: string;
   sets: number;
   reps: number;
   movement: IMovement;

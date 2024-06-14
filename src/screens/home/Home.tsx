@@ -50,6 +50,10 @@ const Home = () => {
           />
         </View>
       </View>
+      {/* <Button
+        title="Egzersizler"
+        onPress={() => navigation.navigate("AddExercises")}
+      /> */}
     </SafeAreaView>
   );
 };

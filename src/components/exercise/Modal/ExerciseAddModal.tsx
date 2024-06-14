@@ -1,0 +1,57 @@
+import { View, Text, Modal, Image, Pressable, ScrollView } from "react-native";
+import React from "react";
+import { useNavigation } from "@react-navigation/native";
+
+type ExerciseAddModalPropTypes = {
+  checkedMovements: IMovement[];
+};
+
+const ExerciseAddModal = (props: ExerciseAddModalPropTypes) => {
+  const navigation = useNavigation<any>();
+  const { checkedMovements } = props;
+
+  {
+    return (
+      checkedMovements.length > 0 && (
+        <View className="absolute bottom-0 w-full bg-slate-50 p-2">
+          <View className="flex flex-col mb-2">
+            <Text className="text-lg text-slate-500 mb-3 pl-2">
+              Eklenecek olan egzersizler:
+            </Text>
+            <ScrollView
+              horizontal={true}
+              className="flex flex-row mb-2 mt-2 space-x-2"
+            >
+              {checkedMovements.map((c, i) => {
+                return (
+                  <Image
+                    key={i}
+                    className="rounded-full p-1"
+                    width={60}
+                    height={60}
+                    source={{
+                      uri: `https://api.gymguru.com.tr/api.gymguru.com.tr/images/${c.imageUrl}`,
+                    }}
+                  />
+                );
+              })}
+            </ScrollView>
+          </View>
+          <Pressable
+            onPress={() => {
+              navigation.navigate("Workouts", {
+                checkedMovements: checkedMovements,
+              });
+            }}
+          >
+            <View className="bg-[#ff6145] flex items-center p-2 rounded-xl">
+              <Text className="font-bold text-xl text-white">{`+${checkedMovements?.length} Egzersiz Ekle`}</Text>
+            </View>
+          </Pressable>
+        </View>
+      )
+    );
+  }
+};
+
+export default React.memo(ExerciseAddModal);
