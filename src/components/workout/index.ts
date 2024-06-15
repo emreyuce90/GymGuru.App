@@ -71,3 +71,12 @@ export const calculateVolume = (data: IWorkout[]): number => {
     return total + movements;
   }, 0);
 };
+
+export const isSameWorkout = (
+  data1: ISubProgrammeMovement[],
+  data2: ISubProgrammeMovement[]
+): boolean => {
+  console.log("original data", data1);
+  console.log("new data", data2);
+  return false;
+};

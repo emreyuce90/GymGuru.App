@@ -22,6 +22,7 @@ import {
   findMovementName,
   finishedSetCounts,
   isAllMovementsOk,
+  isSameWorkout,
   unFinishedSetCounts,
 } from "../../components/workout";
 import StopWatch from "../../components/workout/StopWatch";
@@ -136,6 +137,10 @@ const Workouts = () => {
         const date = new Date();
         if (saveMovements.Success) {
           navigation.navigate("WorkoutLogs", {
+            isSame: isSameWorkout(
+              subProgrammeMovements,
+              subProgrammeMovementsState
+            ),
             workoutCount: saveMovements.Resource.resource,
             date: date,
             duration: seconds,
@@ -204,7 +209,7 @@ const Workouts = () => {
         //mevcut state i kopyala
         const state = [...prev];
         //sana gelen arrayi state içerisine uygun bir şekilde push et
-        const newData = checkedMovements.forEach((element) => {
+        const newData = checkedMovements.forEach((element: any) => {
           state.push({
             movementId: element.id,
             reps: 8,

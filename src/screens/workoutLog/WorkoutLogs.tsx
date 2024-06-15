@@ -1,10 +1,11 @@
 import { View, Text, Image, Pressable, FlatList } from "react-native";
-import React, { useLayoutEffect } from "react";
+import React, { useCallback, useLayoutEffect, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import NoDataView from "../../../lib/@core/components/NoDataView";
 import WorkoutLog from "../../components/workoutLog/WorkoutLog";
 import { calculateVolume } from "../../components/workout";
 import { getFormattedTime } from "../../components/workout/StopWatch";
+import WorkoutUpdateModal from "../../components/workoutLog/Modals/WorkoutUpdateModal";
 
 function formatDateTime(date: Date) {
   // Tarih formatlaması için
@@ -49,11 +50,25 @@ function HeaderTitle(props: any) {
 }
 
 const WorkoutLogs = () => {
+  const [isVisible, setIsVisible] = useState<boolean>(false);
   const route = useRoute();
-  const { workout, duration, workoutName, workoutCount, date } =
+  const { workout, duration, workoutName, workoutCount, date, isSame } =
     route.params as any;
   const { formattedDate, formattedTime } = formatDateTime(date);
   const navigation = useNavigation<any>();
+
+  const handleWorkoutFinished = () => {
+    if (isSame) {
+      navigation.navigate("Home");
+    } else {
+      setIsVisible((prev) => !prev);
+    }
+  };
+
+  const handleUpdate = useCallback(() => {
+    console.log("Kullanıcı antrenmanının üzerine yazılmasını istedi");
+    //fetch
+  }, []);
   useLayoutEffect(() => {
     navigation.setOptions({
       style: {},
@@ -68,54 +83,58 @@ const WorkoutLogs = () => {
     });
   }, [navigation]);
   return (
-    <View className="flex-1 justify-between">
-      <View className="bg-white flex flex=col px-7 py-5">
-        <View className="flex flex-col space-y-4">
-          <Text className="font-bold text-2xl">{`${workoutName} Programı`}</Text>
-          <View className="flex flex-row justify-between items-center">
-            <View className="flex flex-col items-center justify-center">
-              <Text className="font-extrabold text-2xl">{`${calculateVolume(
-                workout
-              )}kg`}</Text>
-              <Text className="text-base">Hacim</Text>
-            </View>
-            <View className="flex flex-col items-center justify-center">
-              <Text className="font-extrabold text-2xl">
-                {getFormattedTime(duration)}
-              </Text>
-              <Text className="text-base">Süre</Text>
-            </View>
-            <View className="flex flex-col items-center justify-center">
-              <Text className="font-extrabold text-2xl">{formattedDate}</Text>
-              <Text className="text-base">{formattedTime}</Text>
+    <>
+      <View className="flex-1 justify-between">
+        <View className="bg-white flex flex=col px-7 py-5">
+          <View className="flex flex-col space-y-4">
+            <Text className="font-bold text-2xl">{`${workoutName} Programı`}</Text>
+            <View className="flex flex-row justify-between items-center">
+              <View className="flex flex-col items-center justify-center">
+                <Text className="font-extrabold text-2xl">{`${calculateVolume(
+                  workout
+                )}kg`}</Text>
+                <Text className="text-base">Hacim</Text>
+              </View>
+              <View className="flex flex-col items-center justify-center">
+                <Text className="font-extrabold text-2xl">
+                  {getFormattedTime(duration)}
+                </Text>
+                <Text className="text-base">Süre</Text>
+              </View>
+              <View className="flex flex-col items-center justify-center">
+                <Text className="font-extrabold text-2xl">{formattedDate}</Text>
+                <Text className="text-base">{formattedTime}</Text>
+              </View>
             </View>
           </View>
         </View>
-      </View>
-      <View className="flex-1">
-        {workout ? (
-          <FlatList
-            data={workout}
-            renderItem={({ item }) => (
-              <WorkoutLog key={item.movementId} workout={item} />
-            )}
-            keyExtractor={(w: IWorkout) => w.movementId}
-          />
-        ) : (
-          <NoDataView />
-        )}
-      </View>
-      <Pressable
-        onPress={() => navigation.navigate("Home")}
-        className={"bg-[#FF6346]"}
-      >
-        <View className="w-full flex flex-row items-center justify-center  rounded-xl py-3 px-4 space-x-3 mb-2">
-          <Text className=" text-white font-bold uppercase text-xl ">
-            🏁 BİTTİ
-          </Text>
+        <View className="flex-1">
+          {workout ? (
+            <FlatList
+              data={workout}
+              renderItem={({ item }) => (
+                <WorkoutLog key={item.movementId} workout={item} />
+              )}
+              keyExtractor={(w: IWorkout) => w.movementId}
+            />
+          ) : (
+            <NoDataView />
+          )}
         </View>
-      </Pressable>
-    </View>
+        <Pressable onPress={handleWorkoutFinished} className={"bg-[#FF6346]"}>
+          <View className="w-full flex flex-row items-center justify-center  rounded-xl py-3 px-4 space-x-3 mb-2">
+            <Text className=" text-white font-bold uppercase text-xl ">
+              🏁 BİTTİ
+            </Text>
+          </View>
+        </Pressable>
+      </View>
+      <WorkoutUpdateModal
+        isVisible={isVisible}
+        setIsVisible={setIsVisible}
+        handleUpdate={handleUpdate}
+      />
+    </>
   );
 };
 
