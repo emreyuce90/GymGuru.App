@@ -66,7 +66,8 @@ const WorkoutLogs = () => {
   };
 
   const handleUpdate = useCallback(() => {
-    console.log("Kullanıcı antrenmanının üzerine yazılmasını istedi");
+    navigation.navigate("Home");
+
     //fetch
   }, []);
   useLayoutEffect(() => {
