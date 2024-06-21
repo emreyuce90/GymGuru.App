@@ -83,14 +83,17 @@ export const calculateVolume = (data: IWorkout[]): number => {
 
 export const isSameWorkout = (
   array1: ISubProgrammeMovement[],
-  array2: ISubProgrammeMovement[]
+  array2: IWorkout[]
 ) => {
-  if (array1.length !== array2.length) return false;
+  let formattedArray1 = formatSubProgrammeMovement(array1);
+  let formattedArray2 = formatIWorkout(array2);
 
-  let sortedArray1 = array1
+  if (formattedArray1.length !== formattedArray2.length) return false;
+
+  let sortedArray1 = formattedArray1
     .slice()
     .sort((a, b) => a.movementId.localeCompare(b.movementId));
-  let sortedArray2 = array2
+  let sortedArray2 = formattedArray2
     .slice()
     .sort((a, b) => a.movementId.localeCompare(b.movementId));
 
@@ -99,14 +102,29 @@ export const isSameWorkout = (
     let obj2 = sortedArray2[i];
 
     // Belirtilen alanları karşılaştırma
-    if (
-      obj1.movementId !== obj2.movementId ||
-      obj1.sets !== obj2.sets ||
-      obj1.reps !== obj2.reps
-    ) {
+    if (obj1.movementId !== obj2.movementId || obj1.sets !== obj2.sets) {
       return false;
     }
   }
 
   return true;
+};
+
+const formatSubProgrammeMovement = (data: ISubProgrammeMovement[]) => {
+  return data.map((d: ISubProgrammeMovement) => {
+    return { movementId: d.movementId, sets: d.sets };
+  });
+};
+
+const formatIWorkout = (data: IWorkout[]) => {
+  const filteredData: IWorkout[] = data.filter((d: IWorkout) => {
+    return d.movementSets.every((x) => x.checked === true);
+  });
+
+  return filteredData.map((d: IWorkout) => {
+    return {
+      movementId: d.movementId,
+      sets: d.movementSets.length,
+    };
+  });
 };

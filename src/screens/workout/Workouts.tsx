@@ -55,9 +55,6 @@ const Workouts = () => {
     ISubProgrammeMovement[]
   >([]);
 
-  // console.log("subProgrammeMovementsState", subProgrammeMovementsState);
-  console.log("workoutId", workoutInfos.workoutId);
-
   const [allWorkoutsData, setAllWorkoutsData] = useState<IWorkout[]>([]);
   const [seconds, setSeconds] = useState<number>(0);
   const [isRunning, setIsRunning] = useState<boolean>(true);
@@ -137,10 +134,7 @@ const Workouts = () => {
         const date = new Date();
         if (saveMovements.Success) {
           navigation.navigate("WorkoutLogs", {
-            isSame: isSameWorkout(
-              subProgrammeMovements,
-              subProgrammeMovementsState
-            ),
+            isSame: isSameWorkout(subProgrammeMovements, allWorkoutsData),
             workoutCount: saveMovements.Resource.resource,
             date: date,
             duration: seconds,
