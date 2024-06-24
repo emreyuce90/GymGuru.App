@@ -3,9 +3,15 @@ import React, { useCallback, useLayoutEffect, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import NoDataView from "../../../lib/@core/components/NoDataView";
 import WorkoutLog from "../../components/workoutLog/WorkoutLog";
-import { calculateVolume } from "../../components/workout";
+import {
+  calculateVolume,
+  formatSubProgrammeMovementFetch,
+} from "../../components/workout";
 import { getFormattedTime } from "../../components/workout/StopWatch";
 import WorkoutUpdateModal from "../../components/workoutLog/Modals/WorkoutUpdateModal";
+import ErrorScreen from "../../../lib/@core/components/ErrorScreen";
+import LoadingScreen from "../../../lib/@core/components/LoadingScreen";
+import Api from "../../../lib/@core/data/Api";
 
 function formatDateTime(date: Date) {
   // Tarih formatlaması için
@@ -50,10 +56,20 @@ function HeaderTitle(props: any) {
 }
 
 const WorkoutLogs = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | unknown>();
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const route = useRoute();
-  const { workout, duration, workoutName, workoutCount, date, isSame } =
-    route.params as any;
+  const {
+    workout,
+    duration,
+    workoutName,
+    workoutCount,
+    date,
+    isSame,
+    subProgrammeId,
+  } = route.params as any;
+
   const { formattedDate, formattedTime } = formatDateTime(date);
   const navigation = useNavigation<any>();
 
@@ -65,10 +81,21 @@ const WorkoutLogs = () => {
     }
   };
 
-  const handleUpdate = useCallback(() => {
-    navigation.navigate("Home");
-
-    //fetch
+  const handleUpdate = useCallback(async () => {
+    setLoading((prev) => !prev);
+    try {
+      const response = await Api.put(
+        `/api/SubProgrammeMovement/${subProgrammeId}`,
+        formatSubProgrammeMovementFetch(workout)
+      );
+      if (response.Success) {
+        navigation.navigate("Home");
+      }
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoading((prev) => !prev);
+    }
   }, []);
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -83,6 +110,14 @@ const WorkoutLogs = () => {
       ),
     });
   }, [navigation]);
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
+
+  if (error) {
+    return <ErrorScreen error={error} />;
+  }
   return (
     <>
       <View className="flex-1 justify-between">

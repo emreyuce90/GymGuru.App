@@ -56,4 +56,4 @@ const WorkoutUpdateModal = (props: WorkoutUpdateModal) => {
   );
 };
 
-export default WorkoutUpdateModal;
+export default React.memo(WorkoutUpdateModal);

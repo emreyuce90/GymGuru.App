@@ -110,7 +110,7 @@ export const isSameWorkout = (
   return true;
 };
 
-const formatSubProgrammeMovement = (data: ISubProgrammeMovement[]) => {
+export const formatSubProgrammeMovement = (data: ISubProgrammeMovement[]) => {
   return data.map((d: ISubProgrammeMovement) => {
     return { movementId: d.movementId, sets: d.sets };
   });
@@ -126,5 +126,11 @@ const formatIWorkout = (data: IWorkout[]) => {
       movementId: d.movementId,
       sets: d.movementSets.length,
     };
+  });
+};
+
+export const formatSubProgrammeMovementFetch = (data: IWorkout[]) => {
+  return data.map((d: IWorkout) => {
+    return { movementId: d.movementId, sets: d.movementSets.length, reps: 8 };
   });
 };

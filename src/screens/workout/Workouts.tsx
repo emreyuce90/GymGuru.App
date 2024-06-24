@@ -134,6 +134,7 @@ const Workouts = () => {
         const date = new Date();
         if (saveMovements.Success) {
           navigation.navigate("WorkoutLogs", {
+            subProgrammeId: workoutInfos.subProgrammeId,
             isSame: isSameWorkout(subProgrammeMovements, allWorkoutsData),
             workoutCount: saveMovements.Resource.resource,
             date: date,
