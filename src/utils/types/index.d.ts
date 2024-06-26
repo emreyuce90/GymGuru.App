@@ -12,6 +12,7 @@ type IMovement = {
 type IBodyPart = {
   id: string;
   name: string;
+  pictureUrl: string;
 };
 
 type IProgramme = {

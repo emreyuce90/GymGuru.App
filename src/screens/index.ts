@@ -8,6 +8,8 @@ import SubProgrammeDetail from "./subProgramme/SubProgrammeDetail";
 import Workouts from "./workout/Workouts";
 import WorkoutLogs from "./workoutLog/WorkoutLogs";
 import AddExercises from "./AddExercises/AddExercises";
+import BodyParts from "./Bodyparts/BodyParts";
+import Exercises from "./Exercises/Exercises";
 
 export {
   Home,
@@ -20,4 +22,6 @@ export {
   Workouts,
   WorkoutLogs,
   AddExercises,
+  BodyParts,
+  Exercises,
 };

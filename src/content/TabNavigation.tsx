@@ -42,11 +42,11 @@ const TabNavigation = () => {
         component={Home}
         options={{ headerTitle: "Anasayfa", title: "Anasayfa" }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Movements"
         component={TopTabsNavigation}
         options={{ headerTitle: "Hareketler", title: "Hareketler" }}
-      />
+      /> */}
       <Tab.Screen
         name="Programmes"
         component={Programmes}

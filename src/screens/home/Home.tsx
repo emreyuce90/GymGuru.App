@@ -14,7 +14,8 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import ImageSlider from "../../components/home/ImageSlider";
+import BodyParts from "../Bodyparts/BodyParts";
+import { LinearGradient } from "expo-linear-gradient";
 
 const Home = () => {
   const navigation = useNavigation<any>();
@@ -30,8 +31,9 @@ const Home = () => {
     });
   }, []);
   return (
-    <SafeAreaView className="flex-1 flex-col items-center">
-      <View className="flex flex-row items-center space-x-3">
+    // <SafeAreaView className="">
+    <>
+      <View className="flex flex-row items-center space-x-3 justify-center mt-4">
         <View>
           <Text className="text-xl">
             Hoşgeldin, <Text className="font-bold">Emre Yüce 👋</Text>
@@ -50,11 +52,9 @@ const Home = () => {
           />
         </View>
       </View>
-      {/* <Button
-        title="Egzersizler"
-        onPress={() => navigation.navigate("AddExercises")}
-      /> */}
-    </SafeAreaView>
+
+      <BodyParts />
+    </>
   );
 };
 

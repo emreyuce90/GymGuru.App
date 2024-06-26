@@ -8,6 +8,7 @@ import {
   Workouts,
   WorkoutLogs,
   AddExercises,
+  Exercises,
 } from "../screens";
 
 function StackGroup() {
@@ -28,6 +29,11 @@ function StackGroup() {
       <Stack.Screen
         name="AddExercises"
         component={AddExercises}
+        options={{ presentation: "modal" }}
+      />
+      <Stack.Screen
+        name="Exercises"
+        component={Exercises}
         options={{ presentation: "modal" }}
       />
     </Stack.Navigator>
