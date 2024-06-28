@@ -48,3 +48,9 @@ type IWorkout = {
   movementSets: IWorkoutSets[];
   movementName?: string;
 };
+
+type IWorkoutLog = {
+  workoutDate: string;
+  workoutTime: number;
+  workoutName: string;
+};

@@ -10,6 +10,9 @@ import WorkoutLogs from "./workoutLog/WorkoutLogs";
 import AddExercises from "./AddExercises/AddExercises";
 import BodyParts from "./Bodyparts/BodyParts";
 import Exercises from "./Exercises/Exercises";
+import Reports from "./Reports/Reports";
+import Supplements from "./Supplements/Supplements";
+import Settings from "./Settings/Settings";
 
 export {
   Home,
@@ -24,4 +27,7 @@ export {
   AddExercises,
   BodyParts,
   Exercises,
+  Reports,
+  Supplements,
+  Settings,
 };

@@ -5,7 +5,9 @@ import { StatusBar } from "expo-status-bar";
 import LoadingScreen from "./lib/@core/components/LoadingScreen";
 import { Suspense } from "react";
 import "fast-text-encoding";
+import moment from "moment";
 
+moment.locale("tr");
 const axiosConfig = {
   baseURL: process.env.EXPO_PUBLIC_API_URL ?? "https://api.gymguru.com.tr",
 };

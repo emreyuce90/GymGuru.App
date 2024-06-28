@@ -1,17 +1,20 @@
 import { useEffect, useState } from "react";
 import Api from "../../../../lib/@core/data/Api";
 
-const useExercises = (bodypartId: string) => {
+const useReports = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | unknown>();
-  const [exercises, setExercises] = useState<IMovement[]>();
+  const [reports, setReports] = useState<IWorkoutLog[]>();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await Api.get(`/api/Movements/bodypart/${bodypartId}`);
+        const res = await Api.get(
+          "/api/Workout/GetByUserId/7aaf453f-56ea-4f7d-8877-4cec29072bfe"
+        );
+        console.log("res", res);
         if (res.Success) {
-          setExercises(res.Resource.resource);
+          setReports(res.Resource.resource);
         }
       } catch (error) {
         setError(error);
@@ -23,7 +26,7 @@ const useExercises = (bodypartId: string) => {
     fetchData();
   }, []);
 
-  return { loading, error, exercises };
+  return { loading, error, reports };
 };
 
-export default useExercises;
+export default useReports;

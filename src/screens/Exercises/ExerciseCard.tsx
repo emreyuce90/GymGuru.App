@@ -1,7 +1,6 @@
-import { View, Text } from "react-native";
+import { View, Text, Image } from "react-native";
 import React from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { Image } from "expo-image";
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
@@ -47,7 +46,6 @@ const ExerciseCard = (props: ExerciseCardPropTypes) => {
                   : ""
               }/images/${imageUrl}`,
             }}
-            contentFit="cover"
             style={{ width: wp(44), height: wp(52) }}
             className="rounded-[32px]"
           />
