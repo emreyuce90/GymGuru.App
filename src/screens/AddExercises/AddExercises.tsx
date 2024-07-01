@@ -1,5 +1,5 @@
 import { View, Text, FlatList, SafeAreaView } from "react-native";
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useMemo, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import useMovements from "../movement/hooks/useMovements";
 import LoadingScreen from "../../../lib/@core/components/LoadingScreen";
@@ -7,6 +7,7 @@ import ErrorScreen from "../../../lib/@core/components/ErrorScreen";
 import NoDataView from "../../../lib/@core/components/NoDataView";
 import AddExercise from "../../components/exercise/AddExercise";
 import ExerciseAddModal from "../../components/exercise/Modal/ExerciseAddModal";
+import SearchExercise from "../../components/exercise/SearchExercise";
 
 function HeaderTitle() {
   return (
@@ -25,7 +26,16 @@ const AddExercises = () => {
   const { movements, loading, error } = useMovements();
   const [allMovements, setAllMovements] = useState<IMovement[]>([]);
   const { movementIds } = route.params as any;
-  console.log("allMovements", movementIds);
+  const [text, setText] = useState<string>("");
+
+  const filteredMovements = useMemo(() => {
+    return allMovements
+      .filter((m) => !movementIds.some((i: string) => i === m.id))
+      .filter((m) =>
+        m.title.toLocaleLowerCase().includes(text.toLocaleLowerCase())
+      )
+      .sort((a, b) => a.title.localeCompare(b.title));
+  }, [text, movementIds]);
 
   const navigation = useNavigation();
   useLayoutEffect(() => {
@@ -73,14 +83,14 @@ const AddExercises = () => {
 
   return (
     <>
-      <View className="flex-1">
+      <View className="">
         {allMovements ? (
           <>
             <FlatList
+              // ListHeaderComponent={<SearchExercises />}
               contentContainerStyle={{ paddingBottom: 32 }}
-              data={allMovements
-                .filter((m) => !movementIds.some((i: string) => i === m.id))
-                .sort((a, b) => a.title.localeCompare(b.title))}
+              ListHeaderComponent={<SearchExercise onChange={setText} />}
+              data={filteredMovements}
               renderItem={({ item }) => (
                 <AddExercise
                   exercise={item}
