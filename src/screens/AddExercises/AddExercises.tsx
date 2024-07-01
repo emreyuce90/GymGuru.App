@@ -1,6 +1,6 @@
 import { View, Text, FlatList, SafeAreaView } from "react-native";
 import React, { useEffect, useLayoutEffect, useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import useMovements from "../movement/hooks/useMovements";
 import LoadingScreen from "../../../lib/@core/components/LoadingScreen";
 import ErrorScreen from "../../../lib/@core/components/ErrorScreen";
@@ -21,8 +21,11 @@ function HeaderTitle() {
 }
 
 const AddExercises = () => {
+  const route = useRoute();
   const { movements, loading, error } = useMovements();
   const [allMovements, setAllMovements] = useState<IMovement[]>([]);
+  const { movementIds } = route.params as any;
+  console.log("allMovements", movementIds);
 
   const navigation = useNavigation();
   useLayoutEffect(() => {
@@ -75,7 +78,9 @@ const AddExercises = () => {
           <>
             <FlatList
               contentContainerStyle={{ paddingBottom: 32 }}
-              data={allMovements.sort((a, b) => a.title.localeCompare(b.title))}
+              data={allMovements
+                .filter((m) => !movementIds.some((i: string) => i === m.id))
+                .sort((a, b) => a.title.localeCompare(b.title))}
               renderItem={({ item }) => (
                 <AddExercise
                   exercise={item}

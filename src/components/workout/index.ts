@@ -134,3 +134,9 @@ export const formatSubProgrammeMovementFetch = (data: IWorkout[]) => {
     return { movementId: d.movementId, sets: d.movementSets.length, reps: 8 };
   });
 };
+
+export const movementIds = (data: ISubProgrammeMovement[]) => {
+  return data.map((sp: ISubProgrammeMovement) => {
+    return sp.movementId;
+  });
+};

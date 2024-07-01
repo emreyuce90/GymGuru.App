@@ -23,6 +23,7 @@ import {
   finishedSetCounts,
   isAllMovementsOk,
   isSameWorkout,
+  movementIds,
   unFinishedSetCounts,
 } from "../../components/workout";
 import StopWatch from "../../components/workout/StopWatch";
@@ -54,7 +55,6 @@ const Workouts = () => {
   const [subProgrammeMovementsState, setSubProgrammeMovementsState] = useState<
     ISubProgrammeMovement[]
   >([]);
-
   const [allWorkoutsData, setAllWorkoutsData] = useState<IWorkout[]>([]);
   const [seconds, setSeconds] = useState<number>(0);
   const [isRunning, setIsRunning] = useState<boolean>(true);
@@ -278,7 +278,9 @@ const Workouts = () => {
             <View>{renderedWorkoutMovements}</View>
             <Bounceable
               onPress={() => {
-                navigation.navigate("AddExercises");
+                navigation.navigate("AddExercises", {
+                  movementIds: movementIds(subProgrammeMovementsState),
+                });
               }}
             >
               <View className="flex flex-row items-center justify-center  px-4 py-2 m-3 rounded-xl bg-[#FF6346]">

@@ -9,6 +9,7 @@ import {
   WorkoutLogs,
   AddExercises,
   Exercises,
+  WorkoutLogReports,
 } from "../screens";
 
 function StackGroup() {
@@ -26,6 +27,14 @@ function StackGroup() {
       <Stack.Screen name="SubProgrammeDetail" component={SubProgrammeDetail} />
       <Stack.Screen name="Workouts" component={Workouts} />
       <Stack.Screen name="WorkoutLogs" component={WorkoutLogs} />
+      <Stack.Screen
+        name="WorkoutLogReports"
+        component={WorkoutLogReports}
+        options={{
+          headerTitle: "Antrenman Logları",
+        }}
+      />
+
       <Stack.Screen
         name="AddExercises"
         component={AddExercises}

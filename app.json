@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "GymGuru.App",
+    "name": "Gym Guru - Track Weight & Learn Movements",
     "slug": "GymGuru-App",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -11,9 +11,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -22,7 +20,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.emreyuce39.GymGuruApp"
+      "package": "com.emreyuce39.GymGuruApp",
+      "versionCode": 2
     },
     "web": {
       "favicon": "./assets/favicon.png"

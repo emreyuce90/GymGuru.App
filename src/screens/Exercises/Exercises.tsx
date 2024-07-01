@@ -16,7 +16,6 @@ const Exercises = () => {
   const route = useRoute();
   const p = route.params as any;
   const { loading, error, exercises } = useExercises(p.id);
-
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: `${p.name} Egzersizleri`,
