@@ -10,6 +10,7 @@ import {
   AddExercises,
   Exercises,
   WorkoutLogReports,
+  WorkoutLogReportsDetail,
 } from "../screens";
 
 function StackGroup() {
@@ -32,6 +33,13 @@ function StackGroup() {
         component={WorkoutLogReports}
         options={{
           headerTitle: "Antrenman Logları",
+        }}
+      />
+      <Stack.Screen
+        name="WorkoutLogReportsDetail"
+        component={WorkoutLogReportsDetail}
+        options={{
+          headerTitle: "Antrenman Log Detayı",
         }}
       />
 

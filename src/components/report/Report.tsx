@@ -3,6 +3,7 @@ import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import moment from "moment";
 import "moment/locale/tr";
+import { useNavigation } from "@react-navigation/native";
 
 type ReportPropTypes = {
   report: IWorkoutLog;
@@ -20,12 +21,20 @@ const formatDuration = (seconds: number) => {
 };
 
 const Report = (props: ReportPropTypes) => {
-  const { workoutDate, workoutTime, workoutName } = props.report;
+  const { workoutId, workoutDate, workoutTime, workoutName } = props.report;
+  const navigation = useNavigation<any>();
 
   const formattedDuration = formatDuration(workoutTime);
 
   return (
-    <TouchableOpacity className="flex-row items-center p-4 bg-white border-b border-gray-200">
+    <TouchableOpacity
+      onPress={() => {
+        navigation.navigate("WorkoutLogReportsDetail", {
+          workoutId: workoutId,
+        });
+      }}
+      className="flex-row items-center p-4 bg-white border-b border-gray-200"
+    >
       <View className="flex-1">
         <Text className="text-lg font-bold text-gray-800">
           {moment(workoutDate).format("DD-MMM-YYYY")}

@@ -14,6 +14,7 @@ import Reports from "./Reports/Reports";
 import Supplements from "./Supplements/Supplements";
 import Settings from "./Settings/Settings";
 import WorkoutLogReports from "./Reports/WorkoutLogReports";
+import WorkoutLogReportsDetail from "./Reports/WorkoutLogReportsDetail";
 
 export {
   Home,
@@ -32,4 +33,5 @@ export {
   Supplements,
   Settings,
   WorkoutLogReports,
+  WorkoutLogReportsDetail,
 };

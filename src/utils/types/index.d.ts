@@ -44,12 +44,13 @@ type IWorkoutSets = {
 };
 
 type IWorkout = {
-  movementId: string;
+  movementId?: string;
   movementSets: IWorkoutSets[];
   movementName?: string;
 };
 
 type IWorkoutLog = {
+  workoutId: string;
   workoutDate: string;
   workoutTime: number;
   workoutName: string;
