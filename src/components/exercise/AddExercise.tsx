@@ -1,4 +1,4 @@
-import { View, Text, Pressable, Image } from "react-native";
+import { View, Text, Pressable, Image, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -10,7 +10,14 @@ type AddExercisePropTypes = {
 const AddExercise = (props: AddExercisePropTypes) => {
   const { exercise, handleItemStatusChange } = props;
   return (
-    <View className="px-1 py-2 rounded-lg shadow-md">
+    <TouchableOpacity
+      onPress={() => {
+        handleItemStatusChange({
+          ...exercise,
+        });
+      }}
+      className="px-1 py-2 rounded-lg shadow-md"
+    >
       <View className="bg-white rounded-lg">
         <View className="flex-row items-center p-3">
           <Pressable
@@ -45,7 +52,7 @@ const AddExercise = (props: AddExercisePropTypes) => {
           </View>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

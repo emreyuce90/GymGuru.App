@@ -14,6 +14,8 @@ const useProgrammes = () => {
         );
         if (programmes.Success) {
           setProgrammes(programmes.Resource.resource);
+        } else {
+          setError(programmes.Message);
         }
       } catch (error) {
         setError(error);

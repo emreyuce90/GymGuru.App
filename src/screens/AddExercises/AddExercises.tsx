@@ -29,13 +29,23 @@ const AddExercises = () => {
   const [text, setText] = useState<string>("");
 
   const filteredMovements = useMemo(() => {
+    if (!allMovements || !movementIds) {
+      return [];
+    }
+
+    if (!text.trim()) {
+      return allMovements
+        .filter((m) => !movementIds.some((i: string) => i === m.id))
+        .sort((a, b) => a.title.localeCompare(b.title));
+    }
+
     return allMovements
       .filter((m) => !movementIds.some((i: string) => i === m.id))
       .filter((m) =>
         m.title.toLocaleLowerCase().includes(text.toLocaleLowerCase())
       )
       .sort((a, b) => a.title.localeCompare(b.title));
-  }, [text, movementIds]);
+  }, [text, movementIds, allMovements]);
 
   const navigation = useNavigation();
   useLayoutEffect(() => {

@@ -68,7 +68,6 @@ const WorkoutRunning = (props: WorkoutRunningPropTypes) => {
   };
 
   const updateReps = (index: number, value: string) => {
-    console.log("update reps", value);
     if (value === "") {
       //bu itemin check kısmını kaldır
       setWorkoutSets((prevState) => {
@@ -109,12 +108,13 @@ const WorkoutRunning = (props: WorkoutRunningPropTypes) => {
     }
 
     setWorkoutSets((prevState) => {
+      console.log("prevState", prevState);
       //copiying data
       const updateWeigth = [...prevState.movementSets];
       //find exact data
       updateWeigth[index] = {
         ...updateWeigth[index],
-        weight: value === "" ? 0 : parseInt(value),
+        weight: value === "" ? 0 : parseFloat(value),
       };
       return { ...prevState, movementSets: updateWeigth };
     });
@@ -271,6 +271,7 @@ const WorkoutRunning = (props: WorkoutRunningPropTypes) => {
                         {index + 1}
                       </Text>
                       <TextInput
+                        onFocus={() => updateWeights(index, "")}
                         className={`h-10 mx-3 px-5 rounded-md text-center font-extrabold text-lg ${
                           workoutSet.checked ? "bg-white" : "bg-gray-300"
                         } ${
@@ -278,7 +279,7 @@ const WorkoutRunning = (props: WorkoutRunningPropTypes) => {
                         }`}
                         value={workoutSet.weight.toString()}
                         onChangeText={(value) => updateWeights(index, value)}
-                        keyboardType="numeric"
+                        keyboardType="decimal-pad"
                       />
                       <Text
                         className={`font-extrabold text-sm ${
@@ -288,6 +289,7 @@ const WorkoutRunning = (props: WorkoutRunningPropTypes) => {
                         KG
                       </Text>
                       <TextInput
+                        onFocus={() => updateReps(index, "")}
                         className={`h-10 mx-3 px-5 rounded-md text-center font-extrabold text-lg ${
                           workoutSet.checked ? "bg-white" : "bg-gray-300"
                         } ${
