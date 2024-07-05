@@ -127,7 +127,7 @@ const Workouts = () => {
           filterDataToSend(allWorkoutsData)
         );
         const saveMovements = await Api.post(
-          `/api/Workout/SaveWorkoutMovements/${workoutInfos.workoutId}`,
+          `/api/Workout/SaveWorkoutMovements/${workoutInfos.workoutId}/7aaf453f-56ea-4f7d-8877-4cec29072bfe`,
           transformedData
         );
 

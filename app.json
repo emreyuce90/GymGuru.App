@@ -23,7 +23,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.emreyuce39.GymGuruApp",
-      "versionCode": 3
+      "versionCode": 4
     },
     "web": {
       "favicon": "./assets/favicon.png"
