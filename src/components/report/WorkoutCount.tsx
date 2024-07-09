@@ -32,7 +32,7 @@ const WorkoutCount = (props: WorkoutCountPropTypes) => {
         name="chevron-forward-circle-outline"
         color="#FF6346"
         size={40}
-        style={{ position: "absolute", top: 12, right: 12 }}
+        style={{ position: "absolute", top: "50%", right: "10%" }}
       />
     </TouchableOpacity>
   );

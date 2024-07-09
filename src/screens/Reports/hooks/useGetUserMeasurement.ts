@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import Api from "../../../../lib/@core/data/Api";
 
-const useGetUserWeight = () => {
+const useGetUserMeasurement = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | unknown>("");
-  const [weight, setWeight] = useState<number>();
+  const [measurements, setMeasurements] = useState<IUserMeasurements[]>();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -14,7 +14,7 @@ const useGetUserWeight = () => {
           "/api/Metrics/7aaf453f-56ea-4f7d-8877-4cec29072bfe"
         );
         if (response.Success) {
-          setWeight(response.Resource.resource[0].value || 0);
+          setMeasurements(response.Resource.resource);
         } else {
           setError(response.Message);
         }
@@ -28,7 +28,7 @@ const useGetUserWeight = () => {
     fetchData();
   }, []);
 
-  return { loading, error, weight };
+  return { loading, error, measurements };
 };
 
-export default useGetUserWeight;
+export default useGetUserMeasurement;

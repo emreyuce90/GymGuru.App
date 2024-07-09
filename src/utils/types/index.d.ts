@@ -55,3 +55,9 @@ type IWorkoutLog = {
   workoutTime: number;
   workoutName: string;
 };
+
+type IUserMeasurements = {
+  bodyMetricsId: string;
+  metricName: string;
+  value: string;
+};
