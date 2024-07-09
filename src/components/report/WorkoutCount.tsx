@@ -21,16 +21,17 @@ const WorkoutCount = (props: WorkoutCountPropTypes) => {
         navigation.navigate("WorkoutLogReports");
       }}
       style={{
+        backgroundColor: "grey",
         width: width,
         height: height,
       }}
-      className="flex bg-white p-4 items-center mt-2 rounded-xl ml-1 justify-center"
+      className="flex p-4 items-center mt-2 rounded-xl ml-1 justify-center"
     >
-      <Text className="font-bold text-2xl">{count}</Text>
-      <Text className="">Antrenman</Text>
+      <Text className="font-bold text-3xl text-white">{count}</Text>
+      <Text className="font-semibold text-white text-base">Antrenman</Text>
       <Ionicons
         name="chevron-forward-circle-outline"
-        color="#FF6346"
+        color="white"
         size={40}
         style={{ position: "absolute", top: "50%", right: "10%" }}
       />

@@ -60,34 +60,42 @@ const UsersMeasurement = (props: UsersMeasurementsPropTypes) => {
   if (loading) {
     return <LoadingScreen />;
   }
-
+  console.log("measurement.color", measurement.color);
   return !clicked ? (
     <TouchableOpacity
-      onPress={handleClicked}
+      onPress={() => {}}
       style={{
         width: width,
         height: height,
+        backgroundColor: `${measurement.color}`,
       }}
-      className="flex bg-white p-4 items-center mt-2 rounded-xl ml-1 justify-center"
+      className={`flex p-4 items-center mt-2 rounded-xl ml-1 justify-center`}
     >
-      <Text className="font-bold text-2xl">{text}</Text>
-      <Text className="">{measurement.metricName}</Text>
+      <Text className="font-bold text-white text-3xl">
+        {text}
+        {measurement.metricName === "Kilo" ? "kg" : "cm"}
+      </Text>
+      <Text className="font-semibold text-white text-base">
+        {measurement.metricName}
+      </Text>
       <Feather
+        onPress={handleClicked}
         name="edit"
-        color="#FF6346"
-        size={24}
+        color="white"
+        size={28}
         style={{ position: "absolute", top: "50%", right: "10%" }}
       />
     </TouchableOpacity>
   ) : (
     <>
       <TouchableOpacity
-        onPress={handleMeasureChange}
+        onPress={() => {}}
         style={{
           width: width,
           height: height,
+          backgroundColor: `${measurement.color}`,
         }}
-        className="flex bg-white p-4 items-center mt-2 rounded-xl ml-1 justify-center"
+        className="flex p-4 items-center mt-2 rounded-xl ml-1 justify-center"
       >
         <Text className="font-bold text-2xl"></Text>
         <TextInput
@@ -96,18 +104,22 @@ const UsersMeasurement = (props: UsersMeasurementsPropTypes) => {
           value={text}
           autoFocus
           style={{
+            color: "white",
             fontSize: 28,
             fontWeight: "500",
           }}
         />
 
-        <Text className="">{measurement.metricName}</Text>
+        <Text className="font-semibold text-base text-white">
+          {measurement.metricName}
+        </Text>
         {measurement?.value && parseInt(text) > 0 ? (
           <Ionicons
+            onPress={handleMeasureChange}
             name="checkmark-circle-outline"
-            color="green"
+            color="white"
             size={40}
-            style={{ position: "absolute", top: 12, right: 14 }}
+            style={{ position: "absolute", top: "50%", right: "30%" }}
           />
         ) : (
           <Ionicons

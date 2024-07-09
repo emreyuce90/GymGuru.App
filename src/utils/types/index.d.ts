@@ -60,4 +60,5 @@ type IUserMeasurements = {
   bodyMetricsId: string;
   metricName: string;
   value: string;
+  color?: string;
 };
