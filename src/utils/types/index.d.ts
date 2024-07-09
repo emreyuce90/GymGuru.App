@@ -61,4 +61,5 @@ type IUserMeasurements = {
   metricName: string;
   value: string;
   color?: string;
+  color2?: string;
 };

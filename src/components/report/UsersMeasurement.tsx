@@ -4,6 +4,7 @@ import { Feather, Ionicons } from "@expo/vector-icons";
 import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 import Api from "../../../lib/@core/data/Api";
 import LoadingScreen from "../../../lib/@core/components/LoadingScreen";
+import { LinearGradient } from "expo-linear-gradient";
 
 type UsersMeasurementsPropTypes = {
   measurement: IUserMeasurements;
@@ -62,30 +63,32 @@ const UsersMeasurement = (props: UsersMeasurementsPropTypes) => {
   }
   console.log("measurement.color", measurement.color);
   return !clicked ? (
-    <TouchableOpacity
-      onPress={() => {}}
-      style={{
-        width: width,
-        height: height,
-        backgroundColor: `${measurement.color}`,
-      }}
-      className={`flex p-4 items-center mt-2 rounded-xl ml-1 justify-center`}
-    >
-      <Text className="font-bold text-white text-3xl">
-        {text}
-        {measurement.metricName === "Kilo" ? "kg" : "cm"}
-      </Text>
-      <Text className="font-semibold text-white text-base">
-        {measurement.metricName}
-      </Text>
-      <Feather
-        onPress={handleClicked}
-        name="edit"
-        color="white"
-        size={28}
-        style={{ position: "absolute", top: "50%", right: "10%" }}
-      />
-    </TouchableOpacity>
+    <LinearGradient colors={[`${measurement.color}`, `${measurement.color2}`]}>
+      <TouchableOpacity
+        onPress={() => {}}
+        style={{
+          width: width,
+          height: height,
+          //backgroundColor: `${measurement.color}`,
+        }}
+        className={`flex p-4 items-center mt-2 rounded-xl ml-1 justify-center`}
+      >
+        <Text className="font-bold text-white text-3xl">
+          {text}
+          {measurement.metricName === "Kilo" ? "kg" : "cm"}
+        </Text>
+        <Text className="font-semibold text-white text-base">
+          {measurement.metricName}
+        </Text>
+        <Feather
+          onPress={handleClicked}
+          name="edit"
+          color="white"
+          size={28}
+          style={{ position: "absolute", top: "50%", right: "10%" }}
+        />
+      </TouchableOpacity>
+    </LinearGradient>
   ) : (
     <>
       <TouchableOpacity
