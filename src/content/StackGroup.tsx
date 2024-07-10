@@ -11,9 +11,12 @@ import {
   Exercises,
   WorkoutLogReports,
   WorkoutLogReportsDetail,
+  Dynamic,
 } from "../screens";
+import useGetUserMeasurement from "../screens/Reports/hooks/useGetUserMeasurement";
 
 function StackGroup() {
+  const { measurements } = useGetUserMeasurement();
   const Stack = createStackNavigator();
   return (
     <Stack.Navigator>
@@ -53,6 +56,19 @@ function StackGroup() {
         component={Exercises}
         options={{ presentation: "modal" }}
       />
+
+      {measurements &&
+        measurements.map((m, i) => {
+          return (
+            <Stack.Screen
+              key={i}
+              name={`${m.metricName}`}
+              options={{ presentation: "modal" }}
+            >
+              {(props) => <Dynamic measurements={m} {...props} />}
+            </Stack.Screen>
+          );
+        })}
     </Stack.Navigator>
   );
 }

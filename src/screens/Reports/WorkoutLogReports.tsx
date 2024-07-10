@@ -18,6 +18,7 @@ const WorkoutLogReports = () => {
 
   return (
     <FlatList
+      initialNumToRender={6}
       data={reports}
       renderItem={({ item, index }) => <Report report={item} />}
       keyExtractor={(item, index) => index.toString()}

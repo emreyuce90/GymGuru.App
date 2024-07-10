@@ -9,7 +9,7 @@ type ReportPropTypes = {
   report: IWorkoutLog;
 };
 
-const formatDuration = (seconds: number) => {
+export const formatDuration = (seconds: number) => {
   const duration = moment.duration(seconds, "seconds");
   const hours = Math.floor(duration.asHours());
   const minutes = duration.minutes();

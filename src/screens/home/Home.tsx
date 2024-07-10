@@ -1,21 +1,12 @@
-import {
-  View,
-  Text,
-  Pressable,
-  Image,
-  Button,
-  TouchableHighlight,
-} from "react-native";
-import React, { useLayoutEffect, useRef, useState } from "react";
+import { View, Text, Pressable, Image } from "react-native";
+import React, { useLayoutEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { Feather, Ionicons } from "@expo/vector-icons";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { Feather } from "@expo/vector-icons";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import BodyParts from "../Bodyparts/BodyParts";
-import { LinearGradient } from "expo-linear-gradient";
 
 const Home = () => {
   const navigation = useNavigation<any>();

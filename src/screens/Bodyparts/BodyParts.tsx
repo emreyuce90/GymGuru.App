@@ -28,6 +28,7 @@ const BodyParts = () => {
         Egzersizler
       </Text>
       <FlatList
+        initialNumToRender={6}
         data={bodyparts}
         renderItem={({ item, index }) => (
           <BodyPart bodypart={item} index={index} />

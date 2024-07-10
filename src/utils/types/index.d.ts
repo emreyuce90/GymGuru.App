@@ -63,3 +63,9 @@ type IUserMeasurements = {
   color?: string;
   color2?: string;
 };
+
+type IUserMetricLog = {
+  createdDate: Date;
+  value: number;
+  metricName: string;
+};

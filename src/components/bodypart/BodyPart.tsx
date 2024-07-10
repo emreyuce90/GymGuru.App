@@ -22,7 +22,7 @@ const BodyPart = (props: BodyPartPropTypes) => {
   );
   return (
     <Animated.View
-      entering={FadeInDown.duration(400)
+      entering={FadeInDown.duration(600)
         .delay(props.index * 200)
         .springify()}
     >

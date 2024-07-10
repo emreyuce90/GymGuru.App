@@ -32,7 +32,9 @@ const Reports = () => {
         <FlatList
           scrollEnabled
           data={measurements}
-          renderItem={({ item }) => <UsersMeasurements measurement={item} />}
+          renderItem={({ item, index }) => (
+            <UsersMeasurements index={index} measurement={item} />
+          )}
           keyExtractor={(item) => item.bodyMetricsId}
         />
       ) : (
