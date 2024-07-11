@@ -1,62 +1,43 @@
-import { View, Text, Dimensions } from "react-native";
+import { View, Dimensions } from "react-native";
 import React from "react";
 import { LineChart } from "react-native-gifted-charts";
 import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 
-const CustomLineCharts = (props: any) => {
-  const data = [
-    { value: 15 },
-    { value: 30 },
-    { value: 26 },
-    { value: 40 },
-    { value: 15 },
-    { value: 30 },
-    { value: 26 },
-    { value: 40 },
-    { value: 15 },
-    { value: 30 },
-    { value: 26 },
-    { value: 40 },
-    { value: 15 },
-    { value: 30 },
-    { value: 26 },
-    { value: 40 },
-    { value: 15 },
-    { value: 30 },
-    { value: 26 },
-    { value: 40 },
-    { value: 15 },
-    { value: 30 },
-    { value: 26 },
-    { value: 40 },
-    { value: 15 },
-    { value: 30 },
-    { value: 26 },
-    { value: 40 },
-    { value: 15 },
-    { value: 30 },
-    { value: 26 },
-    { value: 40 },
-  ];
+type CustomLineChartsPropTypes = {
+  data: IUserMetricLog[] | undefined;
+};
+
+const CustomLineCharts = (props: CustomLineChartsPropTypes) => {
+  const { data } = props;
+
+  const chartData = data?.reduce(
+    (acc: { value: number }[], curr: IUserMetricLog) => {
+      acc.push({ value: curr.value });
+      return acc;
+    },
+    []
+  );
 
   return (
     <View
       style={{
         marginTop: wp(8),
+        padding: 10, // Padding ekleyerek boşluk bırakma
         flex: 1,
-        justifyContent: "center",
+        justifyContent: "center", // Dikey merkezleme
         alignItems: "center",
         backgroundColor: "#f5f5f5",
       }}
     >
       <LineChart
-        dataPointsColor="#f5f5f5"
-        width={wp(100)}
+        dataPointsColor="#FF8265"
+        width={wp(90)} // Genişliği biraz daraltarak ortalama
+        height={220} // Yüksekliği belirleyerek görseli ortalama
         animationDuration={1200}
         isAnimated
         curved
         areaChart
-        data={data}
+        data={chartData}
         startFillColor="#FF8265"
         startOpacity={1}
         endFillColor="#f5f5f5"
@@ -67,7 +48,13 @@ const CustomLineCharts = (props: any) => {
         color="#FF8265"
         xAxisColor="#FF8265"
         showValuesAsDataPointsText
-        dataPointsHeight={20}
+        dataPointsHeight={10} // Data points height
+        dataPointsWidth={10} // Data points width
+        dataPointsRadius={5} // Data points radius
+        xAxisLabelTextStyle={{ fontSize: 16, color: "#000" }} // X axis labels style
+        // Y axis labels style
+        textFontSize={20} // General text font size
+        // General text font color
       />
     </View>
   );

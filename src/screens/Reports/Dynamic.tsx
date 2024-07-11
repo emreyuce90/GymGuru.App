@@ -67,7 +67,7 @@ const Dynamic = (props: DynamicPropTypes) => {
 
   return (
     <ScrollView className="flex mb-10">
-      <CustomLineCharts />
+      <CustomLineCharts data={userMetricLogs} />
       <FlatList
         renderItem={({ item, index }) => (
           <UserLogMetric
