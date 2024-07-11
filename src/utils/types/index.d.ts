@@ -57,6 +57,7 @@ type IWorkoutLog = {
 };
 
 type IUserMeasurements = {
+  metricId: string;
   bodyMetricsId: string;
   metricName: string;
   value: string;
@@ -68,4 +69,5 @@ type IUserMetricLog = {
   createdDate: Date;
   value: number;
   metricName: string;
+  metricId: string;
 };

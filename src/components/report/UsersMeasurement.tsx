@@ -22,6 +22,7 @@ const UsersMeasurement = (props: UsersMeasurementsPropTypes) => {
   const [text, setText] = useState<string>(measurement.value);
   const [loading, setLoading] = useState<boolean>(false);
 
+  console.log("metricId", measurement.metricId);
   const handleMeasureChange = async () => {
     const updateMetricChange = async () => {
       try {
@@ -30,11 +31,12 @@ const UsersMeasurement = (props: UsersMeasurementsPropTypes) => {
           bodymetricId: measurement.bodyMetricsId,
           userId: "7aaf453f-56ea-4f7d-8877-4cec29072bfe",
           value: parseFloat(text),
+          metricId: measurement.metricId,
         });
 
         if (response.Success) {
           console.log("response.Resource.resource", response.Resource.resource);
-          setText(response.Resource.resource.value.toString());
+          setText(response.Resource.resource.toString());
           setClicked((prev) => !prev);
         } else {
           alert(response.Message);

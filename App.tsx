@@ -6,6 +6,7 @@ import LoadingScreen from "./lib/@core/components/LoadingScreen";
 import { Suspense } from "react";
 import "fast-text-encoding";
 import moment from "moment";
+import Toast from "react-native-toast-message";
 
 moment.locale("tr");
 const axiosConfig = {
@@ -21,6 +22,7 @@ export default function App() {
         <StatusBar style="dark" />
         <Content />
       </SafeAreaProvider>
+      <Toast />
     </Suspense>
   );
 }

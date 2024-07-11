@@ -12,6 +12,7 @@ const useGetUserMetricLogs = (bodyMetricId: string) => {
         const response = await Api.get(
           `/api/Metrics/7aaf453f-56ea-4f7d-8877-4cec29072bfe/${bodyMetricId}`
         );
+
         if (response.Success) {
           setMetricLogs(response.Resource.resource);
         } else {
