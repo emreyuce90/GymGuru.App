@@ -1,7 +1,8 @@
-import { View, Dimensions } from "react-native";
+import { View, Dimensions, StyleSheet, Text } from "react-native";
 import React from "react";
 import { LineChart } from "react-native-gifted-charts";
 import { widthPercentageToDP as wp } from "react-native-responsive-screen";
+import moment from "moment";
 
 type CustomLineChartsPropTypes = {
   data: IUserMetricLog[] | undefined;
@@ -10,51 +11,56 @@ type CustomLineChartsPropTypes = {
 const CustomLineCharts = (props: CustomLineChartsPropTypes) => {
   const { data } = props;
 
-  const chartData = data?.reduce(
-    (acc: { value: number }[], curr: IUserMetricLog) => {
-      acc.push({ value: curr.value });
-      return acc;
-    },
-    []
-  );
-
+  const chartData = data?.reduce((acc: any, curr: IUserMetricLog) => {
+    acc.push({
+      value: curr.value,
+      label: moment(curr.createdDate).format("DD-MMM"),
+    });
+    return acc;
+  }, []);
+  console.log("data", data);
   return (
     <View
       style={{
-        marginTop: wp(8),
         padding: 10, // Padding ekleyerek boşluk bırakma
         flex: 1,
         justifyContent: "center", // Dikey merkezleme
         alignItems: "center",
-        backgroundColor: "#f5f5f5",
+        backgroundColor: "white",
       }}
     >
+      <Text className=" text-xl font-bold text-black mt-6 mb-6">
+        Zamana göre ölçü değişim grafiği
+      </Text>
+
       <LineChart
-        dataPointsColor="#FF8265"
+        backgroundColor={"white"}
+        hideRules
+        color="#FE5B61"
+        dataPointsColor="#FE5B61"
+        dataPointsRadius={4}
         width={wp(90)} // Genişliği biraz daraltarak ortalama
         height={220} // Yüksekliği belirleyerek görseli ortalama
         animationDuration={1200}
         isAnimated
         curved
         areaChart
-        data={chartData}
-        startFillColor="#FF8265"
+        data={chartData?.reverse()}
+        startFillColor="#FFDCDC"
         startOpacity={1}
         endFillColor="#f5f5f5"
         endOpacity={0.3}
-        initialSpacing={0}
+        initialSpacing={30}
         thickness={2}
-        yAxisColor="#FF8265"
-        color="#FF8265"
-        xAxisColor="#FF8265"
+        yAxisTextStyle={{ color: "gray" }}
+        yAxisColor="#FFDCDC"
+        xAxisColor="#FFDCDC"
         showValuesAsDataPointsText
-        dataPointsHeight={10} // Data points height
-        dataPointsWidth={10} // Data points width
-        dataPointsRadius={5} // Data points radius
-        xAxisLabelTextStyle={{ fontSize: 16, color: "#000" }} // X axis labels style
-        // Y axis labels style
-        textFontSize={20} // General text font size
-        // General text font color
+        dataPointsHeight={20}
+        dataPointsWidth={10}
+        xAxisLabelTextStyle={{ fontSize: 12, color: "grey" }}
+        xAxisThickness={2}
+        textFontSize={16}
       />
     </View>
   );
