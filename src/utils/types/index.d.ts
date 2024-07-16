@@ -6,6 +6,7 @@ type IMovement = {
   imageUrl?: string;
   videoUrl?: string;
   bodyPartId?: string;
+  subBodyPartId?: string;
   isChecked?: boolean;
 };
 
@@ -70,4 +71,10 @@ type IUserMetricLog = {
   value: number;
   metricName: string;
   metricId: string;
+};
+
+type ISubBodyPart = {
+  id: string;
+  name: string;
+  bodyPartId: string;
 };

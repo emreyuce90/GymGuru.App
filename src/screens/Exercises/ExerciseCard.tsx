@@ -39,13 +39,7 @@ const ExerciseCard = (props: ExerciseCardPropTypes) => {
       >
         <View className="bg-neutral-200 shadow rounded-[25px]">
           <Image
-            source={{
-              uri: `${process.env.EXPO_PUBLIC_API_URL}${
-                process.env.EXPO_PUBLIC_API_URL == "https://api.gymguru.com.tr"
-                  ? "/api.gymguru.com.tr"
-                  : ""
-              }/images/${imageUrl}`,
-            }}
+            src={`${process.env.EXPO_PUBLIC_API_URL}/api.gymguru.com.tr/images/${imageUrl}`}
             style={{ width: wp(44), height: wp(52) }}
             className="rounded-[32px]"
           />
