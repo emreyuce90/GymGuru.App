@@ -16,6 +16,7 @@ import Settings from "./Settings/Settings";
 import WorkoutLogReports from "./Reports/WorkoutLogReports";
 import WorkoutLogReportsDetail from "./Reports/WorkoutLogReportsDetail";
 import Dynamic from "./Reports/Dynamic";
+import AddNewProgramme from "./AddNewProgramme/AddNewProgramme";
 
 export {
   Home,
@@ -36,4 +37,5 @@ export {
   WorkoutLogReports,
   WorkoutLogReportsDetail,
   Dynamic,
+  AddNewProgramme,
 };

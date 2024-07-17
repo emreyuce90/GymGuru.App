@@ -6,9 +6,12 @@ import { Ionicons } from "@expo/vector-icons";
 import useProgrammes from "./hooks/useProgrammes";
 import LoadingScreen from "../../../lib/@core/components/LoadingScreen";
 import ErrorScreen from "../../../lib/@core/components/ErrorScreen";
+import { useNavigation } from "@react-navigation/native";
+import Animated, { FadeIn, FadeInDown } from "react-native-reanimated";
 
 const Programmes = () => {
   const { programmes, loading, error } = useProgrammes();
+  const navigation = useNavigation<any>();
 
   if (loading) {
     return <LoadingScreen />;
@@ -22,27 +25,36 @@ const Programmes = () => {
       <FlatList
         className="mt-4"
         data={programmes}
-        renderItem={({ item }: { item: IProgramme }) => (
-          <Programme programme={item} />
+        renderItem={({ item, index }) => (
+          <Programme key={index} programme={item} index={index} />
         )}
+        keyExtractor={(item) => item.id}
       />
 
-      <Pressable
-        onPress={() => {
-          // console.log("Pressed");
-        }}
+      <Animated.View
+        entering={FadeInDown.duration(600)
+          .delay((programmes.length + 1) * 200)
+          .springify()}
       >
-        <View className="mb-1 mt-1 px-5">
-          <Bounceable onPress={() => {}}>
-            <View className=" bg-[#FF6346] p-5 flex flex-row justify-between items-center  rounded-lg ">
-              <View className="ml-3 flex flex-row items-center gap-2">
-                <Ionicons name="add-circle" size={40} color={"white"} />
-                <Text className="text-base text-white">Yeni Program Ekle</Text>
+        <Pressable
+          onPress={() => {
+            navigation.navigate("AddNewProgramme");
+          }}
+        >
+          <View className="mb-1 mt-1 px-5">
+            <Bounceable onPress={() => {}}>
+              <View className=" bg-[#FF6346] p-5 flex flex-row justify-between items-center  rounded-lg ">
+                <View className="ml-3 flex flex-row items-center gap-2">
+                  <Ionicons name="add-circle" size={40} color={"white"} />
+                  <Text className="text-base text-white">
+                    Yeni Program Ekle
+                  </Text>
+                </View>
               </View>
-            </View>
-          </Bounceable>
-        </View>
-      </Pressable>
+            </Bounceable>
+          </View>
+        </Pressable>
+      </Animated.View>
     </View>
   );
 };

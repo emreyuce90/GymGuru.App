@@ -12,6 +12,7 @@ import {
   WorkoutLogReports,
   WorkoutLogReportsDetail,
   Dynamic,
+  AddNewProgramme,
 } from "../screens";
 import useGetUserMeasurement from "../screens/Reports/hooks/useGetUserMeasurement";
 
@@ -31,6 +32,11 @@ function StackGroup() {
       <Stack.Screen name="SubProgrammeDetail" component={SubProgrammeDetail} />
       <Stack.Screen name="Workouts" component={Workouts} />
       <Stack.Screen name="WorkoutLogs" component={WorkoutLogs} />
+      <Stack.Screen
+        name="AddNewProgramme"
+        component={AddNewProgramme}
+        options={{ headerTitle: "Yeni Program Ekle" }}
+      />
       <Stack.Screen
         name="WorkoutLogReports"
         component={WorkoutLogReports}
