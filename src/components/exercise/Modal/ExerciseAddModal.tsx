@@ -4,11 +4,12 @@ import { useNavigation } from "@react-navigation/native";
 
 type ExerciseAddModalPropTypes = {
   checkedMovements: IMovement[];
+  index: number;
 };
 
 const ExerciseAddModal = (props: ExerciseAddModalPropTypes) => {
   const navigation = useNavigation<any>();
-  const { checkedMovements } = props;
+  const { checkedMovements, index } = props;
 
   {
     return (
@@ -39,8 +40,9 @@ const ExerciseAddModal = (props: ExerciseAddModalPropTypes) => {
           </View>
           <Pressable
             onPress={() => {
-              navigation.navigate("Workouts", {
+              navigation.navigate("AddNewProgramme", {
                 checkedMovements: checkedMovements,
+                index: index,
               });
             }}
           >

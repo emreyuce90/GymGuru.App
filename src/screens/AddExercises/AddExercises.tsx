@@ -25,7 +25,7 @@ const AddExercises = () => {
   const route = useRoute();
   const { movements, loading, error } = useMovements();
   const [allMovements, setAllMovements] = useState<IMovement[]>([]);
-  const { movementIds } = route.params as any;
+  const { movementIds, index } = route.params as any;
   const [text, setText] = useState<string>("");
 
   const filteredMovements = useMemo(() => {
@@ -110,6 +110,7 @@ const AddExercises = () => {
               keyExtractor={(item) => item.id}
             />
             <ExerciseAddModal
+              index={index}
               checkedMovements={allMovements.filter(
                 (m) => m.isChecked === true
               )}

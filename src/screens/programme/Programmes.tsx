@@ -8,6 +8,7 @@ import LoadingScreen from "../../../lib/@core/components/LoadingScreen";
 import ErrorScreen from "../../../lib/@core/components/ErrorScreen";
 import { useNavigation } from "@react-navigation/native";
 import Animated, { FadeIn, FadeInDown } from "react-native-reanimated";
+import { movementIds } from "../../components/workout";
 
 const Programmes = () => {
   const { programmes, loading, error } = useProgrammes();
@@ -42,7 +43,11 @@ const Programmes = () => {
           }}
         >
           <View className="mb-1 mt-1 px-5">
-            <Bounceable onPress={() => {}}>
+            <Bounceable
+            // onPress={() => {
+            //   navigation.navigate("AddExercises", { movementIds: [] });
+            // }}
+            >
               <View className=" bg-[#FF6346] p-5 flex flex-row justify-between items-center  rounded-lg ">
                 <View className="ml-3 flex flex-row items-center gap-2">
                   <Ionicons name="add-circle" size={40} color={"white"} />

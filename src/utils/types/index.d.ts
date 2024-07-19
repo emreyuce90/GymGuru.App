@@ -78,3 +78,14 @@ type ISubBodyPart = {
   name: string;
   bodyPartId: string;
 };
+
+type IAddExerciseModel = {
+  programmeName: string;
+  subProgramme: ISubProgrammeAddModel[];
+};
+
+type ISubProgrammeAddModel = {
+  id: number;
+  subProgrammeName: string;
+  subProgrammeMovements: ISubProgrammeMovement[];
+};
