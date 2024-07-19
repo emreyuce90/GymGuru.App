@@ -280,6 +280,7 @@ const Workouts = () => {
               onPress={() => {
                 navigation.navigate("AddExercises", {
                   movementIds: movementIds(subProgrammeMovementsState),
+                  from: "Workouts",
                 });
               }}
             >

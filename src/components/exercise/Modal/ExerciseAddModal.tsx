@@ -1,15 +1,31 @@
 import { View, Text, Modal, Image, Pressable, ScrollView } from "react-native";
-import React from "react";
+import React, { useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
 
 type ExerciseAddModalPropTypes = {
   checkedMovements: IMovement[];
   index: number;
+  from: string;
 };
 
 const ExerciseAddModal = (props: ExerciseAddModalPropTypes) => {
   const navigation = useNavigation<any>();
-  const { checkedMovements, index } = props;
+  const { checkedMovements, index, from } = props;
+
+  const handleGoBack = () => {
+    if (from === "AddNewProgramme") {
+      navigation.navigate("AddNewProgramme", {
+        checkedMovements: checkedMovements,
+        index: index,
+      });
+    } else if (from === "Workouts") {
+      navigation.navigate("Workouts", {
+        checkedMovements: checkedMovements,
+      });
+    } else {
+      navigation.goBack();
+    }
+  };
 
   {
     return (
@@ -38,14 +54,7 @@ const ExerciseAddModal = (props: ExerciseAddModalPropTypes) => {
               })}
             </ScrollView>
           </View>
-          <Pressable
-            onPress={() => {
-              navigation.navigate("AddNewProgramme", {
-                checkedMovements: checkedMovements,
-                index: index,
-              });
-            }}
-          >
+          <Pressable onPress={handleGoBack}>
             <View className="bg-[#ff6145] flex items-center p-2 rounded-xl">
               <Text className="font-bold text-xl text-white">{`+${checkedMovements?.length} Egzersiz Ekle`}</Text>
             </View>

@@ -11,7 +11,7 @@ import SearchExercise from "../../components/exercise/SearchExercise";
 
 function HeaderTitle() {
   return (
-    <SafeAreaView className="flex flex-col w-screen">
+    <SafeAreaView className="flex flex-row w-screen">
       <View>
         <Text className="font-bold text-xl mx-auto text-white">
           Egzersiz Ekle
@@ -25,7 +25,7 @@ const AddExercises = () => {
   const route = useRoute();
   const { movements, loading, error } = useMovements();
   const [allMovements, setAllMovements] = useState<IMovement[]>([]);
-  const { movementIds, index } = route.params as any;
+  const { movementIds, index, from } = route.params as any;
   const [text, setText] = useState<string>("");
 
   const filteredMovements = useMemo(() => {
@@ -50,7 +50,6 @@ const AddExercises = () => {
   const navigation = useNavigation();
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerLeft: null,
       headerStyle: {
         backgroundColor: "#ff6145",
         height: 100,
@@ -115,6 +114,7 @@ const AddExercises = () => {
               keyExtractor={(item) => item.id}
             />
             <ExerciseAddModal
+              from={from}
               index={index}
               checkedMovements={allMovements.filter(
                 (m) => m.isChecked === true
