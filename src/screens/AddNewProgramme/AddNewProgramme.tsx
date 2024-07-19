@@ -6,6 +6,14 @@ import { Bounceable } from "rn-bounceable";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
+const selectIds = (data: ISubProgrammeMovement[]) => {
+  let arr = [] as any;
+  data.forEach((element) => {
+    arr.push(element.movementId);
+  });
+  return arr;
+};
+
 const AddNewProgramme = () => {
   const navigation = useNavigation<any>();
   const route = useRoute();
@@ -38,14 +46,6 @@ const AddNewProgramme = () => {
       }
       return copyOfState;
     });
-  };
-
-  const selectIds = (data: ISubProgrammeMovement[]) => {
-    let arr = [] as any;
-    data.forEach((element) => {
-      arr.push(element.movementId);
-    });
-    return arr;
   };
 
   const updateSets = (value: string, spIndex: number, index: number) => {
@@ -89,8 +89,9 @@ const AddNewProgramme = () => {
     <>
       <View className="flex p-3">
         <View className="flex flex-col">
-          <Text className="text-xl">Program Adı:</Text>
+          <Text className="text-lg">Program Adı:</Text>
           <CustomInput
+            success={programme.programmeName === "" ? false : true}
             placeholder="Program adını yazınız"
             value={programme.programmeName}
             setValue={(value: string) =>
@@ -101,10 +102,10 @@ const AddNewProgramme = () => {
           />
         </View>
         <View className="flex">
-          <Text className="text-xl">Antrenman kaç günden oluşacak</Text>
+          <Text className="text-lg">Antrenman gün sayısı:</Text>
           <Picker
             selectedValue={day}
-            style={{ width: "100%", backgroundColor: "white" }}
+            style={{ width: "100%", backgroundColor: "white", marginTop: 4 }}
             onValueChange={handleWorkoutDayChange}
           >
             {[...Array(7).keys()].map((i) => (

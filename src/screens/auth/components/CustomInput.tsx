@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   input: {
-    fontSize: 24,
+    fontSize: 16,
   },
 });
 

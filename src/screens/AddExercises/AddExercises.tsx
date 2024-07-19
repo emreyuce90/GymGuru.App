@@ -98,8 +98,13 @@ const AddExercises = () => {
           <>
             <FlatList
               // ListHeaderComponent={<SearchExercises />}
+
+              initialNumToRender={10}
+              maxToRenderPerBatch={10}
+              updateCellsBatchingPeriod={50}
               contentContainerStyle={{ paddingBottom: 32 }}
               ListHeaderComponent={<SearchExercise onChange={setText} />}
+              stickyHeaderIndices={[0]}
               data={filteredMovements}
               renderItem={({ item }) => (
                 <AddExercise
