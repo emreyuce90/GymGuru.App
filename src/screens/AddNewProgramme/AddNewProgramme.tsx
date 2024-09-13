@@ -14,6 +14,9 @@ import { Ionicons } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import ProgrammeFinishModel from "../../components/programme/Modal/ProgrammeFinishModel";
 import { Swipeable } from "react-native-gesture-handler";
+import Api from "../../../lib/@core/data/Api";
+import ErrorScreen from "../../../lib/@core/components/ErrorScreen";
+import LoadingScreen from "../../../lib/@core/components/LoadingScreen";
 
 const selectIds = (data: ISubProgrammeMovement[]) => {
   let arr = [] as any;
@@ -45,6 +48,8 @@ const isValidProgramme = (data: IAddExerciseModel) => {
 };
 
 const AddNewProgramme = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | unknown>();
   const swipeableRefs = useRef<any>([]);
   const [visible, setVisible] = useState<boolean>(false);
   const [messages, setMessages] = useState<string[]>([]);
@@ -99,10 +104,28 @@ const AddNewProgramme = () => {
     });
   };
 
-  const handleProgrammeFinish = () => {
+  const handleProgrammeFinish = async () => {
     if (isValidProgramme(programme).length > 0) {
       setVisible(true);
       setMessages(isValidProgramme(programme));
+    } else {
+      try {
+        setLoading(true);
+        const response = await Api.post(
+          `/api/programme/7aaf453f-56ea-4f7d-8877-4cec29072bfe`,
+          programme
+        );
+        if (response.Success) {
+          navigation.navigate("Programmes");
+          console.log("success");
+        } else {
+          console.log("fail");
+        }
+      } catch (error) {
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
@@ -153,6 +176,14 @@ const AddNewProgramme = () => {
       });
     }
   }, [p]);
+
+  if (error) {
+    return <ErrorScreen error={error} />;
+  }
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
 
   return (
     <>

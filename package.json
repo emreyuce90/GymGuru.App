@@ -50,7 +50,8 @@
     "react-native-webview": "13.6.4",
     "react-native-youtube-iframe": "^2.3.0",
     "rn-bounceable": "^1.2.0",
-    "@react-native-picker/picker": "2.6.1"
+    "@react-native-picker/picker": "2.6.1",
+    "expo-updates": "~0.24.13"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

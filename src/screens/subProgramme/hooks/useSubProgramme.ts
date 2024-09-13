@@ -11,12 +11,16 @@ const useSubProgramme = (props: subProgrammePropTypes) => {
   const [subProgrammes, setSubProgrammes] = useState<ISubProgramme[]>([]);
 
   const { programmeId } = props;
-  console.log("programmeId", programmeId);
   useEffect(() => {
     const getSubProgrammes = async () => {
       try {
         const subProgrammes = await Api.get(`/api/SubProgramme/${programmeId}`);
         if (subProgrammes.Success) {
+          console.log(
+            "subProgrammes.Resource.resource",
+            subProgrammes.Resource.resource
+          );
+
           setSubProgrammes(subProgrammes.Resource.resource);
         }
       } catch (err) {

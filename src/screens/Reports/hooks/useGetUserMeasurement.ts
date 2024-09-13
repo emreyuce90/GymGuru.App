@@ -11,10 +11,10 @@ const useGetUserMeasurement = () => {
       try {
         //userId ve yeni değer gönder
         const response = await Api.get(
-          "/api/Metrics/7aaf453f-56ea-4f7d-8877-4cec29072bfe"
+          "/api/Metrics/9c2e83f5-d9b6-4ae1-ebad-08dcd3c40b19"
         );
         if (response.Success) {
-          setMeasurements(response.Resource.resource);
+          setMeasurements(response.Resource.resource || []);
         } else {
           setError(response.Message);
         }

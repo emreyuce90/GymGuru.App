@@ -123,11 +123,12 @@ const Workouts = () => {
         ""
       );
       if (request.Success) {
+        console.log("request successs");
         const transformedData = convertToWorkoutMovementAddDto(
           filterDataToSend(allWorkoutsData)
         );
         const saveMovements = await Api.post(
-          `/api/Workout/SaveWorkoutMovements/${workoutInfos.workoutId}/7aaf453f-56ea-4f7d-8877-4cec29072bfe`,
+          `/api/Workout/SaveWorkoutMovements/${workoutInfos.workoutId}`,
           transformedData
         );
 

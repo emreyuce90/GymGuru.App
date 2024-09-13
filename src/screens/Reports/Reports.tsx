@@ -18,6 +18,7 @@ const Reports = () => {
   if (error) {
     return <ErrorScreen error={error} />;
   }
+  console.log("measure", measurements);
   return (
     // <View className="flex flex-col justify-center">
     //

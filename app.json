@@ -23,7 +23,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.emreyuce39.GymGuruApp",
-      "versionCode": 9
+      "versionCode": 10
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -42,6 +42,12 @@
       "eas": {
         "projectId": "a4db9e6e-5fab-4a53-8a84-0a66f46aa0d8"
       }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/a4db9e6e-5fab-4a53-8a84-0a66f46aa0d8"
     }
   }
 }

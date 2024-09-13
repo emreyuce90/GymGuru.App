@@ -22,16 +22,16 @@ const UsersMeasurement = (props: UsersMeasurementsPropTypes) => {
   const [text, setText] = useState<string>(measurement.value);
   const [loading, setLoading] = useState<boolean>(false);
 
-  console.log("metricId", measurement.metricId);
+  console.log("text", measurement);
   const handleMeasureChange = async () => {
     const updateMetricChange = async () => {
       try {
         setLoading(true);
         const response = await Api.post(`/api/Metrics/`, {
           bodymetricId: measurement.bodyMetricsId,
-          userId: "7aaf453f-56ea-4f7d-8877-4cec29072bfe",
+          userId: "9c2e83f5-d9b6-4ae1-ebad-08dcd3c40b19",
           value: parseFloat(text),
-          metricId: measurement.metricId,
+          metricId: measurement.metricId ?? "",
         });
 
         if (response.Success) {
@@ -134,7 +134,7 @@ const UsersMeasurement = (props: UsersMeasurementsPropTypes) => {
           <Text className="font-semibold text-base text-white">
             {measurement.metricName}
           </Text>
-          {measurement?.value && parseInt(text) > 0 ? (
+          {text && parseInt(text) > 0 ? (
             <Ionicons
               onPress={handleMeasureChange}
               name="checkmark-circle-outline"
