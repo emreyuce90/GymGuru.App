@@ -5,6 +5,11 @@ const useGetUserMeasurement = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | unknown>("");
   const [measurements, setMeasurements] = useState<IUserMeasurements[]>();
+  const [trigger, setTrigger] = useState<number>(0);
+
+  const reFetch = () => {
+    setTrigger((prev) => prev + 1);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,9 +31,9 @@ const useGetUserMeasurement = () => {
     };
 
     fetchData();
-  }, []);
+  }, [trigger]);
 
-  return { loading, error, measurements };
+  return { loading, error, measurements, reFetch };
 };
 
 export default useGetUserMeasurement;

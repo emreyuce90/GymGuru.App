@@ -1,62 +1,44 @@
 import { Text, TouchableOpacity, TextInput } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { widthPercentageToDP as wp } from "react-native-responsive-screen";
-import Api from "../../../lib/@core/data/Api";
 import LoadingScreen from "../../../lib/@core/components/LoadingScreen";
 import { LinearGradient } from "expo-linear-gradient";
 import Animated, { FadeInDown } from "react-native-reanimated";
 import { useNavigation } from "@react-navigation/native";
+import { IMeasureUpdate } from "./types/IMeasureUpdate";
 
 type UsersMeasurementsPropTypes = {
   measurement: IUserMeasurements;
   index: number;
+  handleMeasurementUpdate: (data: IMeasureUpdate) => void;
 };
 
-const UsersMeasurement = (props: UsersMeasurementsPropTypes) => {
+const UsersMeasurement: React.FC<UsersMeasurementsPropTypes> = ({
+  measurement,
+  index,
+  handleMeasurementUpdate,
+}) => {
   const navigation = useNavigation<any>();
   const width = wp(100);
   const height = wp(40);
-  const { measurement, index } = props;
+
   const [clicked, setClicked] = useState<boolean>(false);
   const [text, setText] = useState<string>(measurement.value);
   const [loading, setLoading] = useState<boolean>(false);
 
-  console.log("text", measurement);
   const handleMeasureChange = async () => {
-    const updateMetricChange = async () => {
-      try {
-        setLoading(true);
-        const response = await Api.post(`/api/Metrics/`, {
-          bodymetricId: measurement.bodyMetricsId,
-          userId: "9c2e83f5-d9b6-4ae1-ebad-08dcd3c40b19",
-          value: parseFloat(text),
-          metricId: measurement.metricId ?? "",
-        });
-
-        if (response.Success) {
-          console.log("response.Resource.resource", response.Resource.resource);
-          setText(response.Resource.resource.toString());
-          setClicked((prev) => !prev);
-        } else {
-          alert(response.Message);
-        }
-      } catch (error) {
-        alert(error);
-      } finally {
-        setLoading(false);
-      }
+    const dataToSend: IMeasureUpdate = {
+      bodyMetricId: measurement.bodyMetricsId,
+      metricId: measurement.metricId,
+      value: parseFloat(text),
     };
-    if (parseFloat(text) !== parseFloat(measurement.value)) {
-      updateMetricChange();
-    } else {
-      setClicked((prev) => !prev);
-    }
+    await handleMeasurementUpdate(dataToSend);
   };
 
-  const handleClicked = () => {
+  const handleClicked = useCallback(() => {
     setClicked((prev) => !prev);
-  };
+  }, []);
 
   useEffect(() => {
     if (measurement) {
@@ -78,7 +60,9 @@ const UsersMeasurement = (props: UsersMeasurementsPropTypes) => {
       >
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate(`${measurement.metricName}`);
+            if (measurement.metricId != null) {
+              navigation.navigate(`${measurement.metricName}`);
+            }
           }}
           style={{
             width: width,

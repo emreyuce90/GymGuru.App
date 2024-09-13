@@ -38,7 +38,7 @@ const UserLogMetric = (props: UserLogMetricPropTypes) => {
   const { metric, index, handleDelete } = props;
   const width = wp(100);
   const height = wp(20);
-
+  console.log("metric?.metricName", metric?.metricName);
   return (
     <Animated.View
       entering={FadeInDown.duration(400)

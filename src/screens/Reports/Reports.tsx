@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { FlatList, Text, View } from "react-native";
 import WorkoutCount from "../../components/report/WorkoutCount";
 import UsersMeasurements from "../../components/report/UsersMeasurement";
@@ -8,9 +8,33 @@ import ErrorScreen from "../../../lib/@core/components/ErrorScreen";
 import NoDataView from "../../../lib/@core/components/NoDataView";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import { ScrollView } from "react-native-virtualized-view";
+import { IMeasureUpdate } from "../../components/report/types/IMeasureUpdate";
+import Api from "../../../lib/@core/data/Api";
 
 const Reports = () => {
-  const { measurements, error, loading } = useGetUserMeasurement();
+  const { measurements, error, loading, reFetch } = useGetUserMeasurement();
+
+  const handleMeasurementUpdate = useCallback(async (data: IMeasureUpdate) => {
+    try {
+      const response = await Api.post(`/api/Metrics/`, {
+        bodymetricId: data.bodyMetricId,
+        userId: "9c2e83f5-d9b6-4ae1-ebad-08dcd3c40b19",
+        value: data.value,
+        metricId: data.metricId ?? "",
+      });
+      if (response.Success) {
+        reFetch();
+        // setClicked((prev) => !prev);
+      } else {
+        alert(response.Message);
+      }
+    } catch (error) {
+      alert(error);
+    } finally {
+      // setLoading(false);
+    }
+  }, []);
+
   if (loading) {
     return <LoadingScreen />;
   }
@@ -18,12 +42,8 @@ const Reports = () => {
   if (error) {
     return <ErrorScreen error={error} />;
   }
-  console.log("measure", measurements);
+
   return (
-    // <View className="flex flex-col justify-center">
-    //
-    //   <UsersMeasurements width={wp(100)} height={wp(40)} />
-    // </View>
     <ScrollView>
       <WorkoutCount
         width={widthPercentageToDP(100)}
@@ -34,7 +54,11 @@ const Reports = () => {
           scrollEnabled
           data={measurements}
           renderItem={({ item, index }) => (
-            <UsersMeasurements index={index} measurement={item} />
+            <UsersMeasurements
+              index={index}
+              measurement={item}
+              handleMeasurementUpdate={handleMeasurementUpdate}
+            />
           )}
           keyExtractor={(item) => item.bodyMetricsId}
         />
