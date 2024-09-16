@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { FlatList, Text, View } from "react-native";
 import WorkoutCount from "../../components/report/WorkoutCount";
 import UsersMeasurements from "../../components/report/UsersMeasurement";
@@ -13,27 +13,45 @@ import Api from "../../../lib/@core/data/Api";
 
 const Reports = () => {
   const { measurements, error, loading, reFetch } = useGetUserMeasurement();
+  const [userMeasurements, setUserMeasurements] = useState<IUserMeasurements[]>(
+    []
+  );
 
-  const handleMeasurementUpdate = useCallback(async (data: IMeasureUpdate) => {
-    try {
-      const response = await Api.post(`/api/Metrics/`, {
-        bodymetricId: data.bodyMetricId,
-        userId: "9c2e83f5-d9b6-4ae1-ebad-08dcd3c40b19",
-        value: data.value,
-        metricId: data.metricId ?? "",
-      });
-      if (response.Success) {
-        reFetch();
-        // setClicked((prev) => !prev);
-      } else {
-        alert(response.Message);
-      }
-    } catch (error) {
-      alert(error);
-    } finally {
-      // setLoading(false);
+  useEffect(() => {
+    if (measurements) {
+      setUserMeasurements(measurements);
     }
-  }, []);
+  }, [measurements]);
+
+  const handleMeasurementUpdate = useCallback(
+    async (data: IMeasureUpdate) => {
+      try {
+        const response = await Api.post(`/api/Metrics/`, {
+          bodymetricId: data.bodyMetricId,
+          userId: "9c2e83f5-d9b6-4ae1-ebad-08dcd3c40b19",
+          value: data.value,
+          metricId: data.metricId ?? "",
+        });
+        if (response.Success) {
+          setUserMeasurements((prevMeasurements): IUserMeasurements[] =>
+            prevMeasurements.map((measurement) =>
+              measurement.bodyMetricsId === data.bodyMetricId
+                ? {
+                    ...measurement,
+                    value: data.value.toString(), // value'yu string'e dönüştür
+                  }
+                : measurement
+            )
+          );
+        } else {
+          alert(response.Message);
+        }
+      } catch (error) {
+        alert(error);
+      }
+    },
+    [reFetch]
+  );
 
   if (loading) {
     return <LoadingScreen />;
@@ -52,7 +70,7 @@ const Reports = () => {
       {measurements ? (
         <FlatList
           scrollEnabled
-          data={measurements}
+          data={userMeasurements}
           renderItem={({ item, index }) => (
             <UsersMeasurements
               index={index}
