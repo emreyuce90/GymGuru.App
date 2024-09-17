@@ -17,6 +17,7 @@ import { Swipeable } from "react-native-gesture-handler";
 import Api from "../../../lib/@core/data/Api";
 import ErrorScreen from "../../../lib/@core/components/ErrorScreen";
 import LoadingScreen from "../../../lib/@core/components/LoadingScreen";
+import useProgrammes from "../programme/hooks/useProgrammes";
 
 const selectIds = (data: ISubProgrammeMovement[]) => {
   let arr = [] as any;
@@ -48,6 +49,7 @@ const isValidProgramme = (data: IAddExerciseModel) => {
 };
 
 const AddNewProgramme = () => {
+  const { fetchData } = useProgrammes();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | unknown>();
   const swipeableRefs = useRef<any>([]);
@@ -112,10 +114,11 @@ const AddNewProgramme = () => {
       try {
         setLoading(true);
         const response = await Api.post(
-          `/api/programme/7aaf453f-56ea-4f7d-8877-4cec29072bfe`,
+          `/api/programme/9c2e83f5-d9b6-4ae1-ebad-08dcd3c40b19`,
           programme
         );
         if (response.Success) {
+          await fetchData();
           navigation.navigate("Programmes");
           console.log("success");
         } else {

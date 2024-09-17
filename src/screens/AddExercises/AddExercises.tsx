@@ -23,6 +23,7 @@ function HeaderTitle() {
 
 const AddExercises = () => {
   const route = useRoute();
+  //TODO:Hareketleri hooktan değil contextten oku!
   const { movements, loading, error } = useMovements();
   const [allMovements, setAllMovements] = useState<IMovement[]>([]);
   const { movementIds, index, from } = route.params as any;

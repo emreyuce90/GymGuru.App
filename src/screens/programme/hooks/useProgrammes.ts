@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Api from "../../../../lib/@core/data/Api";
 
 const useProgrammes = () => {
@@ -6,26 +6,27 @@ const useProgrammes = () => {
   const [error, setError] = useState<string | unknown>("");
   const [programmes, setProgrammes] = useState<IProgramme[]>([]);
 
-  useEffect(() => {
-    const getProgrammes = async () => {
-      try {
-        const programmes = await Api.get(
-          `/api/programme/7aaf453f-56ea-4f7d-8877-4cec29072bfe`
-        );
-        if (programmes.Success) {
-          setProgrammes(programmes.Resource.resource);
-        } else {
-          setError(programmes.Message);
-        }
-      } catch (error) {
-        setError(error);
-      } finally {
-        setLoading(false);
+  const fetchData = async () => {
+    try {
+      const programmes = await Api.get(
+        `/api/programme/9c2e83f5-d9b6-4ae1-ebad-08dcd3c40b19`
+      );
+      if (programmes.Success) {
+        setProgrammes(programmes.Resource.resource);
+      } else {
+        setError(programmes.Message);
       }
-    };
-    getProgrammes();
+    } catch (error) {
+      setError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
   }, []);
-  return { loading, error, programmes };
+  return { loading, error, programmes, fetchData };
 };
 
 export default useProgrammes;
