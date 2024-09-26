@@ -35,7 +35,7 @@ const SubProgrammeDetail = () => {
     try {
       setIsLoading(true);
       const request = await Api.post("/api/Workout/StartWorkout", {
-        userId: "7aaf453f-56ea-4f7d-8877-4cec29072bfe",
+        userId: "04aa9bc1-ee4b-45e0-8feb-08dcde5262d9",
         subProgrammeId: subProgrammeId,
         workoutDate: now.toISOString(),
         startTime2: getCurrentTime(),

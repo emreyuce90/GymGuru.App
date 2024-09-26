@@ -10,7 +10,7 @@ const useReports = () => {
     const fetchData = async () => {
       try {
         const res = await Api.get(
-          "/api/Workout/GetByUserId/7aaf453f-56ea-4f7d-8877-4cec29072bfe"
+          "/api/Workout/GetByUserId/04aa9bc1-ee4b-45e0-8feb-08dcde5262d9"
         );
         console.log("res", res);
         if (res.Success) {
