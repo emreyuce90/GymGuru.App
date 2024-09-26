@@ -10,7 +10,7 @@ const useWorkoutCount = () => {
     const fetchData = async () => {
       try {
         const response = await Api.get(
-          "/api/Workout/GetWorkoutCountByUserId/9c2e83f5-d9b6-4ae1-ebad-08dcd3c40b19"
+          "/api/Workout/GetWorkoutCountByUserId/04aa9bc1-ee4b-45e0-8feb-08dcde5262d9"
         );
         if (response.Success) {
           setCount(response.Resource.resource);

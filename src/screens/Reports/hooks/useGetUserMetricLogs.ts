@@ -10,7 +10,7 @@ const useGetUserMetricLogs = (bodyMetricId: string) => {
     const fetchData = async () => {
       try {
         const response = await Api.get(
-          `/api/Metrics/9c2e83f5-d9b6-4ae1-ebad-08dcd3c40b19/${bodyMetricId}`
+          `/api/Metrics/04aa9bc1-ee4b-45e0-8feb-08dcde5262d9/${bodyMetricId}`
         );
 
         if (response.Success) {
