@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import Api from "../../../../lib/@core/data/Api";
+import { useAuth } from "../../../context/AuthProvider";
 
 const useGetUserMetricLogs = (bodyMetricId: string) => {
+  const { user } = useAuth();
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | unknown>();
   const [metricLogs, setMetricLogs] = useState<IUserMetricLog[]>();
@@ -10,7 +12,7 @@ const useGetUserMetricLogs = (bodyMetricId: string) => {
     const fetchData = async () => {
       try {
         const response = await Api.get(
-          `/api/Metrics/04aa9bc1-ee4b-45e0-8feb-08dcde5262d9/${bodyMetricId}`
+          `/api/Metrics/${user?.id}/${bodyMetricId}`
         );
 
         if (response.Success) {

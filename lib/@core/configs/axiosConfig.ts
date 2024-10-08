@@ -1,4 +1,6 @@
 import axios from "axios";
+import { getUser } from "../../../src/context/SecureStore/UserSecureStore";
+import { jwtValid } from "../../../src/context/SecureStore";
 
 const isString = (object: any) => typeof object === "string";
 
@@ -15,10 +17,17 @@ export const configureAxios = ({ baseURL }: axiosConfigType) => {
   axios.defaults.baseURL = baseURL;
   //axios.defaults.headers.common.Authorization = `ApiKey ${apiKey}`;
 
-  axios.interceptors.request.use((request) => {
+  axios.interceptors.request.use(async (request) => {
+    const user: IUser = await getUser();
     //request.headers.set('Accept-Language', i18n.language);
     //request.withCredentials = true;
-    return request;
+    if (user.token && jwtValid(user.loginDate)) {
+      request.headers.Authorization = `Bearer ${user?.token}`;
+      //request.headers.set('Accept-Language', i18n.language);
+      return request;
+    } else {
+      return request;
+    }
   });
 
   axios.interceptors.response.use(

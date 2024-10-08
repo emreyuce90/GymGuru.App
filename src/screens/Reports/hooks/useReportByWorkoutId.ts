@@ -10,7 +10,6 @@ const useReportByWorkoutId = (props: useReportByWorkoutIdPropTypes) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<unknown | string>("");
   const [reportDetails, setReportDetails] = useState<any>();
-  console.log("props", props);
   useEffect(() => {
     const fetchData = async () => {
       try {

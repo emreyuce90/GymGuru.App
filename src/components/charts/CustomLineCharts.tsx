@@ -18,7 +18,6 @@ const CustomLineCharts = (props: CustomLineChartsPropTypes) => {
     });
     return acc;
   }, []);
-  console.log("data", data);
   return (
     <View
       style={{

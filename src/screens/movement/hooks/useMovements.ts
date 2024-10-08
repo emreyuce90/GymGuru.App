@@ -12,11 +12,9 @@ const useMovements = () => {
         const movements = await Api.get("/api/movements");
         if (movements.Success) {
           setMovements(movements?.Resource.resource);
-          console.log("movements", movements);
         }
       } catch (err) {
         setError(err);
-        console.log("err", err);
       } finally {
         setLoading(false);
       }

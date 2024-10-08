@@ -17,14 +17,7 @@ const ExerciseCard = (props: ExerciseCardPropTypes) => {
   const navigation = useNavigation<any>();
   const { title, imageUrl, id, tip, videoUrl, bodyPartId, description } =
     props.exercise;
-  console.log(
-    "uri",
-    `${process.env.EXPO_PUBLIC_API_URL}${
-      process.env.EXPO_PUBLIC_API_URL == "https://api.gymguru.com.tr"
-        ? "/api.gymguru.com.tr"
-        : ""
-    }/images/${imageUrl}`
-  );
+
   return (
     <Animated.View
       entering={FadeInDown.duration(400)

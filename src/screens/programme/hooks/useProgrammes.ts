@@ -1,16 +1,17 @@
 import { useCallback, useEffect, useState } from "react";
 import Api from "../../../../lib/@core/data/Api";
+import { useAuth } from "../../../context/AuthProvider";
 
 const useProgrammes = () => {
+  const { user } = useAuth();
+
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | unknown>("");
   const [programmes, setProgrammes] = useState<IProgramme[]>([]);
 
   const fetchData = async () => {
     try {
-      const programmes = await Api.get(
-        `/api/programme/04aa9bc1-ee4b-45e0-8feb-08dcde5262d9`
-      );
+      const programmes = await Api.get(`/api/programme/${user?.id}`);
       if (programmes.Success) {
         setProgrammes(programmes.Resource.resource);
       } else {

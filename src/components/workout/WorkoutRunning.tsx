@@ -108,7 +108,6 @@ const WorkoutRunning = (props: WorkoutRunningPropTypes) => {
     }
 
     setWorkoutSets((prevState) => {
-      console.log("prevState", prevState);
       //copiying data
       const updateWeigth = [...prevState.movementSets];
       //find exact data

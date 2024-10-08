@@ -7,6 +7,7 @@ import { Suspense } from "react";
 import "fast-text-encoding";
 import moment from "moment";
 import Toast from "react-native-toast-message";
+import { AuthProvider } from "./src/context/AuthProvider";
 
 moment.locale("tr");
 const axiosConfig = {
@@ -18,10 +19,12 @@ configureAxios(axiosConfig);
 export default function App() {
   return (
     <Suspense fallback={<LoadingScreen />}>
-      <SafeAreaProvider>
-        <StatusBar style="dark" />
-        <Content />
-      </SafeAreaProvider>
+      <AuthProvider>
+        <SafeAreaProvider>
+          <StatusBar style="dark" />
+          <Content />
+        </SafeAreaProvider>
+      </AuthProvider>
       <Toast />
     </Suspense>
   );

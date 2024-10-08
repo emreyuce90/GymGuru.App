@@ -17,7 +17,11 @@ import WorkoutLogReports from "./Reports/WorkoutLogReports";
 import WorkoutLogReportsDetail from "./Reports/WorkoutLogReportsDetail";
 import Dynamic from "./Reports/Dynamic";
 import AddNewProgramme from "./AddNewProgramme/AddNewProgramme";
-
+import ForgotPassword from "./auth/ForgotPassword";
+import Login from "./auth/Login";
+import Register from "./auth/Register";
+import ResetPassword from "./auth/ResetPassword";
+import ChangePassword from "./auth/ChangePassword";
 export {
   Home,
   Movements,
@@ -38,4 +42,9 @@ export {
   WorkoutLogReportsDetail,
   Dynamic,
   AddNewProgramme,
+  ForgotPassword,
+  ChangePassword,
+  Login,
+  Register,
+  ResetPassword,
 };

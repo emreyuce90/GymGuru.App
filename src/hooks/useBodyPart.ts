@@ -13,7 +13,6 @@ const useBodyPart = () => {
         const data = await Api.get("/api/bodypart");
         if (data.Success) {
           setBodyParts(data?.Resource?.resource);
-          console.log("movements", data.Resource.resource);
         }
       } catch (err) {
         setError(err);

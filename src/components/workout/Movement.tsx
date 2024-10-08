@@ -12,7 +12,6 @@ const Movement = (props: MovementPropTypes) => {
   const { id, title, description, bodyPartId, imageUrl, videoUrl } =
     props.movement;
   const navigation = useNavigation<any>();
-  console.log("ImageUrl", imageUrl);
   return (
     <Pressable
       onPress={() =>

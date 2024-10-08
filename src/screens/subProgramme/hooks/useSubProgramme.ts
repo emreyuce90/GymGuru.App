@@ -16,11 +16,6 @@ const useSubProgramme = (props: subProgrammePropTypes) => {
       try {
         const subProgrammes = await Api.get(`/api/SubProgramme/${programmeId}`);
         if (subProgrammes.Success) {
-          console.log(
-            "subProgrammes.Resource.resource",
-            subProgrammes.Resource.resource
-          );
-
           setSubProgrammes(subProgrammes.Resource.resource);
         }
       } catch (err) {

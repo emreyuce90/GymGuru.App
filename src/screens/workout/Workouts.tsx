@@ -123,7 +123,6 @@ const Workouts = () => {
         ""
       );
       if (request.Success) {
-        console.log("request successs");
         const transformedData = convertToWorkoutMovementAddDto(
           filterDataToSend(allWorkoutsData)
         );
@@ -200,7 +199,6 @@ const Workouts = () => {
 
   useEffect(() => {
     if (checkedMovements) {
-      console.log("workoutId", workoutInfos.workoutId);
       setSubProgrammeMovementsState((prev) => {
         //mevcut state i kopyala
         const state = [...prev];
@@ -213,7 +211,6 @@ const Workouts = () => {
             movement: element,
           });
         });
-        console.log("state", state);
         //yenilenmiş state i geri döndür
         return state;
       });

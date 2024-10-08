@@ -7,8 +7,12 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import BodyParts from "../Bodyparts/BodyParts";
+import { useAuth } from "../../context/AuthProvider";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { jwtValid } from "../../context/SecureStore";
 
 const Home = () => {
+  const { user, logout } = useAuth();
   const navigation = useNavigation<any>();
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -21,27 +25,29 @@ const Home = () => {
       ),
     });
   }, []);
+
   return (
     // <SafeAreaView className="">
     <>
-      <View className="flex flex-row items-center space-x-3 justify-center mt-4">
+      <View className="flex flex-row items-center space-x-3 justify-between px-8 py-4 ">
         <View>
           <Text className="text-xl">
-            Hoşgeldin, <Text className="font-bold">Emre Yüce 👋</Text>
+            Hoşgeldin, <Text className="font-bold">{user?.username} 👋</Text>
           </Text>
           <Text className="text-sm text-slate-500 mt-2">
             Antrenman yapmak için harika bir gün ☀️
           </Text>
         </View>
-        <View className="">
-          <Image
-            className="rounded-full"
-            source={{
-              uri: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cmFuZG9tJTIwcGVvcGxlfGVufDB8fDB8fHww",
+        {user?.token && jwtValid(user.loginDate) && (
+          <Pressable
+            className="text-sm font-thin text-black"
+            onPress={() => {
+              logout();
             }}
-            style={{ width: wp(20), height: hp(10) }}
-          />
-        </View>
+          >
+            <Ionicons name="exit-outline" size={32} color="orange" />
+          </Pressable>
+        )}
       </View>
 
       <BodyParts />

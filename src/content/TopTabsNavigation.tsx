@@ -40,7 +40,6 @@ const TopTabsNavigation = () => {
   if (error) {
     return <ErrorScreen error={error} />;
   }
-  console.log("bodyParts", bodyParts);
   return (
     <TopTabs.Navigator
       screenOptions={{

@@ -17,9 +17,6 @@ type BodyPartPropTypes = {
 const BodyPart = (props: BodyPartPropTypes) => {
   const navigation = useNavigation<any>();
   const { id, name, pictureUrl } = props.bodypart;
-  console.log(
-    `${process.env.EXPO_PUBLIC_API_URL}/api.gymguru.com.tr/images/bodyPart/${pictureUrl}`
-  );
   return (
     <Animated.View
       entering={FadeInDown.duration(600)

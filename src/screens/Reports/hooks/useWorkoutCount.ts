@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import Api from "../../../../lib/@core/data/Api";
+import { useAuth } from "../../../context/AuthProvider";
 
 const useWorkoutCount = () => {
+  const { user } = useAuth();
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | unknown>("");
   const [count, setCount] = useState<number>(0);
@@ -10,7 +12,7 @@ const useWorkoutCount = () => {
     const fetchData = async () => {
       try {
         const response = await Api.get(
-          "/api/Workout/GetWorkoutCountByUserId/04aa9bc1-ee4b-45e0-8feb-08dcde5262d9"
+          `/api/Workout/GetWorkoutCountByUserId/${user?.id}`
         );
         if (response.Success) {
           setCount(response.Resource.resource);

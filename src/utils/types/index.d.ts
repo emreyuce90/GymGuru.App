@@ -89,3 +89,11 @@ type ISubProgrammeAddModel = {
   subProgrammeName: string;
   subProgrammeMovements: ISubProgrammeMovement[];
 };
+
+type IUser = {
+  id: string;
+  email: string;
+  username: string;
+  token: string;
+  loginDate: string;
+};

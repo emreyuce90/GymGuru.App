@@ -10,8 +10,10 @@ import { widthPercentageToDP } from "react-native-responsive-screen";
 import { ScrollView } from "react-native-virtualized-view";
 import { IMeasureUpdate } from "../../components/report/types/IMeasureUpdate";
 import Api from "../../../lib/@core/data/Api";
+import { useAuth } from "../../context/AuthProvider";
 
 const Reports = () => {
+  const { user } = useAuth();
   const { measurements, error, loading, reFetch } = useGetUserMeasurement();
   const [userMeasurements, setUserMeasurements] = useState<IUserMeasurements[]>(
     []
@@ -28,7 +30,7 @@ const Reports = () => {
       try {
         const response = await Api.post(`/api/Metrics/`, {
           bodymetricId: data.bodyMetricId,
-          userId: "04aa9bc1-ee4b-45e0-8feb-08dcde5262d9",
+          userId: user?.id,
           value: data.value,
           metricId: data.metricId ?? "",
         });

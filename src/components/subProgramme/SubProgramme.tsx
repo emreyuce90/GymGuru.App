@@ -12,7 +12,6 @@ type SubProgrammePropTypes = {
 const SubProgramme = (props: SubProgrammePropTypes) => {
   const { id, name, programmeId } = props.subprogramme;
   const navigation = useNavigation<any>();
-  console.log("subProgramme", props.programmeName);
   return (
     <Pressable
       onPress={() =>

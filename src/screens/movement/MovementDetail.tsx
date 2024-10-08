@@ -29,7 +29,6 @@ const MovementDetail = () => {
     });
   }, []);
 
-  console.log("tip", tip);
   return (
     <>
       <View className="flex">

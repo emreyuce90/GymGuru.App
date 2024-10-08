@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import Api from "../../../../lib/@core/data/Api";
+import { useAuth } from "../../../context/AuthProvider";
 
 const useGetUserMeasurement = () => {
+  const { user } = useAuth();
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | unknown>("");
   const [measurements, setMeasurements] = useState<IUserMeasurements[]>();
@@ -15,9 +17,7 @@ const useGetUserMeasurement = () => {
     const fetchData = async () => {
       try {
         //userId ve yeni değer gönder
-        const response = await Api.get(
-          "/api/Metrics/04aa9bc1-ee4b-45e0-8feb-08dcde5262d9"
-        );
+        const response = await Api.get(`/api/Metrics/${user?.id}`);
         if (response.Success) {
           setMeasurements(response.Resource.resource || []);
         } else {

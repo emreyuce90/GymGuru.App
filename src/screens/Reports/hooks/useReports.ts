@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import Api from "../../../../lib/@core/data/Api";
+import { useAuth } from "../../../context/AuthProvider";
 
 const useReports = () => {
+  const { user } = useAuth();
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | unknown>();
   const [reports, setReports] = useState<IWorkoutLog[]>();
@@ -9,10 +11,7 @@ const useReports = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await Api.get(
-          "/api/Workout/GetByUserId/04aa9bc1-ee4b-45e0-8feb-08dcde5262d9"
-        );
-        console.log("res", res);
+        const res = await Api.get(`/api/Workout/GetByUserId/${user?.id}`);
         if (res.Success) {
           setReports(res.Resource.resource);
         }

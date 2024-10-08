@@ -18,6 +18,7 @@ import Api from "../../../lib/@core/data/Api";
 import ErrorScreen from "../../../lib/@core/components/ErrorScreen";
 import LoadingScreen from "../../../lib/@core/components/LoadingScreen";
 import useProgrammes from "../programme/hooks/useProgrammes";
+import { useAuth } from "../../context/AuthProvider";
 
 const selectIds = (data: ISubProgrammeMovement[]) => {
   let arr = [] as any;
@@ -49,6 +50,7 @@ const isValidProgramme = (data: IAddExerciseModel) => {
 };
 
 const AddNewProgramme = () => {
+  const { user } = useAuth();
   const { fetchData } = useProgrammes();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | unknown>();
@@ -114,15 +116,13 @@ const AddNewProgramme = () => {
       try {
         setLoading(true);
         const response = await Api.post(
-          `/api/programme/04aa9bc1-ee4b-45e0-8feb-08dcde5262d9`,
+          `/api/programme/${user?.id}`,
           programme
         );
         if (response.Success) {
           await fetchData();
           navigation.navigate("Programmes");
-          console.log("success");
         } else {
-          console.log("fail");
         }
       } catch (error) {
         setError(error);

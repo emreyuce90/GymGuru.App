@@ -11,8 +11,10 @@ import { Bounceable } from "rn-bounceable";
 import Api from "../../../lib/@core/data/Api";
 import { getCurrentDateTime, getCurrentTime } from "../../../lib/@core/utils";
 import { ScrollView } from "react-native-gesture-handler";
+import { useAuth } from "../../context/AuthProvider";
 
 const SubProgrammeDetail = () => {
+  const { user } = useAuth();
   const route = useRoute();
   const navigation = useNavigation<any>();
   const { subProgrammeId, subProgrammeName, programmeName } =
@@ -35,14 +37,13 @@ const SubProgrammeDetail = () => {
     try {
       setIsLoading(true);
       const request = await Api.post("/api/Workout/StartWorkout", {
-        userId: "04aa9bc1-ee4b-45e0-8feb-08dcde5262d9",
+        userId: user?.id,
         subProgrammeId: subProgrammeId,
         workoutDate: now.toISOString(),
         startTime2: getCurrentTime(),
       });
 
       if (request.Success) {
-        console.log("Workout Post Response", request.Resource.resource.id);
         navigation.navigate("Workouts", {
           workoutId: request.Resource.resource.id,
           workoutName: `${programmeName} | ${subProgrammeName}`,

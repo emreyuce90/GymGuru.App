@@ -12,7 +12,6 @@ const useExercises = (bodypartId: string) => {
         const res = await Api.get(`/api/Movements/bodypart/${bodypartId}`);
         if (res.Success) {
           setExercises(res.Resource.resource);
-          console.log("exercises", res.Resource.resource);
         }
       } catch (error) {
         setError(error);
