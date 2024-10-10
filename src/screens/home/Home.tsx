@@ -13,6 +13,7 @@ import { jwtValid } from "../../context/SecureStore";
 
 const Home = () => {
   const { user, logout } = useAuth();
+
   const navigation = useNavigation<any>();
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -38,7 +39,7 @@ const Home = () => {
             Antrenman yapmak için harika bir gün ☀️
           </Text>
         </View>
-        {user?.token && jwtValid(user.loginDate) && (
+        {user && (
           <Pressable
             className="text-sm font-thin text-black"
             onPress={() => {

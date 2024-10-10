@@ -24,22 +24,21 @@ import { useAuth } from "../context/AuthProvider";
 import { useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { jwtValid } from "../context/SecureStore";
+import LoadingScreen from "../../lib/@core/components/LoadingScreen";
 
 function StackGroup() {
-  const { user } = useAuth();
-
+  const { user, loading } = useAuth();
   const navigation = useNavigation<any>();
   const { measurements } = useGetUserMeasurement();
   const Stack = createStackNavigator();
 
-  useEffect(() => {
-    if (!user?.token || !jwtValid(user.loginDate)) {
-      navigation.navigate("Login");
-    }
-  }, [user]);
+  if (loading) {
+    return <LoadingScreen />;
+  }
+
   return (
     <Stack.Navigator>
-      {user?.token && jwtValid(user.loginDate) ? (
+      {user ? (
         <>
           <Stack.Screen
             name="TabGroup"

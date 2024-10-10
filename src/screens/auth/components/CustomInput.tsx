@@ -1,6 +1,5 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, TextInput } from "react-native";
 import React from "react";
-import { TextInput } from "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
 
 type CustomInputPropTypes = {
@@ -10,12 +9,10 @@ type CustomInputPropTypes = {
   securityTextEntry?: boolean;
   errorMessage?: string;
   success?: boolean;
-  width?: number;
 };
 
 const CustomInput = (props: CustomInputPropTypes) => {
   const {
-    width,
     value,
     setValue,
     placeholder,
@@ -27,53 +24,34 @@ const CustomInput = (props: CustomInputPropTypes) => {
   return (
     <>
       <View
-        className={`flex-row justify-between ${width ? width : "100%"}`}
-        style={errorMessage ? styles.containerError : styles.container}
+        className={`flex-row items-center w-full p-4 bg-white border ${
+          errorMessage
+            ? "border-red-500"
+            : success
+            ? "border-green-500"
+            : "border-gray-300"
+        } rounded-2xl shadow-sm my-3`}
       >
         <TextInput
           value={value}
           onChangeText={setValue}
           placeholder={placeholder}
-          style={styles.input}
           secureTextEntry={securityTextEntry}
+          className="flex-1 text-lg text-gray-700"
+          placeholderTextColor="#aaa"
         />
         {errorMessage && (
-          <Ionicons name="close-circle-outline" size={28} color="red" />
+          <Ionicons name="close-circle-outline" size={24} color="red" />
         )}
         {success && (
-          <Ionicons name="checkmark-circle-outline" size={28} color="green" />
+          <Ionicons name="checkmark-circle-outline" size={24} color="green" />
         )}
       </View>
-
-      <View className="w-full">
-        {errorMessage && <Text className="text-red-500">{errorMessage}</Text>}
-      </View>
+      {errorMessage && (
+        <Text className="text-red-500 text-sm">{errorMessage}</Text>
+      )}
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "white",
-    borderColor: "#e8e8e8",
-    borderWidth: 1,
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    marginVertical: 5,
-    paddingVertical: 10,
-  },
-  containerError: {
-    backgroundColor: "white",
-    width: "100%",
-    borderColor: "red",
-    borderWidth: 1,
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    marginVertical: 5,
-  },
-  input: {
-    fontSize: 16,
-  },
-});
 
 export default CustomInput;

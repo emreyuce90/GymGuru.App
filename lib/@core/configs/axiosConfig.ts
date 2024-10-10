@@ -1,6 +1,11 @@
 import axios from "axios";
-import { getUser } from "../../../src/context/SecureStore/UserSecureStore";
+import {
+  getUser,
+  updateUser,
+  userLogout,
+} from "../../../src/context/SecureStore/UserSecureStore";
 import { jwtValid } from "../../../src/context/SecureStore";
+import Api from "../data/Api";
 
 const isString = (object: any) => typeof object === "string";
 
@@ -25,11 +30,9 @@ export const configureAxios = ({ baseURL }: axiosConfigType) => {
       request.headers.Authorization = `Bearer ${user?.token}`;
       //request.headers.set('Accept-Language', i18n.language);
       return request;
-    } else {
-      return request;
     }
+    return request;
   });
-
   axios.interceptors.response.use(
     (response) => {
       if (Object.keys(response ?? "").indexOf("Success") > -1) {
@@ -51,76 +54,102 @@ export const configureAxios = ({ baseURL }: axiosConfigType) => {
         Resource: response?.data,
       };
     },
-    (err: any) => {
-      console.log("err", err);
-      let msg = err.message;
+    async (error: any) => {
+      let msg = error.message;
       console.error(
         "axios interceptors ERROR*",
-        err.message,
+        error.message,
         "response:",
-        err.response
+        error.response
       );
-      // console.error('axios interceptors ERROR stack', err.stack);
-      return new Promise((resolve, reject) => {
-        if (msg === "Network Error") {
-          if (err.response) {
-            msg = `${err.response?.status}.`;
-          } else {
-            msg = `Network Error. Base URL: ${err.config?.baseURL}${err.config?.url}`;
-          }
-          resolve({
-            Success: false,
-            Message: msg,
-          });
-        } else if (err.response?.data) {
-          const { response } = err;
-          // console.log('axios err.response?.data --------- 1', response.data);
-          if (isString(response.data)) {
-            if (response.data.indexOf("<!DOCTYPE") > -1) {
-              resolve({
-                Success: false,
-                Message: `${msg}. ${err.config?.baseURL}${err.config?.url}`,
-              });
-            }
-          } else if (Object.keys(response.data ?? "").indexOf("Success") > -1) {
-            // console.log('axios err.response?.data Success --------- 2', response.data);
-            resolve(response?.data);
-          } else {
-            // console.log('axios err.response?.data Success --------- 3', response.data);
-            resolve({
-              Success: response?.status === 200 || response?.status === 201,
-              Message: `${msg} ${response?.status}`,
-              Resource: response?.data,
-            });
+      const originalRequest = error.config;
+      if (error.response.status === 401 && !originalRequest._retry) {
+        originalRequest._retry = true;
+        const user: IUser = await getUser();
+
+        if (user.refreshToken) {
+          try {
+            const response = await Api.post(
+              "api/auth/CreateTokenByRefreshToken",
+              {
+                refreshToken: `${user.refreshToken}`,
+              }
+            );
+
+            const { token, refreshToken } = response.Resource.resource;
+            await updateUser(token, refreshToken);
+
+            axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+            originalRequest.headers["Authorization"] = `Bearer ${token}`;
+
+            return axios(originalRequest);
+          } catch (error) {
+            await userLogout();
           }
         } else {
-          console.error("axios.interceptors.err", msg, err.response);
-          if (err.response?.status === 401) {
-            resolve({
-              Success: false,
-              Message: `401 Unauthorized. ${msg}. ${err.config?.baseURL}${err.config?.url}`,
-            });
-          } else if (err.response?.status === 403) {
-            resolve({
-              Success: false,
-              Message: `403 Forbidden. The server received the request but refused authorization. ${msg}. ${err.config?.baseURL}${err.config?.url}`,
-            });
-          } else {
-            resolve({
-              Success: false,
-              Message: `The server is working properly but error occurred. ${msg}`,
-            });
-          }
+          await userLogout();
         }
-      });
+      }
+      return Promise.reject(error);
     }
   );
-
-  // console.blue('configureAxios', axios.defaults);
-  // axios
-  // 	.get('/api/auth/test')
-  // 	.then((result) => console.log('axios test result: ', JSON.stringify(result, null, 2)))
-  // 	.catch((err: Error) => console.log('axios test result: ', err.message));
-
-  return true;
+  // console.error('axios interceptors ERROR stack', err.stack);
+  // return new Promise((resolve, reject) => {
+  //   if (msg === "Network Error") {
+  //     if (err.response) {
+  //       msg = `${err.response?.status}.`;
+  //     } else {
+  //       msg = `Network Error. Base URL: ${err.config?.baseURL}${err.config?.url}`;
+  //     }
+  //     resolve({
+  //       Success: false,
+  //       Message: msg,
+  //     });
+  //   } else if (err.response?.data) {
+  //     const { response } = err;
+  //     // console.log('axios err.response?.data --------- 1', response.data);
+  //     if (isString(response.data)) {
+  //       if (response.data.indexOf("<!DOCTYPE") > -1) {
+  //         resolve({
+  //           Success: false,
+  //           Message: `${msg}. ${err.config?.baseURL}${err.config?.url}`,
+  //         });
+  //       }
+  //     } else if (Object.keys(response.data ?? "").indexOf("Success") > -1) {
+  //       // console.log('axios err.response?.data Success --------- 2', response.data);
+  //       resolve(response?.data);
+  //     } else {
+  //       // console.log('axios err.response?.data Success --------- 3', response.data);
+  //       resolve({
+  //         Success: response?.status === 200 || response?.status === 201,
+  //         Message: `${msg} ${response?.status}`,
+  //         Resource: response?.data,
+  //       });
+  //     }
+  //   } else {
+  //     console.error("axios.interceptors.err", msg, err.response);
+  //     if (err.response?.status === 401) {
+  //       resolve({
+  //         Success: false,
+  //         Message: `401 Unauthorized. ${msg}. ${err.config?.baseURL}${err.config?.url}`,
+  //       });
+  //     } else if (err.response?.status === 403) {
+  //       resolve({
+  //         Success: false,
+  //         Message: `403 Forbidden. The server received the request but refused authorization. ${msg}. ${err.config?.baseURL}${err.config?.url}`,
+  //       });
+  //     } else {
+  //       resolve({
+  //         Success: false,
+  //         Message: `The server is working properly but error occurred. ${msg}`,
+  //       });
+  //     }
+  //   }
+  // });
 };
+
+// console.blue('configureAxios', axios.defaults);
+// axios
+// 	.get('/api/auth/test')
+// 	.then((result) => console.log('axios test result: ', JSON.stringify(result, null, 2)))
+// 	.catch((err: Error) => console.log('axios test result: ', err.message));

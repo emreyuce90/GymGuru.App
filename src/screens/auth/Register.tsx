@@ -25,7 +25,6 @@ const Register = () => {
       passwordRepeat &&
       !matchError
     ) {
-      console.warn("register pressed", { email, password });
     }
   }, [email, emailError, password, passwordError, passwordRepeat, matchError]);
 

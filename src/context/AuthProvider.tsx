@@ -8,51 +8,73 @@ import {
 import { jwtValid } from "./SecureStore";
 import Api from "../../lib/@core/data/Api";
 import moment from "moment";
+import { useNavigation } from "@react-navigation/native";
 
 //context in tipi ve başlangıç değerleri
 const AuthContext = createContext<{
   user: IUser | null;
   login: (data: IUser) => Promise<void>;
   logout: () => Promise<void>;
+  refreshToken: () => Promise<void>;
+  loading: boolean;
 }>({
   user: null,
   login: async () => {},
   logout: async () => {},
+  refreshToken: async () => {},
+  loading: false,
 });
 
 //provider
 export const AuthProvider: React.FC<any> = ({ children }) => {
   const [user, setUser] = useState<IUser | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  const refreshToken = async () => {
+    const storedUser: IUser = await getUser();
+    if (!storedUser || !storedUser.token) {
+      setUser(null);
+      return;
+    }
+    if (storedUser?.token && !jwtValid(storedUser.loginDate)) {
+      try {
+        const response = await Api.post("api/auth/CreateTokenByRefreshToken", {
+          refreshToken: `${storedUser?.refreshToken}`,
+        });
+        if (
+          response.Success &&
+          response.Resource.resource.token &&
+          response.Resource.resource.refreshToken
+        ) {
+          //dataContext verilerini güncelle
+          storedUser.token = response.Resource.resource.token;
+          storedUser.loginDate = moment().format("DD-MM-YYYY HH:mm:ss");
+          storedUser.refreshToken = response.Resource.resource.refreshToken;
+          //secureStore verilerini güncelle
+          await updateUser(storedUser.token, storedUser.refreshToken);
+          setUser(storedUser);
+          console.log("stored user set edildi");
+        } else {
+          console.warn("Bir hata meydana geldi", response.Message);
+          setUser(null);
+          await userLogout();
+        }
+      } catch (error) {
+        console.warn(
+          "Refresh token ile JWT alma esnasında bir hata meydana geldi"
+        );
+        setUser(null);
+        await userLogout();
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      setUser(storedUser);
+    }
+  };
 
   useEffect(() => {
-    const fetchUser = async () => {
-      const user: IUser = await getUser();
-      if (user?.token) {
-        if (!jwtValid(user.loginDate)) {
-          //jwt süresi dolmuş, refresh token almak için apiye istek yap
-          console.log("jwt Süresi dolmuş, yeni token için istek yapılıyor");
-          try {
-            const response = await Api.post(
-              "/api/auth/CreateTokenByRefreshToken",
-              null
-            );
-            if (response.Success && response.Resource.token) {
-              //dataContext verilerini güncelle
-              user.token = response.Resource.token;
-              user.loginDate = moment().format("DD-MM-YYYY HH:mm:ss");
-              //secureStore verilerini güncelle
-              await updateUser(user.token);
-            }
-          } catch (error) {
-            console.warn(
-              "Refresh token ile JWT alma esnasında bir hata meydana geldi"
-            );
-          }
-        }
-      }
-      setUser(user);
-    };
-    fetchUser();
+    refreshToken();
   }, []);
 
   const login = async (data: IUser) => {
@@ -65,7 +87,9 @@ export const AuthProvider: React.FC<any> = ({ children }) => {
     setUser(null);
   };
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider
+      value={{ user, login, logout, refreshToken, loading }}
+    >
       {children}
     </AuthContext.Provider>
   );

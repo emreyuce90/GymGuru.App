@@ -3,10 +3,10 @@ import Api from "../../../../lib/@core/data/Api";
 import { useAuth } from "../../../context/AuthProvider";
 
 const useGetUserMeasurement = () => {
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | unknown>("");
-  const [measurements, setMeasurements] = useState<IUserMeasurements[]>();
+  const [measurements, setMeasurements] = useState<IUserMeasurements[]>([]);
   const [trigger, setTrigger] = useState<number>(0);
 
   const reFetch = () => {
@@ -15,6 +15,10 @@ const useGetUserMeasurement = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      if (!user?.id || authLoading) {
+        // Eğer user tanımlı değilse veya auth loading ise hiçbir şey yapma
+        return;
+      }
       try {
         //userId ve yeni değer gönder
         const response = await Api.get(`/api/Metrics/${user?.id}`);
@@ -31,7 +35,7 @@ const useGetUserMeasurement = () => {
     };
 
     fetchData();
-  }, [trigger]);
+  }, [trigger, user, authLoading]);
 
   return { loading, error, measurements, reFetch };
 };

@@ -4,11 +4,11 @@ const { deleteItemAsync, setItemAsync, getItemAsync } = SecureStore;
 const SESSION_KEY = "authUser";
 
 export const userLogin = async (data: IUser) => {
-  const { username, token, loginDate, email, id } = data;
+  const { username, token, loginDate, email, id, refreshToken } = data;
   try {
     await setItemAsync(
       SESSION_KEY,
-      JSON.stringify({ username, token, loginDate, email, id })
+      JSON.stringify({ username, token, loginDate, email, id, refreshToken })
     );
     return await getUser();
   } catch {
@@ -37,13 +37,14 @@ export const getUser = async () => {
   }
 };
 
-export const updateUser = async (jwtToken: string) => {
+export const updateUser = async (jwtToken: string, refreshToken: string) => {
   try {
     //find data
     const userInfos = await getItemAsync(SESSION_KEY);
     const parsedData: IUser = userInfos ? JSON.parse(userInfos) : {};
     parsedData.loginDate = moment().format("DD-MM-YYYY HH:mm:ss");
     parsedData.token = jwtToken;
+    parsedData.refreshToken = refreshToken;
     await setItemAsync(SESSION_KEY, JSON.stringify(parsedData));
   } catch (error) {
     console.warn("Kullanıcı güncelleme esnasında bir sorun meydana geldi");

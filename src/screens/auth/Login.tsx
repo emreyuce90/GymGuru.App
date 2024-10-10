@@ -47,7 +47,9 @@ const Login = () => {
             loginDate: moment().format("DD-MM-YYYY HH:mm:ss"),
             token: response.Resource.resource.token,
             username: "Emre Yüce",
+            refreshToken: response.Resource.resource.refreshToken,
           });
+
           navigation.navigate("TabGroup");
         } else {
           setError(response.Message);

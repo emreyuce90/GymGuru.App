@@ -96,4 +96,5 @@ type IUser = {
   username: string;
   token: string;
   loginDate: string;
+  refreshToken: string;
 };
