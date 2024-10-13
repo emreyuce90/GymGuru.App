@@ -10,27 +10,16 @@ import BodyParts from "../Bodyparts/BodyParts";
 import { useAuth } from "../../context/AuthProvider";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { jwtValid } from "../../context/SecureStore";
+import { applicationColors } from "../../utils/types/constants";
 
 const Home = () => {
   const { user, logout } = useAuth();
 
   const navigation = useNavigation<any>();
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerLeft: () => (
-        <View className="mx-4">
-          <Pressable onPress={() => navigation.openDrawer()}>
-            <Feather name="menu" size={24} color="black" />
-          </Pressable>
-        </View>
-      ),
-    });
-  }, []);
 
   return (
-    // <SafeAreaView className="">
     <>
-      <View className="flex flex-row items-center space-x-3 justify-between px-8 py-4 ">
+      <View className="flex flex-row items-center space-x-3 justify-between px-8 py-4 mt-12 ">
         <View>
           <Text className="text-xl">
             Hoşgeldin, <Text className="font-bold">{user?.username} 👋</Text>
@@ -46,7 +35,11 @@ const Home = () => {
               logout();
             }}
           >
-            <Ionicons name="exit-outline" size={32} color="orange" />
+            <Ionicons
+              name="exit-outline"
+              size={32}
+              color={applicationColors.ButtonColor}
+            />
           </Pressable>
         )}
       </View>

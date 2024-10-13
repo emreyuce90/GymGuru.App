@@ -55,6 +55,7 @@ const Login = () => {
           setError(response.Message);
         }
       } catch (error) {
+        console.log("error", error);
         Alert.alert("There is an error occured while login");
       } finally {
         setLoading(false);

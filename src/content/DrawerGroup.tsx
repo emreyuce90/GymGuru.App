@@ -11,7 +11,7 @@ function DrawerGroup() {
         headerShown: false,
       }}
     >
-      <Drawer.Screen name="StackGroup" component={StackGroup} />
+      <Drawer.Screen name="Anasayfa" component={StackGroup} />
     </Drawer.Navigator>
   );
 }

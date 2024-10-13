@@ -12,6 +12,7 @@ import {
 } from "../screens";
 import { Ionicons } from "@expo/vector-icons";
 import TopTabsNavigation from "./TopTabsNavigation";
+import { applicationColors } from "../utils/types/constants";
 
 const Tab = createBottomTabNavigator();
 const TabNavigation = () => {
@@ -34,10 +35,15 @@ const TabNavigation = () => {
           // You can return any component that you like here!
           return <Ionicons name={iconName as any} size={24} color={color} />;
         },
-        tabBarActiveTintColor: "tomato",
+        tabBarActiveTintColor: applicationColors.ButtonColor,
         tabBarInactiveTintColor: "gray",
         tabBarStyle: {
+          bottom: 0,
+          left: 0,
+          right: 0,
           height: 84,
+          //backgroundColor: "rgba(255, 255, 255, 0.90)",
+          borderTopWidth: 0,
         },
         tabBarItemStyle: {
           height: 72,
@@ -51,7 +57,7 @@ const TabNavigation = () => {
       <Tab.Screen
         name="Home"
         component={Home}
-        options={{ headerTitle: "Egzersizler", title: "Egzersizler" }}
+        options={{ headerShown: false, tabBarLabel: "Egzersizler" }}
       />
       {/* <Tab.Screen
         name="Movements"
@@ -61,12 +67,12 @@ const TabNavigation = () => {
       <Tab.Screen
         name="Programmes"
         component={Programmes}
-        options={{ headerTitle: "Programlarım", title: "Programlarım" }}
+        options={{ headerShown: false }}
       />
       <Tab.Screen
         name="Reports"
         component={Reports}
-        options={{ headerTitle: "Raporlar", title: "Raporlar" }}
+        options={{ headerShown: false }}
       />
 
       <Tab.Screen

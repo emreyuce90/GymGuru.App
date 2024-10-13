@@ -3,7 +3,6 @@ import React, { useEffect, useLayoutEffect, useMemo, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import useMovements from "../movement/hooks/useMovements";
 import LoadingScreen from "../../../lib/@core/components/LoadingScreen";
-import ErrorScreen from "../../../lib/@core/components/ErrorScreen";
 import NoDataView from "../../../lib/@core/components/NoDataView";
 import AddExercise from "../../components/exercise/AddExercise";
 import ExerciseAddModal from "../../components/exercise/Modal/ExerciseAddModal";
@@ -85,10 +84,6 @@ const AddExercises = () => {
 
   if (loading) {
     return <LoadingScreen />;
-  }
-
-  if (error) {
-    return <ErrorScreen error={error} />;
   }
 
   return (

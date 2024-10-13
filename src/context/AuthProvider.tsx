@@ -34,6 +34,7 @@ export const AuthProvider: React.FC<any> = ({ children }) => {
     const storedUser: IUser = await getUser();
     if (!storedUser || !storedUser.token) {
       setUser(null);
+      setLoading(false);
       return;
     }
     if (storedUser?.token && !jwtValid(storedUser.loginDate)) {
@@ -41,6 +42,7 @@ export const AuthProvider: React.FC<any> = ({ children }) => {
         const response = await Api.post("api/auth/CreateTokenByRefreshToken", {
           refreshToken: `${storedUser?.refreshToken}`,
         });
+        console.log("API yanıtı", response);
         if (
           response.Success &&
           response.Resource.resource.token &&
@@ -55,27 +57,28 @@ export const AuthProvider: React.FC<any> = ({ children }) => {
           setUser(storedUser);
           console.log("stored user set edildi");
         } else {
-          console.warn("Bir hata meydana geldi", response.Message);
+          console.log("API yanıtı", response);
           setUser(null);
-          await userLogout();
+          await logout();
         }
       } catch (error) {
         console.warn(
           "Refresh token ile JWT alma esnasında bir hata meydana geldi"
         );
         setUser(null);
-        await userLogout();
+        await logout();
       } finally {
         setLoading(false);
       }
     } else {
       setUser(storedUser);
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     refreshToken();
-  }, []);
+  }, [userLogout]);
 
   const login = async (data: IUser) => {
     const userData = await userLogin(data);

@@ -8,7 +8,6 @@ import React, {
 } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import LoadingScreen from "../../../lib/@core/components/LoadingScreen";
-import ErrorScreen from "../../../lib/@core/components/ErrorScreen";
 import Api from "../../../lib/@core/data/Api";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import useSubProgrammeMovements from "../subProgramme/hooks/useSubProgrammeMovements";
@@ -267,7 +266,6 @@ const Workouts = () => {
 
   //error-loading state
   if (loading) return <LoadingScreen />;
-  if (error) return <ErrorScreen error={error} />;
   return (
     <>
       <View className="flex-1 h-screen ">

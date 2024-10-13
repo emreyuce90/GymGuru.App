@@ -13,7 +13,10 @@ type axiosConfigType = {
   baseURL: string;
 };
 
-export const configureAxios = ({ baseURL }: axiosConfigType) => {
+export const configureAxios = (
+  { baseURL }: axiosConfigType,
+  navigationRef?: any
+) => {
   if (axios.defaults.headers.common.Authorization) {
     return;
   }
@@ -63,6 +66,7 @@ export const configureAxios = ({ baseURL }: axiosConfigType) => {
         error.response
       );
       const originalRequest = error.config;
+      console.log("status", error.response.status);
       if (error.response.status === 401 && !originalRequest._retry) {
         originalRequest._retry = true;
         const user: IUser = await getUser();
@@ -75,18 +79,35 @@ export const configureAxios = ({ baseURL }: axiosConfigType) => {
                 refreshToken: `${user.refreshToken}`,
               }
             );
+            console.log("axios response", response);
+            if (response.Success) {
+              const { token, refreshToken } = response.Resource.resource;
+              await updateUser(token, refreshToken);
 
-            const { token, refreshToken } = response.Resource.resource;
-            await updateUser(token, refreshToken);
+              axios.defaults.headers.common[
+                "Authorization"
+              ] = `Bearer ${token}`;
+              originalRequest.headers["Authorization"] = `Bearer ${token}`;
 
-            axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-            originalRequest.headers["Authorization"] = `Bearer ${token}`;
+              return axios(originalRequest);
+            } else {
+              console.log("no");
 
-            return axios(originalRequest);
+              await userLogout();
+              if (navigationRef?.current?.navigate) {
+                navigationRef.current.navigate("Login");
+              }
+            }
           } catch (error) {
             await userLogout();
+            if (navigationRef?.current?.navigate) {
+              navigationRef.current.navigate("Login");
+            }
           }
         } else {
+          if (navigationRef?.current?.navigate) {
+            navigationRef.current.navigate("Login");
+          }
           await userLogout();
         }
       }

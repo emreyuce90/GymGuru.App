@@ -1,7 +1,6 @@
 import { View, Text, FlatList } from "react-native";
 import React, { useEffect, useState } from "react";
 import useGetUserMetricLogs from "./hooks/useGetUserMetricLogs";
-import ErrorScreen from "../../../lib/@core/components/ErrorScreen";
 import LoadingScreen from "../../../lib/@core/components/LoadingScreen";
 import UserLogMetric from "../../components/report/UserLogMetric";
 import CustomLineCharts from "../../components/charts/CustomLineCharts";
@@ -56,10 +55,6 @@ const Dynamic = (props: DynamicPropTypes) => {
       setUserMetricsLog(metricLogs);
     }
   }, [metricLogs]);
-
-  if (error) {
-    return <ErrorScreen error={error} />;
-  }
 
   if (loading) {
     return <LoadingScreen />;

@@ -3,17 +3,12 @@ import React from "react";
 import useReports from "./hooks/useReports";
 import Report from "../../components/report/Report";
 import LoadingScreen from "../../../lib/@core/components/LoadingScreen";
-import ErrorScreen from "../../../lib/@core/components/ErrorScreen";
 
 const WorkoutLogReports = () => {
   const { loading, error, reports } = useReports();
 
   if (loading) {
     return <LoadingScreen />;
-  }
-
-  if (error) {
-    return <ErrorScreen error={error} />;
   }
 
   return (

@@ -7,7 +7,6 @@ import {
 } from "react-native-responsive-screen";
 import useExercises from "./hooks/useExercises";
 import LoadingScreen from "../../../lib/@core/components/LoadingScreen";
-import ErrorScreen from "../../../lib/@core/components/ErrorScreen";
 import ExerciseCard from "./ExerciseCard";
 import { ScrollView } from "react-native-virtualized-view";
 import SubBodyParts from "../subBodyParts/SubBodyParts";
@@ -48,10 +47,6 @@ const Exercises = () => {
 
   if (loading || subbodypartloading) {
     return <LoadingScreen />;
-  }
-
-  if (error || subbodyparterror) {
-    return <ErrorScreen error={error} />;
   }
 
   return (

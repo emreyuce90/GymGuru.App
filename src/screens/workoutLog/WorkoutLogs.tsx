@@ -9,7 +9,6 @@ import {
 } from "../../components/workout";
 import { getFormattedTime } from "../../components/workout/StopWatch";
 import WorkoutUpdateModal from "../../components/workoutLog/Modals/WorkoutUpdateModal";
-import ErrorScreen from "../../../lib/@core/components/ErrorScreen";
 import LoadingScreen from "../../../lib/@core/components/LoadingScreen";
 import Api from "../../../lib/@core/data/Api";
 
@@ -115,9 +114,6 @@ const WorkoutLogs = () => {
     return <LoadingScreen />;
   }
 
-  if (error) {
-    return <ErrorScreen error={error} />;
-  }
   return (
     <>
       <View className="flex-1 justify-between">

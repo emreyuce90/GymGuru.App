@@ -5,7 +5,6 @@ import { FlatList } from "react-native-gesture-handler";
 import SubProgramme from "../../components/subProgramme/SubProgramme";
 import useSubProgramme from "./hooks/useSubProgramme";
 import LoadingScreen from "../../../lib/@core/components/LoadingScreen";
-import ErrorScreen from "../../../lib/@core/components/ErrorScreen";
 import NoDataView from "../../../lib/@core/components/NoDataView";
 
 const SubProgrammes = () => {
@@ -31,7 +30,6 @@ const SubProgrammes = () => {
   }, [navigation, programmeName]);
 
   if (loading) return <LoadingScreen />;
-  if (error) return <ErrorScreen error={error} />;
 
   return subProgrammes.length === 0 ? (
     <NoDataView />

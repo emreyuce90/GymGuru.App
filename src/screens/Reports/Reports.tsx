@@ -4,7 +4,7 @@ import WorkoutCount from "../../components/report/WorkoutCount";
 import UsersMeasurements from "../../components/report/UsersMeasurement";
 import useGetUserMeasurement from "./hooks/useGetUserMeasurement";
 import LoadingScreen from "../../../lib/@core/components/LoadingScreen";
-import ErrorScreen from "../../../lib/@core/components/ErrorScreen";
+
 import NoDataView from "../../../lib/@core/components/NoDataView";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import { ScrollView } from "react-native-virtualized-view";
@@ -59,15 +59,11 @@ const Reports = () => {
     return <LoadingScreen />;
   }
 
-  if (error) {
-    return <ErrorScreen error={error} />;
-  }
-
   return (
     <ScrollView>
       <WorkoutCount
         width={widthPercentageToDP(100)}
-        height={widthPercentageToDP(40)}
+        height={widthPercentageToDP(35)}
       />
       {measurements ? (
         <FlatList

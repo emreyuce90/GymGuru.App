@@ -32,8 +32,10 @@ export const deleteUserCredentials = async () => {
 export const getUserCredentials = async () => {
   try {
     const userInfos = await getItemAsync("userCredentials");
-    const parsedData = JSON.parse(userInfos);
-    return parsedData;
+    if (userInfos) {
+      const parsedData = JSON.parse(userInfos);
+      return parsedData;
+    }
   } catch (error) {
     Toast.show({
       type: "error",

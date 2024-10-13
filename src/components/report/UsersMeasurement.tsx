@@ -18,7 +18,7 @@ const UsersMeasurement: React.FC<UsersMeasurementsPropTypes> = React.memo(
   ({ measurement, index, handleMeasurementUpdate }) => {
     const navigation = useNavigation<any>();
     const width = wp(100);
-    const height = wp(40);
+    const height = wp(35);
 
     const [clicked, setClicked] = useState<boolean>(false);
     const [text, setText] = useState<string>(measurement.value);
@@ -68,6 +68,13 @@ const UsersMeasurement: React.FC<UsersMeasurementsPropTypes> = React.memo(
             }}
             className={`flex p-4 items-center mt-2 rounded-xl ml-1 justify-center`}
           >
+            <Feather
+              onPress={handleClicked}
+              name="edit"
+              color="white"
+              size={28}
+              style={{ position: "absolute", top: "50%", left: "10%" }}
+            />
             <Text className="font-bold text-white text-3xl">
               {text}
               {measurement.metricName === "Kilo" ? "kg" : "cm"}
@@ -75,11 +82,10 @@ const UsersMeasurement: React.FC<UsersMeasurementsPropTypes> = React.memo(
             <Text className="font-semibold text-white text-base">
               {measurement.metricName}
             </Text>
-            <Feather
-              onPress={handleClicked}
-              name="edit"
+            <Ionicons
+              name="chevron-forward-circle-outline"
               color="white"
-              size={28}
+              size={40}
               style={{ position: "absolute", top: "50%", right: "10%" }}
             />
           </TouchableOpacity>

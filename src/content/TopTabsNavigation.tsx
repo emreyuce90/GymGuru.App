@@ -4,7 +4,6 @@ import { Movements } from "../screens";
 import useMovements from "../screens/movement/hooks/useMovements";
 import LoadingScreen from "../../lib/@core/components/LoadingScreen";
 import useBodyPart from "../hooks/useBodyPart";
-import ErrorScreen from "../../lib/@core/components/ErrorScreen";
 import NoDataView from "../../lib/@core/components/NoDataView";
 
 const filteredWorkouts = (movements: IMovement[], bodyPartId: string) => {
@@ -37,9 +36,6 @@ const TopTabsNavigation = () => {
     return <LoadingScreen />;
   }
 
-  if (error) {
-    return <ErrorScreen error={error} />;
-  }
   return (
     <TopTabs.Navigator
       screenOptions={{

@@ -12,7 +12,6 @@ import { Bounceable } from "rn-bounceable";
 import { Ionicons } from "@expo/vector-icons";
 import useProgrammes from "./hooks/useProgrammes";
 import LoadingScreen from "../../../lib/@core/components/LoadingScreen";
-import ErrorScreen from "../../../lib/@core/components/ErrorScreen";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import Animated, { FadeIn, FadeInDown } from "react-native-reanimated";
 import { movementIds } from "../../components/workout";
@@ -70,14 +69,10 @@ const Programmes = () => {
     return <LoadingScreen />;
   }
 
-  if (error) {
-    return <ErrorScreen error={error} />;
-  }
-
   return (
     <View>
       <FlatList
-        className="mt-4"
+        className="mt-12"
         data={programmes}
         renderItem={({ item, index }) => (
           <Swipeable renderRightActions={() => rightSwipeActions(item.id)}>

@@ -5,7 +5,6 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import SubProgrammeDetailRender from "../../components/subProgramme/SubProgrammeDetailRender";
 import useSubProgrammeMovements from "./hooks/useSubProgrammeMovements";
 import LoadingScreen from "../../../lib/@core/components/LoadingScreen";
-import ErrorScreen from "../../../lib/@core/components/ErrorScreen";
 import { Ionicons } from "@expo/vector-icons";
 import { Bounceable } from "rn-bounceable";
 import Api from "../../../lib/@core/data/Api";
@@ -63,7 +62,6 @@ const SubProgrammeDetail = () => {
     });
   }, []);
   if (loading || isLoading) return <LoadingScreen />;
-  if (error || subProgrammeError) return <ErrorScreen error={error} />;
   return (
     <>
       <ScrollView className="flex mt-5">

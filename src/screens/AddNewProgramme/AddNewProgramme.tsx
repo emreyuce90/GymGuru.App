@@ -15,7 +15,6 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import ProgrammeFinishModel from "../../components/programme/Modal/ProgrammeFinishModel";
 import { Swipeable } from "react-native-gesture-handler";
 import Api from "../../../lib/@core/data/Api";
-import ErrorScreen from "../../../lib/@core/components/ErrorScreen";
 import LoadingScreen from "../../../lib/@core/components/LoadingScreen";
 import useProgrammes from "../programme/hooks/useProgrammes";
 import { useAuth } from "../../context/AuthProvider";
@@ -179,10 +178,6 @@ const AddNewProgramme = () => {
       });
     }
   }, [p]);
-
-  if (error) {
-    return <ErrorScreen error={error} />;
-  }
 
   if (loading) {
     return <LoadingScreen />;

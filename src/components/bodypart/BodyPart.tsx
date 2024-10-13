@@ -1,51 +1,68 @@
-import { View, Text, Image, Pressable } from "react-native";
 import React from "react";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { View, Text, Image, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { LinearGradient } from "expo-linear-gradient";
+import Animated, { FadeInDown } from "react-native-reanimated";
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from "react-native-responsive-screen";
-import { LinearGradient } from "expo-linear-gradient";
-import { useNavigation } from "@react-navigation/native";
-import Animated, { FadeInDown } from "react-native-reanimated";
 
-type BodyPartPropTypes = {
-  bodypart: IBodyPart;
-  index: number;
-};
+const BodyPart = ({ bodypart, index }) => {
+  const navigation = useNavigation();
+  const { id, name, pictureUrl } = bodypart;
 
-const BodyPart = (props: BodyPartPropTypes) => {
-  const navigation = useNavigation<any>();
-  const { id, name, pictureUrl } = props.bodypart;
   return (
     <Animated.View
       entering={FadeInDown.duration(600)
-        .delay(props.index * 200)
+        .delay(index * 200)
         .springify()}
+      style={{ margin: wp(2) }} // Her kart arasına boşluk eklenir
     >
       <TouchableOpacity
         onPress={() => {
           navigation.navigate("Exercises", { id, name, pictureUrl });
         }}
-        style={{ width: wp(44), height: wp(50) }}
-        className="flex justify-end p-4 mb-4"
+        style={{
+          width: wp(44),
+          height: wp(50),
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: 4 },
+          shadowOpacity: 0.3,
+          shadowRadius: 5,
+          elevation: 5,
+          borderRadius: 20,
+          overflow: "hidden",
+        }}
       >
         <Image
-          resizeMode="cover"
-          style={{ width: wp(42), height: wp(52) }}
-          src={`${process.env.EXPO_PUBLIC_API_URL}/api.gymguru.com.tr/bodyPart/${pictureUrl}`}
-          className="rounded-2xl absolute"
+          style={{ width: "100%", height: "100%" }}
+          source={{
+            uri: `${process.env.EXPO_PUBLIC_API_URL}/api.gymguru.com.tr/bodyPart/${pictureUrl}`,
+          }}
         />
         <LinearGradient
-          colors={["transparent", "rgba(0,0,0,0.9)"]}
-          style={{ width: wp(44), height: hp(15) }}
-          start={{ x: 0.5, y: 0 }}
-          end={{ x: 0.5, y: 1 }}
-          className="absolute bottom-0 rounded-b-[35px]"
+          colors={["transparent", "rgba(0,0,0,0.7)"]}
+          style={{
+            position: "absolute",
+            bottom: 0,
+            width: "100%",
+            height: "50%",
+          }}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 0, y: 1 }}
         />
         <Text
-          style={{ fontSize: hp(2.3) }}
-          className="text-white font-semibold text-center tracking-wide"
+          style={{
+            position: "absolute",
+            bottom: hp(2),
+            left: 0,
+            right: 0,
+            fontSize: hp(2.5),
+            color: "#fff",
+            fontWeight: "bold",
+            textAlign: "center",
+          }}
         >
           {name}
         </Text>

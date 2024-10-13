@@ -2,7 +2,7 @@ import { View, Text, FlatList } from "react-native";
 import React from "react";
 import useSubBodyParts from "./hooks/useSubBodyParts";
 import LoadingScreen from "../../../lib/@core/components/LoadingScreen";
-import ErrorScreen from "../../../lib/@core/components/ErrorScreen";
+
 import SubBodyPart from "../../components/subBodyPart/SubBodyPart";
 
 type SubBodyPartsPropTypes = {
@@ -16,9 +16,6 @@ const SubBodyParts = (props: SubBodyPartsPropTypes) => {
     return <LoadingScreen />;
   }
 
-  if (error) {
-    return <ErrorScreen error={error} />;
-  }
   return (
     subbodyparts && (
       <FlatList

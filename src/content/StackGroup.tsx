@@ -25,6 +25,7 @@ import { useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { jwtValid } from "../context/SecureStore";
 import LoadingScreen from "../../lib/@core/components/LoadingScreen";
+import { configureAxios } from "../../lib/@core/configs/axiosConfig";
 
 function StackGroup() {
   const { user, loading } = useAuth();
@@ -99,12 +100,45 @@ function StackGroup() {
                 </Stack.Screen>
               );
             })}
+          <Stack.Screen
+            name="Login"
+            component={Login}
+            options={{
+              headerShown: false,
+              title: "Login",
+              headerBackTitleVisible: false,
+            }}
+          />
         </>
       ) : (
         <>
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Register" component={Register} />
-          <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+          <Stack.Screen
+            name="Login"
+            component={Login}
+            options={{
+              headerShown: false,
+              title: "Login",
+              headerBackTitleVisible: false,
+            }}
+          />
+          <Stack.Screen
+            name="Register"
+            component={Register}
+            options={{
+              headerShown: false,
+              title: "Register",
+              headerBackTitleVisible: false,
+            }}
+          />
+          <Stack.Screen
+            name="ForgotPassword"
+            component={ForgotPassword}
+            options={{
+              headerShown: false,
+              title: "ForgotPassword",
+              headerBackTitleVisible: false,
+            }}
+          />
         </>
       )}
     </Stack.Navigator>

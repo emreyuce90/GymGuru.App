@@ -2,7 +2,7 @@ import { View, Text, FlatList } from "react-native";
 import React, { useLayoutEffect } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import useReportByWorkoutId from "./hooks/useReportByWorkoutId";
-import ErrorScreen from "../../../lib/@core/components/ErrorScreen";
+
 import LoadingScreen from "../../../lib/@core/components/LoadingScreen";
 import { calculateVolume } from "../../components/workout";
 import { getFormattedTime } from "../../components/workout/StopWatch";
@@ -130,10 +130,6 @@ const WorkoutLogReportsDetail = () => {
       ),
     });
   }, [navigation, reportDetails]);
-
-  if (error) {
-    return <ErrorScreen error={error} />;
-  }
 
   if (loading) {
     return <LoadingScreen />;
