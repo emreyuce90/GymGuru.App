@@ -93,8 +93,9 @@ type ISubProgrammeAddModel = {
 type IUser = {
   id: string;
   email: string;
-  username: string;
   token: string;
   loginDate: string;
   refreshToken: string;
+  firstName: string;
+  lastName: string;
 };

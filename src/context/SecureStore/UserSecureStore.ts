@@ -4,11 +4,20 @@ const { deleteItemAsync, setItemAsync, getItemAsync } = SecureStore;
 const SESSION_KEY = "authUser";
 
 export const userLogin = async (data: IUser) => {
-  const { username, token, loginDate, email, id, refreshToken } = data;
+  const { token, loginDate, email, id, refreshToken, firstName, lastName } =
+    data;
   try {
     await setItemAsync(
       SESSION_KEY,
-      JSON.stringify({ username, token, loginDate, email, id, refreshToken })
+      JSON.stringify({
+        token,
+        loginDate,
+        email,
+        id,
+        refreshToken,
+        firstName,
+        lastName,
+      })
     );
     return await getUser();
   } catch {

@@ -22,7 +22,10 @@ const Home = () => {
       <View className="flex flex-row items-center space-x-3 justify-between px-8 py-4 mt-12 ">
         <View>
           <Text className="text-xl">
-            Hoşgeldin, <Text className="font-bold">{user?.username} 👋</Text>
+            Hoşgeldin,{" "}
+            <Text className="font-bold">
+              {user?.firstName + " " + user?.lastName} 👋
+            </Text>
           </Text>
           <Text className="text-sm text-slate-500 mt-2">
             Antrenman yapmak için harika bir gün ☀️

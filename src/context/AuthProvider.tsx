@@ -13,7 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 //context in tipi ve başlangıç değerleri
 const AuthContext = createContext<{
   user: IUser | null;
-  login: (data: IUser) => Promise<void>;
+  login: (data: any) => Promise<void>;
   logout: () => Promise<void>;
   refreshToken: () => Promise<void>;
   loading: boolean;
@@ -78,11 +78,37 @@ export const AuthProvider: React.FC<any> = ({ children }) => {
 
   useEffect(() => {
     refreshToken();
-  }, [userLogout]);
+  }, []);
 
-  const login = async (data: IUser) => {
-    const userData = await userLogin(data);
-    setUser(userData);
+  const login = async (data: any) => {
+    const { email, password } = data;
+    try {
+      setLoading(true);
+      const response = await Api.post("/api/auth/login", { email, password });
+      if (response.Success) {
+        const { id, email, token, refreshToken, firstName, lastName } =
+          response.Resource.resource;
+        const data = {
+          id: id,
+          email: email,
+          loginDate: moment().format("DD-MM-YYYY HH:mm:ss"),
+          token: token,
+          firstName: firstName,
+          refreshToken: refreshToken,
+          lastName: lastName,
+        };
+
+        const userData = await userLogin(data);
+
+        setUser(userData);
+      } else {
+        console.warn("error", response.Message);
+      }
+    } catch (error) {
+      console.log("error", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const logout = async () => {

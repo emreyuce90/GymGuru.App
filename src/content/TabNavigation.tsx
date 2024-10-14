@@ -67,12 +67,12 @@ const TabNavigation = () => {
       <Tab.Screen
         name="Programmes"
         component={Programmes}
-        options={{ headerShown: false }}
+        options={{ headerShown: false, tabBarLabel: "Programlar" }}
       />
       <Tab.Screen
         name="Reports"
         component={Reports}
-        options={{ headerShown: false }}
+        options={{ headerShown: false, tabBarLabel: "Raporlar" }}
       />
 
       <Tab.Screen

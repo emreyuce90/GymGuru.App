@@ -11,30 +11,17 @@ import { NavigationContainer } from "@react-navigation/native";
 import StackGroup from "./src/content/StackGroup";
 
 moment.locale("tr");
-
+const axiosConfig = {
+  baseURL: process.env.EXPO_PUBLIC_API_URL ?? "https://api.gymguru.com.tr",
+};
+configureAxios(axiosConfig);
 export default function App() {
-  const navigationRef = useRef(null);
-  useEffect(() => {
-    const axiosConfig = {
-      baseURL: process.env.EXPO_PUBLIC_API_URL ?? "https://api.gymguru.com.tr",
-    };
-
-    const interval = setInterval(() => {
-      if (navigationRef.current) {
-        clearInterval(interval);
-        configureAxios(axiosConfig, navigationRef);
-      }
-    }, 100);
-
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <Suspense fallback={<LoadingScreen />}>
       <AuthProvider>
         <SafeAreaProvider>
           <StatusBar style="dark" />
-          <NavigationContainer ref={navigationRef}>
+          <NavigationContainer>
             <StackGroup />
           </NavigationContainer>
         </SafeAreaProvider>

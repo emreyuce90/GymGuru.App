@@ -37,29 +37,7 @@ const Login = () => {
       } else {
         deleteUserCredentials();
       }
-      try {
-        setLoading(true);
-        const response = await Api.post("/api/auth/login", { email, password });
-        if (response.Success) {
-          login({
-            id: response.Resource.resource.id,
-            email: response.Resource.resource.email,
-            loginDate: moment().format("DD-MM-YYYY HH:mm:ss"),
-            token: response.Resource.resource.token,
-            username: "Emre Yüce",
-            refreshToken: response.Resource.resource.refreshToken,
-          });
-
-          navigation.navigate("TabGroup");
-        } else {
-          setError(response.Message);
-        }
-      } catch (error) {
-        console.log("error", error);
-        Alert.alert("There is an error occured while login");
-      } finally {
-        setLoading(false);
-      }
+      login({ email, password });
     }
   };
 
