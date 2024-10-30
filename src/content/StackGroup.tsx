@@ -26,6 +26,7 @@ import { useNavigation } from "@react-navigation/native";
 import { jwtValid } from "../context/SecureStore";
 import LoadingScreen from "../../lib/@core/components/LoadingScreen";
 import { configureAxios } from "../../lib/@core/configs/axiosConfig";
+import Result from "../screens/nutritionPlan/Result";
 
 function StackGroup() {
   const { user, loading } = useAuth();
@@ -74,7 +75,13 @@ function StackGroup() {
               headerTitle: "Antrenman Log Detayı",
             }}
           />
-
+          <Stack.Screen
+            name="Result"
+            component={Result}
+            options={{
+              headerShown: false,
+            }}
+          />
           <Stack.Screen
             name="AddExercises"
             component={AddExercises}
