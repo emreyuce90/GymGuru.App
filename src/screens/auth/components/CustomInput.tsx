@@ -1,8 +1,8 @@
-import { View, Text, TextInput } from "react-native";
+import { View, Text, TextInput, TextInputProps } from "react-native";
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 
-type CustomInputPropTypes = {
+type CustomInputPropTypes = TextInputProps & {
   value: string;
   placeholder: string;
   setValue: any;
@@ -19,6 +19,7 @@ const CustomInput = (props: CustomInputPropTypes) => {
     securityTextEntry,
     success,
     errorMessage,
+    ...otherProps
   } = props;
 
   return (
@@ -33,6 +34,7 @@ const CustomInput = (props: CustomInputPropTypes) => {
         } rounded-2xl shadow-sm my-3`}
       >
         <TextInput
+          {...otherProps}
           value={value}
           onChangeText={setValue}
           placeholder={placeholder}

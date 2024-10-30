@@ -78,7 +78,11 @@ const TabNavigation = () => {
       <Tab.Screen
         name="Settings"
         component={Settings}
-        options={{ headerTitle: "Ayarlar", title: "Ayarlar" }}
+        options={{
+          headerTitle: "Ayarlar",
+          title: "Ayarlar",
+          headerShown: false,
+        }}
       />
     </Tab.Navigator>
   );

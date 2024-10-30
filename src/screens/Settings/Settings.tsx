@@ -1,11 +1,12 @@
-import { View, Text } from "react-native";
+import { View, Text, SafeAreaView } from "react-native";
 import React from "react";
+import NutritionPlan from "../nutritionPlan/NutritionPlan";
 
 const Settings = () => {
   return (
-    <View>
-      <Text>Settings</Text>
-    </View>
+    <SafeAreaView>
+      <NutritionPlan />
+    </SafeAreaView>
   );
 };
 
