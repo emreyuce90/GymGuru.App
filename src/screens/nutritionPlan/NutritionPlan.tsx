@@ -7,6 +7,7 @@ import { useState } from "react";
 const NutritionPlan = () => {
   const [height, setHeight] = useState<string>("");
   const [weight, setWeight] = useState<string>("");
+  const [year, setYear] = useState<string>("");
 
   const handleHeight = (value: string) => {
     const regex = /^[0-9]*\.?[0-9]*$/;
@@ -19,6 +20,13 @@ const NutritionPlan = () => {
     const regex = /^[0-9]*\.?[0-9]*$/;
     if (regex.test(value)) {
       setWeight(value);
+    }
+  };
+
+  const handleYear = (value: string) => {
+    const regex = /^[0-9]*\.?[0-9]*$/;
+    if (regex.test(value)) {
+      setYear(value);
     }
   };
   return (
@@ -36,18 +44,28 @@ const NutritionPlan = () => {
           />
         </View>
         <View className="border mt-8 border-gray-300"></View>
-        <View className="flex flex-row justify-between items-center">
+        {/* Inputlar */}
+        <View className="flex flex-row justify-between items-center mt-12">
           <CustomInput
+            width={20}
             keyboardType="numeric"
             placeholder="Boy"
             value={height}
             setValue={handleHeight}
           />
           <CustomInput
+            width={20}
             keyboardType="numeric"
             placeholder="Kilo"
             value={weight}
             setValue={handleWeight}
+          />
+          <CustomInput
+            width={20}
+            keyboardType="numeric"
+            placeholder="Yaş"
+            value={year}
+            setValue={handleYear}
           />
         </View>
       </View>

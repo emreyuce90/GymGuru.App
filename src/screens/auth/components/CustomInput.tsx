@@ -9,6 +9,7 @@ type CustomInputPropTypes = TextInputProps & {
   securityTextEntry?: boolean;
   errorMessage?: string;
   success?: boolean;
+  width?: number;
 };
 
 const CustomInput = (props: CustomInputPropTypes) => {
@@ -19,13 +20,16 @@ const CustomInput = (props: CustomInputPropTypes) => {
     securityTextEntry,
     success,
     errorMessage,
+    width,
     ...otherProps
   } = props;
 
   return (
     <>
       <View
-        className={`flex-row items-center w-full p-4 bg-white border ${
+        className={`flex-row items-center ${
+          width ? `w-${width}` : "w-full"
+        }  p-4 bg-white border ${
           errorMessage
             ? "border-red-500"
             : success
