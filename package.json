@@ -54,7 +54,8 @@
     "rn-bounceable": "^1.2.0",
     "expo-secure-store": "~13.0.2",
     "expo-checkbox": "~3.0.0",
-    "expo-blur": "~13.0.2"
+    "expo-blur": "~13.0.2",
+    "@expo/ngrok": "^4.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
